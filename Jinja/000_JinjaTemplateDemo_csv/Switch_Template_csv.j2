@@ -1,0 +1,11 @@
+! Generated configuration
+int {{ interface }}
+  description Link to {{ server }} via {{ link }} for {{ purpose }}
+  {% if vlan == "trunk" -%}
+  switchport mode trunk
+  {% else -%}
+  switchport mode access
+  switchport access vlan {{ vlan }}
+  {% endif -%}
+  no shut
+

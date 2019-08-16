@@ -1,0 +1,13 @@
+! Generated configuration
+
+int Ethernet0/8
+  description Link to ESXI-08 via nic1 for App Server
+  switchport mode access
+  switchport access vlan 8
+  no shut
+! Generated configuration
+
+int Ethernet0/9
+  description Link to ESXI-09 via nic2 for App Server
+  switchport mode trunk
+  no shut

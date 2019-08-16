@@ -1,0 +1,20 @@
+hostname,interface,vlan,server,link,purpose
+SW1-B1,Ethernet0/8,8,ESXI-08,nic 1,App Server
+SW1-B1,Ethernet0/9,8,ESXI-09,nic 2,App Server
+SW1-B1,Ethernet0/10,8,ESXI-10,nic 3,App Server
+SW1-B1,Ethernet0/11,trunk,ESXI-11,nic 4,App Server
+SW1-B2,Ethernet0/12,8,ESXI-12,nic 5,App Server
+SW1-B2,Ethernet0/13,8,ESXI-13,nic 6,App Server
+SW1-B2,Ethernet0/14,8,ESXI-14,nic 7,App Server
+SW1-B2,Ethernet0/15,trunk,ESXI-15,nic 8,App Server
+SW1-B2,Ethernet0/16,8,ESXI-16,nic 9,App Server
+SW1-B3,Ethernet0/17,8,ESXI-17,nic 10,App Server
+SW1-B3,Ethernet0/18,8,ESXI-18,nic 11,App Server
+SW1-B3,Ethernet0/19,8,ESXI-19,nic 12,App Server
+SW1-B3,Ethernet0/20,8,ESXI-20,nic 13,App Server
+SW1-B3,Ethernet0/21,trunk,ESXI-21,nic 14,App Server
+SW1-B3,Ethernet0/22,8,ESXI-22,nic 15,App Server
+SW1-B3,Ethernet0/23,8,ESXI-23,nic 16,App Server
+SW1-B3,Ethernet0/24,trunk,ESXI-24,nic 17,App Server
+SW1-B3,Ethernet0/25,8,ESXI-25,nic 18,App Server
+SW1-B3,Ethernet0/26,8,ESXI-26,nic 19,App Server

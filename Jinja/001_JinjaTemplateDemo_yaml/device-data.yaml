@@ -1,0 +1,29 @@
+---
+- hostname: "SW1-B1"
+  interfaces:
+  -
+    name: "Ethernet0/8"
+    vlan: 8
+    server: "ESXI-08"
+    link: "nic1"
+    purpose: "App Server"
+  -
+    name: "Ethernet0/9"
+    vlan: "trunk"
+    server: "ESXI-09"
+    link: "nic2"
+    purpose: "App Server"
+- hostname: "SW1-B2"
+  interfaces:
+  - 
+    name: "Ethernet0/8"
+    vlan: "trunk"
+    server: "ESXI-08"
+    link: "nic1"
+    purpose: "App Server"
+  -
+    name: "Ethernet0/9"
+    vlan: 8
+    server: "ESXI-09"
+    link: "nic2"
+    purpose: "App Server"

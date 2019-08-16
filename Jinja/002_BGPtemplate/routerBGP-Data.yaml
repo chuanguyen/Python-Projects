@@ -1,0 +1,23 @@
+---
+- hostname: "R1-B1"
+  neighbors: 
+  - 
+    ip: "20.20.20.2"
+    remote-as: 201
+  - 
+    ip: "21.21.21.2"
+    remote-as: 202
+  - 
+    ip: "22.22.22.2"
+    remote-as: 203
+- hostname: "R2-B2"
+  neighbors: 
+  - 
+    ip: "10.10.10.1"
+    remote-as: 101
+  - 
+    ip: "11.11.11.1"
+    remote-as: 102
+  - 
+    ip: "12.12.12.1"
+    remote-as: 103
