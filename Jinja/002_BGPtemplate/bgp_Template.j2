@@ -1,0 +1,11 @@
+! Generated configuration
+
+router bgp {{ local_asn }}
+  router-id {{ rid }}
+  {% for neighbor in neighbors -%}
+  neighbor {{ neighbor.ip }} remote-as {{ neighbor.remote_asn }}
+  {% endfor -%}
+
+  {% for network in networks -%}
+  network {{ network }}
+  {% endfor -%}

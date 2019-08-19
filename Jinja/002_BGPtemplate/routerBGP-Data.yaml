@@ -1,23 +1,35 @@
 ---
 - hostname: "R1-B1"
-  neighbors: 
-  - 
+  rid: "1.1.1.1"
+  local_asn: "100"
+  neighbors:
+  -
     ip: "20.20.20.2"
-    remote-as: 201
-  - 
+    remote_asn: 201
+  -
     ip: "21.21.21.2"
-    remote-as: 202
-  - 
+    remote_asn: 202
+  -
     ip: "22.22.22.2"
-    remote-as: 203
+    remote_asn: 203
+  networks:
+  - "192.168.11.0"
+  - "192.168.12.0"
+  - "192.168.13.0"
 - hostname: "R2-B2"
-  neighbors: 
-  - 
+  rid: "2.2.2.2"
+  local_asn: "200"
+  neighbors:
+  -
     ip: "10.10.10.1"
-    remote-as: 101
-  - 
+    remote_asn: 101
+  -
     ip: "11.11.11.1"
-    remote-as: 102
-  - 
+    remote_asn: 102
+  -
     ip: "12.12.12.1"
-    remote-as: 103
+    remote_asn: 103
+  networks:
+  - "192.168.21.0"
+  - "192.168.22.0"
+  - "192.168.23.0"

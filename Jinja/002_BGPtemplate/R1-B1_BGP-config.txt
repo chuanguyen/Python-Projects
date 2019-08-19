@@ -1,0 +1,11 @@
+! Generated configuration
+
+router bgp 100
+  router-id 1.1.1.1
+  neighbor 20.20.20.2 remote-as 201
+  neighbor 21.21.21.2 remote-as 202
+  neighbor 22.22.22.2 remote-as 203
+  network 192.168.11.0
+  network 192.168.12.0
+  network 192.168.13.0
+  
