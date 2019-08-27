@@ -1,0 +1,22 @@
+Distribution & access layer: Similar to 3025 course lab layout w/ 4 switches in a switch-block configuration
+- Etherchannel used btwn all switches
+
+LAN Implementation (Switching course): 
+- VLANs & VTP (Transparent mode)
+- Disable DTP
+- Define access ports statically
+- Define trunk ports & VLAN pruning
+- Configure Etherchannel (PAgP)
+- Defining root bridges & secondary root bridges
+- Define STP mode (RPVST+)
+- Enable loop & root guard
+- Enabling HSRP, but preventing asymmetric routing (Static route & tracking on upstream routers)
+- Configure NTP & authentication
+- Security: 
+  - Port-security
+  - Configure errdisable mechanism
+  - DHCP snooping
+  - IP source guard
+  - ARP spoofing
+  - VLANs (Blackhole, etc)
+  - 

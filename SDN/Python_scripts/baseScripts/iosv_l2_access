@@ -1,0 +1,7 @@
+int range f0/3 - 4
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport nonegotiate
+int f0/0
+switchport mode access
+switchport access vlan 2
