@@ -7,4 +7,4 @@ testbed:
       username: "%ENV{PYATS_USERNAME}"
       password: "%ENV{PYATS_PASSWORD}"
 
-devices: 
+devices:
