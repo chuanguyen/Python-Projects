@@ -22,7 +22,7 @@ def add_device(hostname, os_type, testbed, device_type='switch', ip_addr=None, l
     connected then this function will return what already exists.
     Examples
     --------
-        dev = connect_device('switch1', 'nxos', testbed)
+        dev = add_device('switch1', 'nxos', testbed)
         dev.parse('show version')
     Parameters
     ----------
@@ -69,10 +69,10 @@ def add_device(hostname, os_type, testbed, device_type='switch', ip_addr=None, l
                  # connect only using SSH, prevent genie from making config
                  # changes to the device during the login process.
 
-                 connections=make_ssh_config(ip_addr or hostname))
+                 connections=make_ssh_conn(ip_addr or hostname))
 
     testbed.add_device(dev)
-    dev.connect(log_stdout=log_stdout)
+    #dev.connect(log_stdout=log_stdout)
 
     return dev
 
