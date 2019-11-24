@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+"""
+
+Rather than relying on static testbed files and building manually, can dynamically
+generate the testbed file from a list of devices (ie. CSV, etc)
+
+"""
+
 import os
 import sys
 from genie.testbed import load
