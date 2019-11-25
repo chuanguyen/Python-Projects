@@ -9,6 +9,7 @@ generate the testbed file from a list of devices (ie. CSV, etc)
 
 import os
 import sys
+import yaml
 from genie.testbed import load
 from genie.conf.base.device import Device
 
@@ -79,7 +80,6 @@ def add_device(hostname, os_type, testbed, device_type='switch', ip_addr=None, l
                  connections=make_ssh_conn(ip_addr or hostname))
 
     testbed.add_device(dev)
-    #dev.connect(log_stdout=log_stdout)
 
     return dev
 
