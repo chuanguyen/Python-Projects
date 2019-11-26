@@ -1,0 +1,43 @@
+devices:
+  R3:
+    connections:
+      cli:
+        ip: 192.168.100.254
+        protocol: ssh
+    credentials:
+      default:
+        password: '%ENV{PYATS_PASSWORD}'
+        username: '%ENV{PYATS_USERNAME}'
+      enable:
+        password: ASK()
+    device_type: router
+    os: ios
+    type: ios
+  R4:
+    connections:
+      cli:
+        ip: 192.168.100.252
+        protocol: ssh
+    credentials:
+      default:
+        password: '%ENV{PYATS_PASSWORD}'
+        username: '%ENV{PYATS_USERNAME}'
+      enable:
+        password: ASK()
+    device_type: router
+    os: ios
+    type: ios
+  R5:
+    connections:
+      cli:
+        ip: 192.168.100.253
+        protocol: ssh
+    credentials:
+      default:
+        password: '%ENV{PYATS_PASSWORD}'
+        username: '%ENV{PYATS_USERNAME}'
+      enable:
+        password: ASK()
+    device_type: router
+    os: ios
+    type: ios
