@@ -20,7 +20,8 @@ try:
 except KeyError as exc:
     sys.exit(f"ERROR: missing ENVAR: {exc}")
 
-testbed = load("empty-testbed.yaml")
+#testbed = load("empty-testbed.yaml")
+testbed = load("Generated_testbed.yaml")
 print(f"Genie loaded testbed: {testbed.name}")
 
 def add_device(hostname, os_type, testbed, device_type='switch', ip_addr=None, log_stdout=False):
