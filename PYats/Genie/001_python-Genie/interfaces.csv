@@ -1,0 +1,9 @@
+Hostname,Interface,MAC Address
+R3,FastEthernet0/0,"(Livengood), address is ca03.180c.0008 (bia ca03.180c.0008)"
+R3,FastEthernet0/1,"(Livengood), address is ca03.180c.0006 (bia ca03.180c.0006)"
+R3,FastEthernet1/0,"(Livengood), address is ca03.180c.001c (bia ca03.180c.001c)"
+R3,FastEthernet1/1,"(Livengood), address is ca03.180c.001d (bia ca03.180c.001d)"
+R5,FastEthernet0/0,"(Livengood), address is ca05.49b0.0008 (bia ca05.49b0.0008)"
+R5,FastEthernet0/1,"(Livengood), address is ca05.49b0.0006 (bia ca05.49b0.0006)"
+R5,FastEthernet1/0,"(Livengood), address is ca05.49b0.001c (bia ca05.49b0.001c)"
+R5,FastEthernet1/1,"(Livengood), address is ca05.49b0.001d (bia ca05.49b0.001d)"
