@@ -1,0 +1,34 @@
+---
+
+testbed:
+  credentials:
+    default:
+      username: "%ENV{PYATS_USERNAME}"
+      password: "%ENV{PYATS_PASSWORD}"
+devices:
+  R3:
+    connections:
+      cli:
+        ip: 192.168.100.254
+        protocol: ssh
+    credentials:
+      default:
+        password: '%ENV{PYATS_PASSWORD}'
+        username: '%ENV{PYATS_USERNAME}'
+      enable:
+        password: '%ENV{PYATS_PASSWORD}'
+    os: ios
+    type: router
+  R5:
+    connections:
+      cli:
+        ip: 192.168.100.253
+        protocol: ssh
+    credentials:
+      default:
+        password: '%ENV{PYATS_PASSWORD}'
+        username: '%ENV{PYATS_USERNAME}'
+      enable:
+        password: '%ENV{PYATS_PASSWORD}'
+    os: ios
+    type: router
