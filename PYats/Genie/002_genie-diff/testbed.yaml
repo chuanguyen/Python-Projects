@@ -1,9 +1,12 @@
 devices:
   R3:
     connections:
-      cli:
+      mgmt:
         ip: 192.168.100.254
         protocol: ssh
+      backup:
+        ip: 192.168.100.254
+        protocol: telnet
     credentials:
       default:
         password: '%ENV{PYATS_PASSWORD}'
@@ -15,9 +18,12 @@ devices:
     type: router
   R5:
     connections:
-      cli:
+      mgmt:
         ip: 192.168.100.253
         protocol: ssh
+      backup:
+        ip: 192.168.100.253
+        protocol: telnet
     credentials:
       default:
         password: '%ENV{PYATS_PASSWORD}'

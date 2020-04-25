@@ -11,7 +11,7 @@ testbed = Genie.init("testbed.yaml")
 baseline = {}
 
 for hostname,dev in testbed.devices.items():
-    dev.connect()
+    dev.connect(via='mgmt')
     baseline[hostname] = {}
     baseline[hostname]["interface"] = dev.learn("interface")
     pprint.pprint(baseline[hostname]["interface"].info)
@@ -35,6 +35,15 @@ for hostname,dev in testbed.devices.items():
 #
 # for hostname,dev in testbed.devices.items():
 #     dev.connect()
+#     baseline[hostname] = {}
+#     baseline[hostname]["interface"] = dev.learn("interface")
+#     pprint.pprint(baseline[hostname]["interface"].info)
+
+
+### Retrieving learned features w/ many connection entries
+
+# for hostname,dev in testbed.devices.items():
+#     dev.connect(alias='vty_1', via='mgmt')
 #     baseline[hostname] = {}
 #     baseline[hostname]["interface"] = dev.learn("interface")
 #     pprint.pprint(baseline[hostname]["interface"].info)
