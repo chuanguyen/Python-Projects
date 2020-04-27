@@ -1,0 +1,26 @@
+--- ./output/learnt/ospf_nxos_nx-osv-1_ops.txt
++++ ./output/disaster/ospf_nxos_nx-osv-1_ops.txt
+info:
+ vrf:
+  default:
+   address_family:
+    ipv4:
+     instance:
+      1:
+       areas:
+        0.0.0.0:
+         interfaces:
+          Ethernet2/1:
++           enable: False
+-           enable: True
+-           neighbors: 
+-            10.1.1.1: 
+-             address: 10.0.1.1
+-             bdr_ip_addr: 10.0.1.2
+-             dead_timer: 00:00:41
+-             dr_ip_addr: 10.0.1.1
+-             last_state_change: 00:02:14
+-             neighbor_router_id: 10.1.1.1
+-             state: full
+-             statistics: 
+-              nbr_event_count: 5

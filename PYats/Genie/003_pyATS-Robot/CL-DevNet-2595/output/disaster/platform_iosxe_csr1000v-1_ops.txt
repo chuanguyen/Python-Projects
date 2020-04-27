@@ -1,0 +1,62 @@
+{
+  "_exclude": [
+    "rp_uptime",
+    "disk_free_space",
+    "uptime",
+    "switchover_reason",
+    "disk_used_space",
+    "total_free_bytes",
+    "disk_total_space",
+    "main_mem",
+    "date",
+    "index",
+    "chassis_sn",
+    "image",
+    "sn",
+    "rp_boot_image",
+    "installed_packages",
+    "version"
+  ],
+  "attributes": null,
+  "chassis": "CSR1000V",
+  "chassis_sn": "9DWED26H4SG",
+  "commands": null,
+  "config_register": "0x2102",
+  "connections": null,
+  "context_manager": {},
+  "dir": "bootflash:/",
+  "image": "bootflash:packages.conf",
+  "issu_rollback_timer_reason": "no ISSU operation is in progress",
+  "issu_rollback_timer_state": "inactive",
+  "main_mem": "1217428",
+  "os": "iosxe",
+  "redundancy_communication": false,
+  "redundancy_mode": "Non-redundant",
+  "rp_uptime": 522780,
+  "rtr_type": "CSR1000V",
+  "slot": {
+    "oc": {
+      "F0": {
+        "name": "CSR1000V",
+        "sn": "",
+        "state": "ok, active"
+      }
+    },
+    "rp": {
+      "R0": {
+        "config_register": "0x2102",
+        "issu": {
+          "in_progress": false
+        },
+        "name": "CSR1000V",
+        "redundancy_state": "ACTIVE",
+        "rp_uptime": "6 days, 1 hour, 13 minutes",
+        "sn": "JAB1303001C",
+        "state": "ok, active",
+        "system_image": "Cisco IOS Software [Fuji], Virtual XE Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.9.1, RELEASE SOFTWARE (fc2)"
+      }
+    }
+  },
+  "switchover_reason": "none",
+  "version": "16.9.1"
+}

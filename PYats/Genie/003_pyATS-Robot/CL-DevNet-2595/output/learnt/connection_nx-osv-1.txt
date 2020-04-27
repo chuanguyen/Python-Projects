@@ -1,0 +1,15 @@
+[2020-04-27 07:27:44,009] +++ nx-osv-1 logfile output/learnt/connection_nx-osv-1.txt +++
+[2020-04-27 07:27:44,009] +++ Unicon plugin nxos +++
+switch#
+[2020-04-27 07:27:44,689] +++ connection to spawn: mock_device_cli --os nxos --mock_data_dir mocked_devices/initial_yamls/nxos --state execute, id: 140517527415200 +++
+[2020-04-27 07:27:44,689] connection to nx-osv-1
+[2020-04-27 07:27:44,736] +++ initializing handle +++
+[2020-04-27 07:27:44,737] +++ nx-osv-1: executing command 'term length 0' +++
+term length 0
+switch#
+[2020-04-27 07:27:44,831] +++ nx-osv-1: executing command 'term width 511' +++
+term width 511
+switch#
+[2020-04-27 07:27:44,906] +++ nx-osv-1: executing command 'terminal session-timeout 0' +++
+terminal session-timeout 0
+switch#

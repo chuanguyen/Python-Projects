@@ -1,0 +1,126 @@
+{
+    "vlan": {
+        "csr1000v-1": {
+            "py/state": {
+                "callables": {},
+                "device": "csr1000v-1",
+                "context_manager": {},
+                "attributes": null,
+                "commands": null,
+                "connections": null,
+                "ops_schema": {
+                    "info": {
+                        "vlans": {
+                            "interface_vlan_enabled": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "vn_segment_vlan_based_enabled": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "Any  (str) *": {
+                                "vlan_id": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "shutdown": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "name": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "state": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "interfaces": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "vn_segment_id": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "mode": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                }
+                            },
+                            "configuration": {
+                                "Any  (str) *": {
+                                    "ip_igmp_snooping": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "diff_ignore": {
+                    "py/reduce": [
+                        {
+                            "py/type": "collections.deque"
+                        },
+                        {
+                            "py/tuple": []
+                        },
+                        null,
+                        {
+                            "py/tuple": [
+                                "maker",
+                                "callables",
+                                "device",
+                                "diff_ignore",
+                                "ops_schema"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

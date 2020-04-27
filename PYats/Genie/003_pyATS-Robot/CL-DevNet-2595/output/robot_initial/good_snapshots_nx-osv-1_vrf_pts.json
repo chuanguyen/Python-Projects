@@ -1,0 +1,162 @@
+{
+    "vrf": {
+        "nx-osv-1": {
+            "py/state": {
+                "callables": {},
+                "device": "nx-osv-1",
+                "context_manager": {},
+                "attributes": null,
+                "commands": null,
+                "connections": null,
+                "ops_schema": {
+                    "info": {
+                        "vrfs": {
+                            "Any  (str) *": {
+                                "route_distinguisher": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "shutdown": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "address_family": {
+                                    "Any  (str) *": {
+                                        "route-targets": {
+                                            "Any  (str) *": {
+                                                "route-target": {
+                                                    "schema": "*",
+                                                    "schemaType": {
+                                                        "py/type": "builtins.str"
+                                                    },
+                                                    "missed": [],
+                                                    "path": []
+                                                },
+                                                "rt-type": {
+                                                    "schema": "*",
+                                                    "schemaType": {
+                                                        "py/type": "builtins.str"
+                                                    },
+                                                    "missed": [],
+                                                    "path": []
+                                                }
+                                            }
+                                        },
+                                        "import-from-global": {
+                                            "import_from_global_map": {
+                                                "schema": "*",
+                                                "schemaType": {
+                                                    "py/type": "builtins.str"
+                                                },
+                                                "missed": [],
+                                                "path": []
+                                            }
+                                        },
+                                        "export-to-global": {
+                                            "export_to_global_map": {
+                                                "schema": "*",
+                                                "schemaType": {
+                                                    "py/type": "builtins.str"
+                                                },
+                                                "missed": [],
+                                                "path": []
+                                            }
+                                        },
+                                        "routing_table_limit": {
+                                            "routing_table_limit_number": {
+                                                "schema": "*",
+                                                "schemaType": {
+                                                    "py/type": "builtins.str"
+                                                },
+                                                "missed": [],
+                                                "path": []
+                                            },
+                                            "routing-table_limit_action": {
+                                                "enable_alert_percent": {
+                                                    "alert_percent_value": {
+                                                        "schema": "*",
+                                                        "schemaType": {
+                                                            "py/type": "builtins.str"
+                                                        },
+                                                        "missed": [],
+                                                        "path": []
+                                                    }
+                                                },
+                                                "enable_alert_limit_number": {
+                                                    "alert_limit_number": {
+                                                        "schema": "*",
+                                                        "schemaType": {
+                                                            "py/type": "builtins.str"
+                                                        },
+                                                        "missed": [],
+                                                        "path": []
+                                                    }
+                                                },
+                                                "enable_simple_alert": {
+                                                    "simple_alert": {
+                                                        "schema": "*",
+                                                        "schemaType": {
+                                                            "py/type": "builtins.str"
+                                                        },
+                                                        "missed": [],
+                                                        "path": []
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "diff_ignore": {
+                    "py/reduce": [
+                        {
+                            "py/type": "collections.deque"
+                        },
+                        {
+                            "py/tuple": []
+                        },
+                        null,
+                        {
+                            "py/tuple": [
+                                "maker",
+                                "callables",
+                                "device",
+                                "diff_ignore",
+                                "ops_schema"
+                            ]
+                        }
+                    ]
+                },
+                "info": {
+                    "vrfs": {
+                        "management": {
+                            "route_distinguisher": "0:0",
+                            "address_family": {
+                                "ipv6": {},
+                                "ipv4": {}
+                            }
+                        },
+                        "default": {
+                            "route_distinguisher": "0:0",
+                            "address_family": {
+                                "ipv6": {},
+                                "ipv4": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

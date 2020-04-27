@@ -1,0 +1,24 @@
+--- ./output/learnt/ospf_iosxe_csr1000v-1_ops.txt
++++ ./output/disaster/ospf_iosxe_csr1000v-1_ops.txt
+info:
+ vrf:
+  default:
+   address_family:
+    ipv4:
+     instance:
+      1:
+       areas:
+        0.0.0.0:
+         interfaces:
+          GigabitEthernet2:
+-           neighbors: 
+-            10.2.2.2: 
+-             address: 10.0.1.2
+-             bdr_ip_addr: 10.0.1.2
+-             dead_timer: 00:00:38
+-             dr_ip_addr: 10.0.1.1
+-             neighbor_router_id: 10.2.2.2
+-             state: full
+-             statistics: 
+-              nbr_event_count: 6
+-              nbr_retrans_qlen: 0

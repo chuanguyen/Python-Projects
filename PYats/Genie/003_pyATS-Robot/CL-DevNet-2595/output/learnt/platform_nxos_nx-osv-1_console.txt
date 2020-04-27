@@ -1,0 +1,354 @@
++++ nx-osv-1: executing command 'show inventory' +++
+show inventory
+NAME: "Chassis",  DESCR: "NX-OSv Chassis "                       
+PID: N7K-C7018           ,  VID: V00 ,  SN: TB00010000B          
+
+NAME: "Slot 1",  DESCR: "NX-OSv Supervisor Module"              
+PID: N7K-SUP1            ,  VID: V00 ,  SN: TM00010000B          
+
+NAME: "Slot 2",  DESCR: "NX-OSv Ethernet Module"                
+PID: N7K-F248XP-25       ,  VID: V00 ,  SN: TM00010000C          
+
+NAME: "Slot 3",  DESCR: "NX-OSv Ethernet Module"                
+PID: N7K-F248XP-25       ,  VID: V00 ,  SN: TM00010000D          
+
+NAME: "Slot 4",  DESCR: "NX-OSv Ethernet Module"                
+PID: N7K-F248XP-25       ,  VID: V00 ,  SN: TM00010000E          
+
+NAME: "Slot 33",  DESCR: "NX-OSv Chassis Power Supply"           
+PID:                     ,  VID: V00 ,  SN:                      
+
+NAME: "Slot 35",  DESCR: "NX-OSv Chassis Fan Module"             
+PID:                     ,  VID: V00 ,  SN:
+switch#
++++ nx-osv-1: executing command 'show vdc detail' +++
+show vdc detail
+
+Switchwide mode is m1 f1 m1xl f2 m2xl f2e f3 m3 
+
+vdc id: 1
+vdc name: nx-osv-1
+vdc state: active
+vdc mac address: fa:16:3e:49:1c:bc
+vdc ha policy: RELOAD
+vdc dual-sup ha policy: SWITCHOVER
+vdc boot Order: 1
+vdc create time: Fri Jan 18 20:43:38 2019
+vdc reload count: 0
+vdc uptime: 6 day(s), 1 hour(s), 11 minute(s), 18 second(s)
+vdc restart count: 0
+vdc type: Ethernet
+vdc supported linecards: m1 m1xl m2xl f2e
+switch#
++++ nx-osv-1: executing command 'show vdc membership status' +++
+show vdc membership status
+Flags : b - breakout port
+---------------------------------
+
+vdc_id: 0 vdc_name: Unallocated interfaces:
+Port        Status      
+----        ----------  
+
+vdc_id: 1 vdc_name: nx-osv-1 interfaces:
+Port        Status      
+----        ----------  
+Eth2/1      OK
+Eth2/2      OK
+Eth2/3      OK
+Eth2/4      OK
+Eth2/5      OK
+Eth2/6      OK
+Eth2/7      OK
+Eth2/8      OK
+Eth2/9      OK
+Eth2/10     OK
+Eth2/11     OK
+Eth2/12     OK
+Eth2/13     OK
+Eth2/14     OK
+Eth2/15     OK
+Eth2/16     OK
+Eth2/17     OK
+Eth2/18     OK
+Eth2/19     OK
+Eth2/20     OK
+Eth2/21     OK
+Eth2/22     OK
+Eth2/23     OK
+Eth2/24     OK
+Eth2/25     OK
+Eth2/26     OK
+Eth2/27     OK
+Eth2/28     OK
+Eth2/29     OK
+Eth2/30     OK
+Eth2/31     OK
+Eth2/32     OK
+Eth2/33     OK
+Eth2/34     OK
+Eth2/35     OK
+Eth2/36     OK
+Eth2/37     OK
+Eth2/38     OK
+Eth2/39     OK
+Eth2/40     OK
+Eth2/41     OK
+Eth2/42     OK
+Eth2/43     OK
+Eth2/44     OK
+Eth2/45     OK
+Eth2/46     OK
+Eth2/47     OK
+Eth2/48     OK
+Eth3/1      OK
+Eth3/2      OK
+Eth3/3      OK
+Eth3/4      OK
+Eth3/5      OK
+Eth3/6      OK
+Eth3/7      OK
+Eth3/8      OK
+Eth3/9      OK
+Eth3/10     OK
+Eth3/11     OK
+Eth3/12     OK
+Eth3/13     OK
+Eth3/14     OK
+Eth3/15     OK
+Eth3/16     OK
+Eth3/17     OK
+Eth3/18     OK
+Eth3/19     OK
+Eth3/20     OK
+Eth3/21     OK
+Eth3/22     OK
+Eth3/23     OK
+Eth3/24     OK
+Eth3/25     OK
+Eth3/26     OK
+Eth3/27     OK
+Eth3/28     OK
+Eth3/29     OK
+Eth3/30     OK
+Eth3/31     OK
+Eth3/32     OK
+Eth3/33     OK
+Eth3/34     OK
+Eth3/35     OK
+Eth3/36     OK
+Eth3/37     OK
+Eth3/38     OK
+Eth3/39     OK
+Eth3/40     OK
+Eth3/41     OK
+Eth3/42     OK
+Eth3/43     OK
+Eth3/44     OK
+Eth3/45     OK
+Eth3/46     OK
+Eth3/47     OK
+Eth3/48     OK
+Eth4/1      OK
+Eth4/2      OK
+Eth4/3      OK
+Eth4/4      OK
+Eth4/5      OK
+Eth4/6      OK
+Eth4/7      OK
+Eth4/8      OK
+Eth4/9      OK
+Eth4/10     OK
+Eth4/11     OK
+Eth4/12     OK
+Eth4/13     OK
+Eth4/14     OK
+Eth4/15     OK
+Eth4/16     OK
+Eth4/17     OK
+Eth4/18     OK
+Eth4/19     OK
+Eth4/20     OK
+Eth4/21     OK
+Eth4/22     OK
+Eth4/23     OK
+Eth4/24     OK
+Eth4/25     OK
+Eth4/26     OK
+Eth4/27     OK
+Eth4/28     OK
+Eth4/29     OK
+Eth4/30     OK
+Eth4/31     OK
+Eth4/32     OK
+Eth4/33     OK
+Eth4/34     OK
+Eth4/35     OK
+Eth4/36     OK
+Eth4/37     OK
+Eth4/38     OK
+Eth4/39     OK
+Eth4/40     OK
+Eth4/41     OK
+Eth4/42     OK
+Eth4/43     OK
+Eth4/44     OK
+Eth4/45     OK
+Eth4/46     OK
+Eth4/47     OK
+Eth4/48     OK
+switch#
++++ nx-osv-1: executing command 'show module' +++
+show module
+Mod  Ports  Module-Type                         Model              Status
+---  -----  ----------------------------------- ------------------ ----------
+1    0      NX-OSv Supervisor Module            N7K-SUP1           active *
+2    48     NX-OSv Ethernet Module              N7K-F248XP-25      ok
+3    48     NX-OSv Ethernet Module              N7K-F248XP-25      ok
+4    48     NX-OSv Ethernet Module              N7K-F248XP-25      ok
+
+Mod  Sw               Hw      World-Wide-Name(s) (WWN)
+---  ---------------  ------  --------------------------------------------------
+1    7.3(0)D1(1)      0.0     --                                                
+2    NA               0.0     --                                                
+3    NA               0.0     --                                                
+4    NA               0.0     --                                                
+
+
+Mod  MAC-Address(es)                         Serial-Num
+---  --------------------------------------  ----------
+1    5e-00-00-01-00-00 to 5e-00-00-01-07-ff  TM00010000B
+2    02-00-0c-00-02-00 to 02-00-0c-00-02-7f  TM00010000C
+3    02-00-0c-00-03-00 to 02-00-0c-00-03-7f  TM00010000D
+4    02-00-0c-00-04-00 to 02-00-0c-00-04-7f  TM00010000E
+
+* this terminal session
+switch#
++++ nx-osv-1: executing command 'dir' +++
+dir
+       4096    Feb 25 20:49:04 2016  .patch/
+      16384    Feb 25 20:44:49 2016  lost+found/
+       4096    Feb 26 10:11:16 2016  scripts/
+   33615360    Feb 11 13:19:49 2016  titanium-d1-kickstart.7.3.0.D1.1.bin
+  139230420    Feb 11 13:19:50 2016  titanium-d1.7.3.0.D1.1.bin
+       4096    Feb 25 20:49:07 2016  virtual-instance/
+
+Usage for bootflash://
+  369954816 bytes used
+ 2840006656 bytes free
+ 3209961472 bytes total
+switch#
++++ nx-osv-1: executing command 'show version' +++
+show version
+Cisco Nexus Operating System (NX-OS) Software
+TAC support: http://www.cisco.com/tac
+Documents: http://www.cisco.com/en/US/products/ps9372/tsd_products_support_series_home.html
+Copyright (c) 2002-2016, Cisco Systems, Inc. All rights reserved.
+The copyrights to certain works contained herein are owned by
+other third parties and are used and distributed under license.
+Some parts of this software are covered under the GNU Public
+License. A copy of the license is available at
+http://www.gnu.org/licenses/gpl.html.
+
+NX-OSv is a demo version of the Nexus Operating System
+
+Software
+  loader:    version N/A
+  kickstart: version 7.3(0)D1(1)
+  system:    version 7.3(0)D1(1)
+  kickstart image file is: bootflash:///titanium-d1-kickstart.7.3.0.D1.1.bin
+  kickstart compile time:  1/11/2016 16:00:00 [02/11/2016 10:30:12]
+  system image file is:    bootflash:///titanium-d1.7.3.0.D1.1.bin
+  system compile time:     1/11/2016 16:00:00 [02/11/2016 13:08:11]
+
+
+Hardware
+  cisco NX-OSv Chassis ("NX-OSv Supervisor Module")
+  QEMU Virtual CPU version 2.5 with 3064740 kB of memory.
+  Processor Board ID TM00010000B
+
+  Device name: nx-osv-1
+  bootflash:    3184776 kB
+
+Kernel uptime is 6 day(s), 1 hour(s), 12 minute(s), 30 second(s)
+
+
+plugin
+  Core Plugin, Ethernet Plugin
+
+Active Package(s)
+switch#
++++ nx-osv-1: executing command 'show install active' +++
+show install active
+Boot Images:
+        Kickstart Image: bootflash:/titanium-d1-kickstart.7.3.0.D1.1.bin
+        System Image: bootflash:/titanium-d1.7.3.0.D1.1.bin
+
+Active Packages:
+
+Active Packages on Module #2:
+
+
+Active Packages on Module #3:
+
+
+Active Packages on Module #4:
+switch#
++++ nx-osv-1: executing command 'show redundancy status' +++
+show redundancy status
+Redundancy mode
+---------------
+      administrative:   HA
+         operational:   None
+
+This supervisor (sup-1)
+-----------------------
+    Redundancy state:   Active
+    Supervisor state:   Active
+      Internal state:   Active with no standby
+
+Other supervisor (sup-1)
+------------------------
+    Redundancy state:   N/A
+
+    Supervisor state:   N/A
+      Internal state:   N/A
+
+System start time:          Fri Jan 18 20:43:38 2019
+
+System uptime:              6 days, 1 hours, 11 minutes, 20 seconds
+Kernel uptime:              6 days, 1 hours, 12 minutes, 31 seconds
+Active supervisor uptime:   6 days, 1 hours, 11 minutes, 20 seconds
+switch#
++++ nx-osv-1: executing command 'show boot' +++
+show boot
+Current Boot Variables:
+
+
+kickstart variable = bootflash:/titanium-d1-kickstart.7.3.0.D1.1.bin
+system variable = bootflash:/titanium-d1.7.3.0.D1.1.bin
+Boot POAP Disabled
+No module boot variable set
+
+Boot Variables on next reload:
+
+
+kickstart variable = bootflash:/titanium-d1-kickstart.7.3.0.D1.1.bin
+system variable = bootflash:/titanium-d1.7.3.0.D1.1.bin
+Boot POAP Disabled
+No module boot variable set
+switch#
++====================================================================================================================================================+
+| Commands for learning feature 'Platform'                                                                                                           |
++====================================================================================================================================================+
+| - Parsed commands                                                                                                                                  |
+|----------------------------------------------------------------------------------------------------------------------------------------------------|
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.ShowInventory'>                                                                                |
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.ShowVdcDetail'>                                                                                |
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.ShowVdcMembershipStatus'>                                                                      |
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.ShowModule'>                                                                                   |
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.Dir'>                                                                                          |
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.ShowVersion'>                                                                                  |
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.ShowInstallActive'>                                                                            |
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.ShowRedundancyStatus'>                                                                         |
+|   cmd: <class 'genie.libs.parser.nxos.show_platform.ShowBoot'>                                                                                     |
+|====================================================================================================================================================|

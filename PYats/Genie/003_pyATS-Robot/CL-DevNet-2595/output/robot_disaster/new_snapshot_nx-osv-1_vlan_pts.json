@@ -1,0 +1,194 @@
+{
+    "vlan": {
+        "nx-osv-1": {
+            "py/state": {
+                "callables": {},
+                "device": "nx-osv-1",
+                "context_manager": {},
+                "attributes": null,
+                "commands": null,
+                "connections": null,
+                "ops_schema": {
+                    "info": {
+                        "vlans": {
+                            "interface_vlan_enabled": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "vn_segment_vlan_based_enabled": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "Any  (str) *": {
+                                "vlan_id": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "shutdown": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "name": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "state": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "interfaces": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "vn_segment_id": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "mode": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                }
+                            },
+                            "configuration": {
+                                "Any  (str) *": {
+                                    "ip_igmp_snooping": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "diff_ignore": {
+                    "py/reduce": [
+                        {
+                            "py/type": "collections.deque"
+                        },
+                        {
+                            "py/tuple": []
+                        },
+                        null,
+                        {
+                            "py/tuple": [
+                                "maker",
+                                "callables",
+                                "device",
+                                "diff_ignore",
+                                "ops_schema"
+                            ]
+                        }
+                    ]
+                },
+                "info": {
+                    "vlans": {
+                        "interface_vlan_enabled": false,
+                        "1": {
+                            "vlan_id": "1",
+                            "name": "default",
+                            "state": "active",
+                            "interfaces": [
+                                "Ethernet4/1",
+                                "Ethernet4/2",
+                                "Ethernet4/3",
+                                "Ethernet4/4",
+                                "Ethernet4/5",
+                                "Ethernet4/6",
+                                "Ethernet4/7",
+                                "Ethernet4/8",
+                                "Ethernet4/9",
+                                "Ethernet4/10",
+                                "Ethernet4/11",
+                                "Ethernet4/12",
+                                "Ethernet4/13",
+                                "Ethernet4/14",
+                                "Ethernet4/15",
+                                "Ethernet4/16",
+                                "Ethernet4/17",
+                                "Ethernet4/18",
+                                "Ethernet4/19",
+                                "Ethernet4/20",
+                                "Ethernet4/21",
+                                "Ethernet4/22",
+                                "Ethernet4/23",
+                                "Ethernet4/24",
+                                "Ethernet4/25",
+                                "Ethernet4/26",
+                                "Ethernet4/27",
+                                "Ethernet4/28",
+                                "Ethernet4/29",
+                                "Ethernet4/30",
+                                "Ethernet4/31",
+                                "Ethernet4/32",
+                                "Ethernet4/33",
+                                "Ethernet4/34",
+                                "Ethernet4/35",
+                                "Ethernet4/36",
+                                "Ethernet4/37",
+                                "Ethernet4/38",
+                                "Ethernet4/39",
+                                "Ethernet4/40",
+                                "Ethernet4/41",
+                                "Ethernet4/42",
+                                "Ethernet4/43",
+                                "Ethernet4/44",
+                                "Ethernet4/45",
+                                "Ethernet4/46",
+                                "Ethernet4/47",
+                                "Ethernet4/48"
+                            ],
+                            "mode": "ce",
+                            "shutdown": false
+                        },
+                        "configuration": {
+                            "1": {
+                                "ip_igmp_snooping": "enabled"
+                            }
+                        },
+                        "vn_segment_vlan_based_enabled": false
+                    }
+                }
+            }
+        }
+    }
+}

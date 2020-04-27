@@ -1,0 +1,33 @@
+testbed:
+  name: CL-DEVWKS-2595-WORKSHOP-TESTBED
+devices:
+  nx-osv-1:
+    alias: 'uut'
+    type: 'Nexus'
+    os: 'nxos'
+    credentials:
+      default:
+        username: admin
+        password: Cisc0123
+      enable:
+        password: Cisc0123
+    connections:
+      console:
+        protocol: telnet
+        ip: "172.25.192.90"
+        port: 17002
+  csr1000v-1:
+    type: router
+    os: "iosxe"
+    alias: 'helper'
+    credentials:
+      default:
+        username: cisco
+        password: cisco
+      enable:
+        password: cisco
+    connections:
+      console:
+        protocol: telnet
+        ip: "172.25.192.90"
+        port: 17000

@@ -1,0 +1,365 @@
+{
+    "arp": {
+        "csr1000v-1": {
+            "py/state": {
+                "callables": {},
+                "device": "csr1000v-1",
+                "context_manager": {},
+                "attributes": null,
+                "commands": null,
+                "connections": null,
+                "ops_schema": {
+                    "info": {
+                        "max_entries": {
+                            "schema": "*",
+                            "schemaType": {
+                                "py/type": "builtins.str"
+                            },
+                            "missed": [],
+                            "path": []
+                        },
+                        "global_static_table": {
+                            "Any  (str) *": {
+                                "ip_address": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "mac_address": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "encap_type": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "interface": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "alias": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                }
+                            }
+                        },
+                        "statistics": {
+                            "in_requests_pkts": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "in_replies_pkts": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "in_gratuitous_pkts": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "out_requests_pkts": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "out_replies_pkts": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "out_gratuitous_pkts": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "in_drops": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "out_drops": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "in_total": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "out_total": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "all_dynamic_pkts": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "all_static_pkts": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "entries_total": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "incomplete_total": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            }
+                        },
+                        "interfaces": {
+                            "Any  (str) *": {
+                                "arp_dynamic_learning": {
+                                    "expire_time": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "proxy_enable": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "local_proxy_enable": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "statistics": {
+                                        "in_request_pkts": {
+                                            "schema": "*",
+                                            "schemaType": {
+                                                "py/type": "builtins.str"
+                                            },
+                                            "missed": [],
+                                            "path": []
+                                        },
+                                        "in_replies_pkts": {
+                                            "schema": "*",
+                                            "schemaType": {
+                                                "py/type": "builtins.str"
+                                            },
+                                            "missed": [],
+                                            "path": []
+                                        },
+                                        "in_gratuitous_pkts": {
+                                            "schema": "*",
+                                            "schemaType": {
+                                                "py/type": "builtins.str"
+                                            },
+                                            "missed": [],
+                                            "path": []
+                                        },
+                                        "out_requests_pkts": {
+                                            "schema": "*",
+                                            "schemaType": {
+                                                "py/type": "builtins.str"
+                                            },
+                                            "missed": [],
+                                            "path": []
+                                        },
+                                        "out_replies_pkts": {
+                                            "schema": "*",
+                                            "schemaType": {
+                                                "py/type": "builtins.str"
+                                            },
+                                            "missed": [],
+                                            "path": []
+                                        },
+                                        "out_gratuitous_pkts": {
+                                            "schema": "*",
+                                            "schemaType": {
+                                                "py/type": "builtins.str"
+                                            },
+                                            "missed": [],
+                                            "path": []
+                                        }
+                                    }
+                                },
+                                "ipv4": {
+                                    "neighbors": {
+                                        "Any  (str) *": {
+                                            "ip": {
+                                                "schema": "*",
+                                                "schemaType": {
+                                                    "py/type": "builtins.str"
+                                                },
+                                                "missed": [],
+                                                "path": []
+                                            },
+                                            "link_layer_address": {
+                                                "schema": "*",
+                                                "schemaType": {
+                                                    "py/type": "builtins.str"
+                                                },
+                                                "missed": [],
+                                                "path": []
+                                            },
+                                            "origin": {
+                                                "schema": "*",
+                                                "schemaType": {
+                                                    "py/type": "builtins.str"
+                                                },
+                                                "missed": [],
+                                                "path": []
+                                            },
+                                            "remaining_expire_time": {
+                                                "schema": "*",
+                                                "schemaType": {
+                                                    "py/type": "builtins.str"
+                                                },
+                                                "missed": [],
+                                                "path": []
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "diff_ignore": {
+                    "py/reduce": [
+                        {
+                            "py/type": "collections.deque"
+                        },
+                        {
+                            "py/tuple": []
+                        },
+                        null,
+                        {
+                            "py/tuple": [
+                                "maker",
+                                "callables",
+                                "device",
+                                "diff_ignore",
+                                "ops_schema"
+                            ]
+                        }
+                    ]
+                },
+                "info": {
+                    "interfaces": {
+                        "Loopback1": {
+                            "arp_dynamic_learning": {
+                                "local_proxy_enable": false,
+                                "proxy_enable": true
+                            }
+                        },
+                        "Loopback0": {
+                            "arp_dynamic_learning": {
+                                "local_proxy_enable": false,
+                                "proxy_enable": true
+                            }
+                        },
+                        "GigabitEthernet3": {
+                            "arp_dynamic_learning": {
+                                "local_proxy_enable": false,
+                                "proxy_enable": true
+                            }
+                        },
+                        "GigabitEthernet2": {
+                            "arp_dynamic_learning": {
+                                "local_proxy_enable": false,
+                                "proxy_enable": true
+                            }
+                        },
+                        "GigabitEthernet1": {
+                            "arp_dynamic_learning": {
+                                "local_proxy_enable": false,
+                                "proxy_enable": true
+                            }
+                        }
+                    },
+                    "statistics": {
+                        "incomplete_total": 0,
+                        "in_requests_pkts": 131635,
+                        "entries_total": 8,
+                        "in_replies_pkts": 70,
+                        "out_requests_pkts": 67,
+                        "out_replies_pkts": 789,
+                        "in_drops": 0
+                    }
+                }
+            }
+        }
+    }
+}

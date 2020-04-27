@@ -1,0 +1,10 @@
+--- ./output/learnt/interface_nxos_nx-osv-1_ops.txt
++++ ./output/disaster/interface_nxos_nx-osv-1_ops.txt
+info:
+ Ethernet2/1:
++  duplex_mode: auto
+-  duplex_mode: full
++  enabled: False
+-  enabled: True
++  oper_status: down
+-  oper_status: up
