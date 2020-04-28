@@ -1,0 +1,1080 @@
+{
+    "interface": {
+        "R3": {
+            "py/state": {
+                "callables": {},
+                "device": "R3",
+                "context_manager": {},
+                "attributes": null,
+                "commands": null,
+                "connections": null,
+                "ops_schema": {
+                    "info": {
+                        "Any  (str) *": {
+                            "description": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "type": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "oper_status": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "last_change": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "phys_address": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "mtu": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "enabled": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "vlan_id": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "access_vlan": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "trunk_vlans": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "mac_address": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "auto_negotiate": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "duplex_mode": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "port_speed": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "switchport_enable": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "switchport_mode": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "medium": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "delay": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "port_channel": {
+                                "port_channel_member": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "port_channel_int": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "port_channel_member_intfs": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                }
+                            },
+                            "flow_control": {
+                                "receive": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "send": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                }
+                            },
+                            "bandwidth": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "link_status": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "vrf": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "vrf_downstream": {
+                                "schema": "*",
+                                "schemaType": {
+                                    "py/type": "builtins.str"
+                                },
+                                "missed": [],
+                                "path": []
+                            },
+                            "accounting": {
+                                "Any  (str) *": {
+                                    "pkts_in": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "pkts_out": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "chars_in": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "chars_out": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    }
+                                }
+                            },
+                            "counters": {
+                                "rate": {
+                                    "load_interval": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "in_rate": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "in_rate_pkts": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "out_rate": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "out_rate_pkts": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    }
+                                },
+                                "in_pkts": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_octets": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_unicast_pkts": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_broadcast_pkts": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_multicast_pkts": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_discards": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_errors": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_unknown_protos": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_mac_control_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_mac_pause_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_oversize_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_jabber_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_fragment_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_8021q_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "in_crc_errors": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_pkts": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_octets": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_unicast_pkts": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_broadcast_pkts": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_multicast_pkts": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_discard": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_errors": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_mac_control_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_mac_pause_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "out_8021q_frames": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "last_clear": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                }
+                            },
+                            "encapsulation": {
+                                "enacapsulation": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "first_dot1q": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "second_dot1q": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                },
+                                "native_vlan": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                }
+                            },
+                            "ipv4": {
+                                "Any  (str) *": {
+                                    "ip": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "prefix_length": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "origin": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "sedondary": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "route_tag": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "secondary_vrf": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    }
+                                },
+                                "unnumbered": {
+                                    "interface_ref": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    }
+                                }
+                            },
+                            "ipv6": {
+                                "Any  (str) *": {
+                                    "ip": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "prefix_length": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "anycast": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "eui_64": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "route_tag": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "origin": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "status": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    },
+                                    "autoconf": {
+                                        "valid_lifetime": {
+                                            "schema": "*",
+                                            "schemaType": {
+                                                "py/type": "builtins.str"
+                                            },
+                                            "missed": [],
+                                            "path": []
+                                        },
+                                        "preferred_lifetime": {
+                                            "schema": "*",
+                                            "schemaType": {
+                                                "py/type": "builtins.str"
+                                            },
+                                            "missed": [],
+                                            "path": []
+                                        }
+                                    }
+                                },
+                                "unnumbered": {
+                                    "interface_ref": {
+                                        "schema": "*",
+                                        "schemaType": {
+                                            "py/type": "builtins.str"
+                                        },
+                                        "missed": [],
+                                        "path": []
+                                    }
+                                },
+                                "enabled": {
+                                    "schema": "*",
+                                    "schemaType": {
+                                        "py/type": "builtins.str"
+                                    },
+                                    "missed": [],
+                                    "path": []
+                                }
+                            }
+                        }
+                    }
+                },
+                "diff_ignore": {
+                    "py/reduce": [
+                        {
+                            "py/type": "collections.deque"
+                        },
+                        {
+                            "py/tuple": []
+                        },
+                        null,
+                        {
+                            "py/tuple": [
+                                "maker",
+                                "callables",
+                                "device",
+                                "diff_ignore",
+                                "ops_schema"
+                            ]
+                        }
+                    ]
+                },
+                "info": {
+                    "Loopback2": {
+                        "description": "Virtual LAN 2",
+                        "type": "Loopback",
+                        "oper_status": "up",
+                        "mtu": 1514,
+                        "enabled": true,
+                        "bandwidth": 8000000,
+                        "port_channel": {
+                            "port_channel_member": false
+                        },
+                        "delay": 5000,
+                        "ipv4": {
+                            "192.168.32.1/24": {
+                                "ip": "192.168.32.1",
+                                "prefix_length": "24",
+                                "secondary": false
+                            }
+                        },
+                        "counters": {
+                            "in_pkts": 0,
+                            "in_octets": 0,
+                            "in_broadcast_pkts": 0,
+                            "in_multicast_pkts": 0,
+                            "in_errors": 0,
+                            "in_crc_errors": 0,
+                            "out_pkts": 0,
+                            "out_octets": 0,
+                            "out_errors": 0,
+                            "last_clear": "never",
+                            "rate": {
+                                "load_interval": 300,
+                                "in_rate": 0,
+                                "in_rate_pkts": 0,
+                                "out_rate": 0,
+                                "out_rate_pkts": 0
+                            }
+                        },
+                        "encapsulation": {
+                            "encapsulation": "loopback"
+                        },
+                        "switchport_enable": false
+                    },
+                    "Loopback1": {
+                        "description": "Virtual LAN 1",
+                        "type": "Loopback",
+                        "oper_status": "up",
+                        "mtu": 1514,
+                        "enabled": true,
+                        "bandwidth": 8000000,
+                        "port_channel": {
+                            "port_channel_member": false
+                        },
+                        "delay": 5000,
+                        "ipv4": {
+                            "192.168.3.1/24": {
+                                "ip": "192.168.3.1",
+                                "prefix_length": "24",
+                                "secondary": false
+                            }
+                        },
+                        "counters": {
+                            "in_pkts": 0,
+                            "in_octets": 0,
+                            "in_broadcast_pkts": 0,
+                            "in_multicast_pkts": 0,
+                            "in_errors": 0,
+                            "in_crc_errors": 0,
+                            "out_pkts": 0,
+                            "out_octets": 0,
+                            "out_errors": 0,
+                            "last_clear": "never",
+                            "rate": {
+                                "load_interval": 300,
+                                "in_rate": 0,
+                                "in_rate_pkts": 0,
+                                "out_rate": 0,
+                                "out_rate_pkts": 0
+                            }
+                        },
+                        "encapsulation": {
+                            "encapsulation": "loopback"
+                        },
+                        "switchport_enable": false
+                    },
+                    "FastEthernet0/1": {
+                        "description": "Management Interface to R5",
+                        "type": "i82543 ",
+                        "oper_status": "up",
+                        "mtu": 1500,
+                        "enabled": true,
+                        "bandwidth": 100000,
+                        "mac_address": "(Livengood), address is ca03.180c.0006 (bia ca03.180c.0006)",
+                        "port_channel": {
+                            "port_channel_member": false
+                        },
+                        "delay": 100,
+                        "accounting": {
+                            "other": {
+                                "pkts_in": 0,
+                                "chars_in": 0,
+                                "pkts_out": 382,
+                                "chars_out": 22920
+                            },
+                            "dec mop": {
+                                "pkts_in": 6,
+                                "chars_in": 462,
+                                "pkts_out": 7,
+                                "chars_out": 539
+                            },
+                            "arp": {
+                                "pkts_in": 6,
+                                "chars_in": 360,
+                                "pkts_out": 4,
+                                "chars_out": 240
+                            },
+                            "cdp": {
+                                "pkts_in": 70,
+                                "chars_in": 27887,
+                                "pkts_out": 73,
+                                "chars_out": 29400
+                            }
+                        },
+                        "ipv4": {
+                            "10.1.1.3/24": {
+                                "ip": "10.1.1.3",
+                                "prefix_length": "24",
+                                "secondary": false
+                            }
+                        },
+                        "counters": {
+                            "in_pkts": 425,
+                            "in_octets": 49289,
+                            "in_broadcast_pkts": 0,
+                            "in_multicast_pkts": 82,
+                            "in_errors": 0,
+                            "in_crc_errors": 0,
+                            "out_pkts": 466,
+                            "out_octets": 53099,
+                            "out_errors": 0,
+                            "last_clear": "never",
+                            "rate": {
+                                "load_interval": 300,
+                                "in_rate": 0,
+                                "in_rate_pkts": 0,
+                                "out_rate": 0,
+                                "out_rate_pkts": 0
+                            }
+                        },
+                        "encapsulation": {
+                            "encapsulation": "arpa"
+                        },
+                        "switchport_enable": false
+                    },
+                    "FastEthernet0/0": {
+                        "description": "Data Interface",
+                        "type": "i82543 ",
+                        "oper_status": "up",
+                        "mtu": 1500,
+                        "enabled": true,
+                        "bandwidth": 100000,
+                        "mac_address": "(Livengood), address is ca03.180c.0008 (bia ca03.180c.0008)",
+                        "port_channel": {
+                            "port_channel_member": false
+                        },
+                        "delay": 100,
+                        "accounting": {
+                            "other": {
+                                "pkts_in": 36,
+                                "chars_in": 3679,
+                                "pkts_out": 382,
+                                "chars_out": 22920
+                            },
+                            "ip": {
+                                "pkts_in": 2199,
+                                "chars_in": 254022,
+                                "pkts_out": 5125,
+                                "chars_out": 861772
+                            },
+                            "dec mop": {
+                                "pkts_in": 7,
+                                "chars_in": 539,
+                                "pkts_out": 7,
+                                "chars_out": 539
+                            },
+                            "arp": {
+                                "pkts_in": 8,
+                                "chars_in": 480,
+                                "pkts_out": 5,
+                                "chars_out": 300
+                            },
+                            "cdp": {
+                                "pkts_in": 73,
+                                "chars_in": 29400,
+                                "pkts_out": 73,
+                                "chars_out": 29400
+                            }
+                        },
+                        "ipv4": {
+                            "192.168.100.254/24": {
+                                "ip": "192.168.100.254",
+                                "prefix_length": "24",
+                                "secondary": false
+                            }
+                        },
+                        "counters": {
+                            "in_pkts": 2319,
+                            "in_octets": 287818,
+                            "in_broadcast_pkts": 13,
+                            "in_multicast_pkts": 633,
+                            "in_errors": 0,
+                            "in_crc_errors": 0,
+                            "out_pkts": 5551,
+                            "out_octets": 904039,
+                            "out_errors": 0,
+                            "last_clear": "never",
+                            "rate": {
+                                "load_interval": 300,
+                                "in_rate": 1000,
+                                "in_rate_pkts": 1,
+                                "out_rate": 1000,
+                                "out_rate_pkts": 1
+                            }
+                        },
+                        "encapsulation": {
+                            "encapsulation": "arpa"
+                        },
+                        "switchport_enable": false
+                    },
+                    "FastEthernet1/1": {
+                        "type": "i82543 ",
+                        "oper_status": "up",
+                        "mtu": 1500,
+                        "enabled": true,
+                        "bandwidth": 100000,
+                        "mac_address": "(Livengood), address is ca03.180c.001d (bia ca03.180c.001d)",
+                        "port_channel": {
+                            "port_channel_member": false
+                        },
+                        "delay": 100,
+                        "accounting": {
+                            "other": {
+                                "pkts_in": 0,
+                                "chars_in": 0,
+                                "pkts_out": 382,
+                                "chars_out": 22920
+                            },
+                            "dec mop": {
+                                "pkts_in": 0,
+                                "chars_in": 0,
+                                "pkts_out": 7,
+                                "chars_out": 539
+                            },
+                            "cdp": {
+                                "pkts_in": 0,
+                                "chars_in": 0,
+                                "pkts_out": 72,
+                                "chars_out": 29336
+                            }
+                        },
+                        "counters": {
+                            "in_pkts": 0,
+                            "in_octets": 0,
+                            "in_broadcast_pkts": 0,
+                            "in_multicast_pkts": 0,
+                            "in_errors": 0,
+                            "in_crc_errors": 0,
+                            "out_pkts": 461,
+                            "out_octets": 52795,
+                            "out_errors": 0,
+                            "last_clear": "never",
+                            "rate": {
+                                "load_interval": 300,
+                                "in_rate": 0,
+                                "in_rate_pkts": 0,
+                                "out_rate": 0,
+                                "out_rate_pkts": 0
+                            }
+                        },
+                        "encapsulation": {
+                            "encapsulation": "arpa"
+                        },
+                        "switchport_enable": false
+                    },
+                    "FastEthernet1/0": {
+                        "type": "i82543 ",
+                        "oper_status": "up",
+                        "mtu": 1500,
+                        "enabled": true,
+                        "bandwidth": 100000,
+                        "mac_address": "(Livengood), address is ca03.180c.001c (bia ca03.180c.001c)",
+                        "port_channel": {
+                            "port_channel_member": false
+                        },
+                        "delay": 100,
+                        "accounting": {
+                            "other": {
+                                "pkts_in": 0,
+                                "chars_in": 0,
+                                "pkts_out": 382,
+                                "chars_out": 22920
+                            },
+                            "dec mop": {
+                                "pkts_in": 0,
+                                "chars_in": 0,
+                                "pkts_out": 7,
+                                "chars_out": 539
+                            },
+                            "cdp": {
+                                "pkts_in": 0,
+                                "chars_in": 0,
+                                "pkts_out": 74,
+                                "chars_out": 30159
+                            }
+                        },
+                        "counters": {
+                            "in_pkts": 0,
+                            "in_octets": 0,
+                            "in_broadcast_pkts": 0,
+                            "in_multicast_pkts": 0,
+                            "in_errors": 0,
+                            "in_crc_errors": 0,
+                            "out_pkts": 463,
+                            "out_octets": 53618,
+                            "out_errors": 0,
+                            "last_clear": "never",
+                            "rate": {
+                                "load_interval": 300,
+                                "in_rate": 0,
+                                "in_rate_pkts": 0,
+                                "out_rate": 0,
+                                "out_rate_pkts": 0
+                            }
+                        },
+                        "encapsulation": {
+                            "encapsulation": "arpa"
+                        },
+                        "switchport_enable": false
+                    }
+                }
+            }
+        }
+    }
+}
