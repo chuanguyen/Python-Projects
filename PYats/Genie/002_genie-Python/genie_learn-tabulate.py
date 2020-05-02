@@ -22,8 +22,6 @@ for device in testbed.devices:
         else:
            devices_info[dev.name].append((intf_name, details['enabled'],"",details['bandwidth'],details['delay']))
 
-    # devices_info.append((dev.name,platform_info['os'],platform_info['version']))
-
 print('\n' + '-'*80)
 
 for hostname,details in devices_info.items():
