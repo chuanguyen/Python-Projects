@@ -19,8 +19,11 @@ Connect
     use genie testbed "${testbed}"
 
     # Connect to both device
-    connect to device "nx-osv-1"
-    connect to device "csr1000v-1"
+    # connect to device "nx-osv-1"
+    # connect to device "csr1000v-1"
+
+    # Connect to all devices
+    connect to all devices
 
 Profile the devices
     Profile the system for "bgp;config;interface;platform;ospf;arp;vrf;vlan" on devices "nx-osv-1;csr1000v-1" as "output/robot_initial/good_snapshots"
