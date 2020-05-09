@@ -1,6 +1,24 @@
+---
 testbed:
   name: My-Testbed
 devices:
+  R1:
+    os: ios
+    platform: 7206VXR
+    type: router
+    connections:
+      mgmt:
+        ip: 192.168.100.251
+        protocol: ssh
+      backup:
+        ip: 192.168.100.251
+        protocol: telnet
+    credentials:
+      default:
+        password: '%ENV{PYATS_PASSWORD}'
+        username: '%ENV{PYATS_USERNAME}'
+      enable:
+        password: '%ENV{PYATS_PASSWORD}'
   R3:
     os: ios
     platform: 7206VXR

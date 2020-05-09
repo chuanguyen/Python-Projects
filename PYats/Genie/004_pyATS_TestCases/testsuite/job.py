@@ -10,7 +10,7 @@ def main(runtime):
 
     # compute relative location of this file
     pwd = os.path.dirname(__file__)
-    aeTestFileName = "aeTest.py"
+    aeTestFileName = "aeTest-interfaces.py"
     testFilePath = os.path.join(pwd, aeTestFileName)
 
     # run this script as a task under this job
