@@ -9,6 +9,20 @@ testbed = Genie.init("testbed.yaml")
 ### Testing
 
 
+### Retrieve specific keys from Genie model
+#
+# baseline = {}
+#
+# for hostname,dev in testbed.devices.items():
+#     dev.connect(via='mgmt')
+#     baseline[hostname] = {}
+#     baseline[hostname]["interface"] = dev.learn("interface", attributes=['info[(.*)][oper_status]'])
+#
+# for hostname in baseline:
+#     print(hostname)
+#     pprint.pprint(baseline[hostname]["interface"].info)
+
+
 
 # for device in testbed.devices:
 #     dev = testbed.devices[device]
