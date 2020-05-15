@@ -1,11 +1,31 @@
 devices:
+  R1:
+    os: ios
+    platform: 7206VXR
+    type: router
+    connections:
+      mgmt:
+        ip: 192.168.100.201
+        protocol: ssh
+      backup:
+        ip: 192.168.100.201
+        protocol: telnet
+    credentials:
+      default:
+        password: '%ENV{PYATS_PASSWORD}'
+        username: '%ENV{PYATS_USERNAME}'
+      enable:
+        password: '%ENV{PYATS_PASSWORD}'
   R3:
+    os: ios
+    platform: 7206VXR
+    type: router
     connections:
       mgmt:
-        ip: 192.168.100.254
+        ip: 192.168.100.203
         protocol: ssh
       backup:
-        ip: 192.168.100.254
+        ip: 192.168.100.203
         protocol: telnet
     credentials:
       default:
@@ -13,16 +33,16 @@ devices:
         username: '%ENV{PYATS_USERNAME}'
       enable:
         password: '%ENV{PYATS_PASSWORD}'
-    os: ios
-    platform: 7206VXR
-    type: router
   R5:
+    os: ios
+    platform: 7206VXR
+    type: router
     connections:
       mgmt:
-        ip: 192.168.100.253
+        ip: 192.168.100.205
         protocol: ssh
       backup:
-        ip: 192.168.100.253
+        ip: 192.168.100.205
         protocol: telnet
     credentials:
       default:
@@ -30,6 +50,3 @@ devices:
         username: '%ENV{PYATS_USERNAME}'
       enable:
         password: '%ENV{PYATS_PASSWORD}'
-    os: ios
-    platform: 7206VXR
-    type: router

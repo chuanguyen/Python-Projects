@@ -6,6 +6,27 @@ from tabulate import tabulate
 from genie.conf import Genie
 
 testbed = Genie.init("testbed.yaml")
+
+dev = testbed.devices['R1']
+dev.connect(via='mgmt')
+output = dev.learn('hsrp')
+pprint.pprint(output.info)
+
+mega_tabular = {}
+failed_dict = {}
+
+for intf_name,hsrp_details in output.info.items():
+    mega_tabular[dev.name] = []
+    tr = []
+
+    for hsrp_group,hsrp_group_config in hsrp_details['address_family']['ipv4']['version'][2]['groups'].items():
+        print(hsrp_group)
+        print(hsrp_group_config)
+        print(hsrp_details['interface'])
+
+
+
+
 # devices_info = {}
 #
 # for device in testbed.devices:
