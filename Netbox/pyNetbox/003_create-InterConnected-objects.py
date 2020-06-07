@@ -77,8 +77,8 @@ try:
 
     # Print summary info for each created device
     for new_dev in new_devs:
-        # Retrieve interfaces associated w/ created device
-        nb_interfaces = nb.dcim.interfaces.filter(device=new_dev.name)
+        # Retrieve specific interface associated w/ created device
+        nb_interfaces = nb.dcim.interfaces.filter(device=new_dev.name,name="FastEthernet0/0")
 
         # Create dict to store attributes for device's primary IP
         primary_ip_addr_dict = dict(
