@@ -22,6 +22,7 @@ nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
 nb_source_file = "nb_devices.csv"
 
 nb_all_devices = list()
+nb_all_devices_primaryIPs = dict()
 
 # Stores non-existent NetBox objects defined in CSV
 nb_non_existent_count = 0
@@ -34,36 +35,51 @@ nb_non_existent_objects['rack'] = list()
 fmt = "{:<15}{:<25}{:<15}"
 header = ("Model","Name","Status")
 
-with open(nb_source_file) as f:
-  reader = csv.DictReader(f)
-  for row in reader:
-      ndev_site = nb.dcim.sites.get(slug=row['site'])
-      ndev_dtype = nb.dcim.device_types.get(slug=row['device_type'])
-      ndev_drole = nb.dcim.device_roles.get(slug=row['device_role'])
-      ndev_rack = nb.dcim.racks.get(q=row['rack'])
+try:
+    with open(nb_source_file) as f:
+      reader = csv.DictReader(f)
+      for row in reader:
+          ndev_site = nb.dcim.sites.get(slug=row['site'])
+          ndev_dtype = nb.dcim.device_types.get(slug=row['device_type'])
+          ndev_drole = nb.dcim.device_roles.get(slug=row['device_role'])
+          ndev_rack = nb.dcim.racks.get(q=row['rack'])
 
-      # Verifies whether DCIM object exists
-      if (not ndev_site):
-          nb_non_existent_objects['site'].append(row['site'])
-          nb_non_existent_count += 1
-      if (not ndev_dtype):
-          nb_non_existent_objects['device_type'].append(row['device_type'])
-          nb_non_existent_count += 1
-      if (not ndev_drole):
-          nb_non_existent_objects['device_role'].append(row['device_type'])
-          nb_non_existent_count += 1
-      if (not ndev_rack):
-          nb_non_existent_objects['rack'].append(row['rack'])
-          nb_non_existent_count += 1
+          # Verifies whether DCIM object exists
+          if (not ndev_site):
+              nb_non_existent_objects['site'].append(row['site'])
+              nb_non_existent_count += 1
+          if (not ndev_dtype):
+              nb_non_existent_objects['device_type'].append(row['device_type'])
+              nb_non_existent_count += 1
+          if (not ndev_drole):
+              nb_non_existent_objects['device_role'].append(row['device_type'])
+              nb_non_existent_count += 1
+          if (not ndev_rack):
+              nb_non_existent_objects['rack'].append(row['rack'])
+              nb_non_existent_count += 1
 
-      # nb_all_devices.append(
-      #   dict(
-      #       name=row['name'],
-      #       site=ndev_site,
-      #       device_type=ndev_dtype.id,
-      #       device_role=ndev_drole.id,
-      #   )
-      # )
+          # Generates dict of values for PyNetbox to create object
+          nb_all_devices.append(
+            dict(
+                name=row['name'],
+                site=ndev_site,
+                device_type=ndev_dtype.id,
+                device_role=ndev_drole.id,
+                rack=ndev_rack.id,
+                face=row['face'],
+                position=row['position'],
+                serial=row['serial'],
+                asset_tag=row['asset_tag'],
+                status=row['status'],
+            )
+          )
+
+          nb_all_devices_primaryIPs[row['name']] = row['primary_ipv4']
+
+except FileNotFoundError as e:
+    print(e)
+except pynetbox.core.query.RequestError as e:
+    print(e.error)
 
 ### Generates table of non-existent NetBox objects defined in CSV
 if (nb_non_existent_count > 0):
@@ -80,6 +96,9 @@ if (nb_non_existent_count > 0):
                     "Non-Existent"
                 )
             )
+
+pprint.pprint(nb_all_devices)
+pprint.pprint(nb_all_devices_primaryIPs)
 
 
 
