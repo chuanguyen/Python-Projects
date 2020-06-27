@@ -1,3 +1,3 @@
 name,site,device_type,device_role,rack,face,position,serial,asset_tag,status,management_intf,primary_ipv4
-r2,hq1,7200-series,network_access,Dc1-2-5,Front,U5,XXXX-YYYY-ZZZZ,000-0015,active,FastEthernet0/0,192.168.100.202/24
-r4,hq1,7200-series,network_access,Dc1-2-5,Front,U4,XXXX-YYYY-ZZZZ,000-0016,active,FastEthernet0/0,192.168.100.204/24
+r2,hq1,7200-series,network_access,Dc1-2-5,0,5,XXXX-YYYY-ZZZZ,000-0015,active,FastEthernet0/0,192.168.100.202/24
+r4,hq1,7200-series,network_access,Dc1-2-5,0,4,XXXX-YYYY-ZZZZ,000-0016,active,FastEthernet0/0,192.168.100.204/24
