@@ -1,0 +1,43 @@
+---
+
+dcim:
+  regions:
+    - name: "Burnaby"
+      slug: "Burnaby"
+  site:
+    - name: "hq1"
+      slug: "hq1"
+      status: 1
+      region: "burnaby"
+      asn: 100
+      time_zone: "America/Vancouver"
+  racks:
+    - name: "dc1-2-5"
+      site: "hq1"
+      group: "core-routing"
+      status: "active" # May need to be integer, so check
+      role: "networking"
+      serial: "XXXX-YYYY-ZZZZ"
+      asset_tag: "000-0000"
+      type: "4-post-cabinet" # May need to be integer
+      width: 19
+      u_height: 42
+      outer_width: 39
+      outer_depth: 25
+      outer_unit: "in"
+  rack_roles:
+    -
+
+ipam:
+  rirs:
+    -
+  aggregates:
+    -
+  prefixes:
+    -
+  prefix_vlan_roles:
+    -
+  vlans:
+    -
+  vlan_groups:
+    -
