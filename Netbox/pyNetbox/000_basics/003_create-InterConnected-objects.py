@@ -28,8 +28,8 @@ ndev_primaryIPs = dict()
 
 ndev_site = nb.dcim.sites.get(slug="hq1")
 ndev_dtype = nb.dcim.device_types.get(slug="7200-series")
-ndev_drole_spine = nb.dcim.device_roles.get(slug="network-core")
-ndev_drole_leaf = nb.dcim.device_roles.get(slug="network-access")
+ndev_drole_spine = nb.dcim.device_roles.get(slug="network_core")
+ndev_drole_leaf = nb.dcim.device_roles.get(slug="network_access")
 
 # Generate spine attributes
 
@@ -75,7 +75,6 @@ try:
     header = ("Device", "Dev Role", "Dev Type", "Site", "Management Interface", "IP")
     print(fmt.format(*header))
 
-    # Print summary info for each created device
     for new_dev in new_devs:
         # Retrieve specific interface associated w/ created device
         nb_interfaces = nb.dcim.interfaces.filter(device=new_dev.name,name="FastEthernet0/0")
@@ -91,6 +90,7 @@ try:
         # Create primary IP and assign to device's first interface
         new_primary_ip = nb.ipam.ip_addresses.create(primary_ip_addr_dict)
 
+        # Print summary info for each created device
         print(
             fmt.format(
                 new_dev.name,
