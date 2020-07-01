@@ -3,14 +3,18 @@
 dcim:
   regions:
     - name: "Burnaby"
-      slug: "Burnaby"
-  site:
+      slug: "burnaby"
+  sites:
     - name: "hq1"
       slug: "hq1"
       status: 1
       region: "burnaby"
       asn: 100
       time_zone: "America/Vancouver"
+  rack_roles:
+    -
+  rack_group:
+    - 
   racks:
     - name: "dc1-2-5"
       site: "hq1"
@@ -25,8 +29,6 @@ dcim:
       outer_width: 39
       outer_depth: 25
       outer_unit: "in"
-  rack_roles:
-    -
 
 ipam:
   rirs:
@@ -36,6 +38,8 @@ ipam:
   prefixes:
     -
   prefix_vlan_roles:
+    -
+  ip_addresses:
     -
   vlans:
     -
