@@ -21,13 +21,19 @@ nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
 ### Read from CSV for NetBox device data
 nb_source_file = "nb_devices.csv"
 
+# Stores devices and attributes that will be created
 nb_all_devices = list()
 nb_all_devices_primaryIPs = dict()
+nb_all_devices_mgmt_intf = dict()
 
 # Stores IPs for duplicate checking
 all_IPs = list()
 
-# Stores non-existent NetBox objects defined in CSV
+# Stores all already created NetBox objects
+nb_existing_devices_count = 0
+nb_existing_devices = list()
+
+# Stores non-existent NetBox objects
 nb_non_existent_count = 0
 nb_non_existent_objects = dict()
 nb_non_existent_objects['site'] = list()
@@ -80,6 +86,7 @@ try:
 
               nb_all_devices_primaryIPs[row['name']] = row['primary_ipv4']
               all_IPs.append(row['primary_ipv4'])
+              nb_all_devices_mgmt_intf[row['name']] = row['mgmt_intf']
 
 except FileNotFoundError as e:
     print(e)
@@ -112,11 +119,6 @@ if ( (nb_non_existent_count > 0) or not(flag) ):
             )
 else:
     try:
-        # Retrieve device object by name and delete
-        for dev in nb_all_devices:
-            dev = nb.dcim.devices.get(name=dev['name'])
-            dev.delete()
-
         # Add devices to NetBox and store resulting object in "created_devs"
         nb_created_devices = nb.dcim.devices.create(nb_all_devices)
 
@@ -129,7 +131,7 @@ else:
 
         for created_dev in nb_created_devices:
             # Retrieve specific interface associated w/ created device
-            nb_primary_interface = nb.dcim.interfaces.filter(device=created_dev.name,name="FastEthernet0/0")
+            nb_primary_interface = nb.dcim.interfaces.filter(device=created_dev.name,name=nb_all_devices_mgmt_intf[created_dev.name])
 
             # Create dict to store attributes for device's primary IP
             primary_ip_addr_dict = dict(
@@ -155,7 +157,7 @@ else:
                     created_dev.device_type.model,
                     created_dev.site.name,
                     created_dev.rack.name,
-                    nb_primary_interface[0].name,
+                    nb_all_devices_mgmt_intf[created_dev.name],
                     new_primary_ip.address
                 )
             )
