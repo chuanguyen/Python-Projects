@@ -8,22 +8,27 @@ import pynetbox
 import csv
 import yaml
 
-def retrieve_nb_id(model, searchTerm):
+def retrieve_nb_id(app, model, searchTerm):
     # Searches for a NetBox object of a given model based on a search term and returns the ID
-    nb_id = None
+    nb_obj_id = None
     nb_obj = None
 
-    if (model == "regions"):
-        nb_obj = nb.dcim.regions.get(slug=searchTerm)
-    elif (model == "sites"):
-        nb_obj = nb.dcim.sites.get(slug=searchTerm)
-    elif (model == "racks"):
-        nb_obj = nb.dcim.racks.get(name=searchTerm)
+    if (app == "dcim"):
+        if (model == "regions"):
+            nb_obj = nb.dcim.regions.get(name=searchTerm)
+        elif (model == "sites"):
+            nb_obj = nb.dcim.sites.get(name=searchTerm)
+        elif (model == "rack_roles"):
+            nb_obj = nb.dcim.rack_roles.get(name=searchTerm)
+        elif (model == "rack_groups"):
+            nb_obj = nb.dcim.rack_groups.get(name=searchTerm)
+        elif (model == "racks"):
+            nb_obj = nb.dcim.racks.get(name=searchTerm)
 
     if (nb_obj):
-        nb_id = nb_obj.id
+        nb_obj_id = nb_obj.id
 
-    return nb_id
+    return nb_obj_id
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -45,24 +50,22 @@ except NameError as e:
     print(e)
 
 # Stores non-existent NetBox objects defined in CSV
-nb_non_existent_count = 0
-nb_non_existent_objects = dict()
+created_nb_count = 0
+created_nb_objects = dict()
 
 # DCIM App & models
-nb_non_existent_objects['dcim'] = dict()
-nb_non_existent_objects['dcim']['regions'] = list()
-nb_non_existent_objects['dcim']['site'] = list()
-nb_non_existent_objects['dcim']['racks'] = list()
-nb_non_existent_objects['dcim']['rack_roles'] = list()
+created_nb_objects['dcim'] = dict()
+created_nb_objects['dcim'] = list()
+
 
 # IPAM App & models
-nb_non_existent_objects['ipam'] = dict()
-nb_non_existent_objects['ipam']['rirs'] = list()
-nb_non_existent_objects['ipam']['aggregates'] = list()
-nb_non_existent_objects['ipam']['prefixes'] = list()
-nb_non_existent_objects['ipam']['prefix_vlan_roles'] = list()
-nb_non_existent_objects['ipam']['vlans'] = list()
-nb_non_existent_objects['ipam']['vlan_groups'] = list()
+created_nb_objects['ipam'] = dict()
+created_nb_objects['ipam']['rirs'] = list()
+created_nb_objects['ipam']['aggregates'] = list()
+created_nb_objects['ipam']['prefixes'] = list()
+created_nb_objects['ipam']['prefix_vlan_roles'] = list()
+created_nb_objects['ipam']['vlans'] = list()
+created_nb_objects['ipam']['vlan_groups'] = list()
 
 fmt = "{:<15}{:<25}{:<15}"
 header = ("Model","Name","Status")
@@ -72,25 +75,73 @@ for model,nb_obj_dicts in nb_base_data['dcim'].items():
     for nb_obj_dict in nb_obj_dicts:
         if (nb_obj_dict):
             nb_obj = None
+
             try:
                 if (model == "regions"):
-                    # Retrieves object, and only attempts to create if no value is returned
-                    nb_obj = nb.dcim.regions.get(slug=nb_obj_dict['slug'])
+                    # Attempts to retrieves object, and creates if object doesn't exist
+                    nb_obj = nb.dcim.regions.get(name=nb_obj_dict['name'])
                     if (not nb_obj):
                         nb.dcim.regions.create(nb_obj_dict)
                 elif (model == "sites"):
-                    nb_obj = nb.dcim.sites.get(slug=nb_obj_dict['slug'])
+                    nb_obj = nb.dcim.sites.get(name=nb_obj_dict['name'])
                     if (not nb_obj):
+                        # Replacing fields that require NetBox IDs as values
+                        nb_obj_dict['region'] = retrieve_nb_id("dcim","regions",nb_obj_dict['region'])
+
                         nb.dcim.sites.create(nb_obj_dict)
+                elif (model == "rack_roles"):
+                    nb_obj = nb.dcim.rack_roles.get(name=nb_obj_dict['name'])
+                    if (not nb_obj):
+                        nb.dcim.rack_roles.create(nb_obj_dict)
+                elif (model == "rack_groups"):
+                    nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+
+                    nb_obj = nb.dcim.rack_groups.get(name=nb_obj_dict['name'])
+                    if (not nb_obj):
+                        nb.dcim.rack_groups.create(nb_obj_dict)
                 elif (model == "racks"):
+                    nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+                    nb_obj_dict['group'] = retrieve_nb_id("dcim","rack_groups",nb_obj_dict['group'])
+                    nb_obj_dict['role'] = retrieve_nb_id("dcim","rack_roles",nb_obj_dict['role'])
+
                     nb_obj = nb.dcim.racks.get(name=nb_obj_dict['name'])
                     if (not nb_obj):
                         nb.dcim.racks.create(nb_obj_dict)
+
+                if (not nb_obj):
+                    created_nb_count += 1
+
+                    created_nb_objects['dcim'].append(
+                        dict(
+                            app="dcim",
+                            model=model,
+                            name=nb_obj_dict["name"],
+                        )
+                    )
+
             except pynetbox.core.query.RequestError as e:
                 print(e.error)
 
+if (created_nb_count > 0):
+    print(12*"*"," The following NetBox DCIM objects have been created ",12*"*")
+    print()
 
+    # Formatting and header for output
+    fmt = "{:<15}{:<15}{:<20}"
+    header = ("App", "Model", "Name")
+    print(fmt.format(*header))
 
+    for obj in created_nb_objects['dcim']:
+        print(
+            fmt.format(
+                obj['app'],
+                obj['model'],
+                obj['name']
+            )
+        )
+else:
+    print(12*"*"," No NetBox objects were created ",12*"*")
+    print("\nAll defined objects already exist")
 
 # ndev_site = nb.dcim.sites.get(slug=row['site'])
 # ndev_dtype = nb.dcim.device_types.get(slug=row['device_type'])
@@ -99,22 +150,22 @@ for model,nb_obj_dicts in nb_base_data['dcim'].items():
 #
 # # Verifies whether DCIM object exists
 # if (not ndev_site):
-#   nb_non_existent_objects['site'].append(row['site'])
-#   nb_non_existent_count += 1
+#   created_nb_objects['site'].append(row['site'])
+#   created_nb_count += 1
 # if (not ndev_dtype):
-#   nb_non_existent_objects['device_type'].append(row['device_type'])
-#   nb_non_existent_count += 1
+#   created_nb_objects['device_type'].append(row['device_type'])
+#   created_nb_count += 1
 # if (not ndev_drole):
-#   nb_non_existent_objects['device_role'].append(row['device_role'])
-#   nb_non_existent_count += 1
+#   created_nb_objects['device_role'].append(row['device_role'])
+#   created_nb_count += 1
 # if (not ndev_rack):
-#   nb_non_existent_objects['rack'].append(row['rack'])
-#   nb_non_existent_count += 1
+#   created_nb_objects['rack'].append(row['rack'])
+#   created_nb_count += 1
 
 
 
 # ### Generates table of non-existent NetBox objects defined in CSV
-# if ( (nb_non_existent_count > 0) or not(flag) ):
+# if ( (created_nb_count > 0) or not(flag) ):
 #     # Print results of verifying duplicated IPs
 #     if(not flag):
 #         print()
@@ -126,7 +177,7 @@ for model,nb_obj_dicts in nb_base_data['dcim'].items():
 #     print(fmt.format(*header))
 #
 #     # Print summary of non-existent objects in CSV
-#     for model,nb_objects in nb_non_existent_objects.items():
+#     for model,nb_objects in created_nb_objects.items():
 #         for nb_object in nb_objects:
 #             print(
 #                 fmt.format(
