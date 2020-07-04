@@ -4,6 +4,9 @@ dcim:
   regions:
     - name: "Burnaby"
       slug: "burnaby"
+      tags:
+    - name: "Vancouver"
+      slug: "vancouver"
   sites:
     - name: "hq1"
       slug: "hq1"
@@ -11,10 +14,34 @@ dcim:
       region: "burnaby"
       asn: 100
       time_zone: "America/Vancouver"
+    - name: "hq2"
+      slug: "hq2"
+      status: 1
+      region: "vancouver"
+      asn: 100
+      time_zone: "America/Vancouver"
+      tags:
+        - "Second-Wave"
   rack_roles:
-    -
-  rack_group:
-    - 
+    - name: "networking"
+      slug: "networking"
+      color: "03a9f4"
+      description: ""
+    - name: "computing"
+      slug: "computing"
+      color: "ff2424"
+      description: "Testing creation"
+      tags:
+        - "Second-Wave"
+  rack_groups:
+    - name: "core-routing"
+      slug: "core-routing"
+      site: "hq1"
+      description: ""
+    - name: "prod-computing"
+      slug: "prod-computing"
+      site: "hq1"
+      description: "Production"
   racks:
     - name: "dc1-2-5"
       site: "hq1"
@@ -29,6 +56,22 @@ dcim:
       outer_width: 39
       outer_depth: 25
       outer_unit: "in"
+    - name: "dc1-2-10"
+      site: "hq1"
+      group: "prod-computing"
+      status: "available" # Accepts pre-defined choices
+      role: "computing"
+      serial: "XXXX-YYYY-ZZZZ"
+      asset_tag: "000-0100"
+      type: "4-post-cabinet" # Accepts pre-defined choices
+      width: 19 # Accepts pre-defined choices
+      u_height: 42
+      outer_width: 39
+      outer_depth: 25
+      outer_unit: "in"
+      tags:
+        - "Second-Wave"
+        - "prod"
 
 ipam:
   rirs:
