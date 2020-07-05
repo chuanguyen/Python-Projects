@@ -10,13 +10,13 @@ dcim:
   sites:
     - name: "hq1"
       slug: "hq1"
-      status: 1
+      status: active
       region: "burnaby"
       asn: 100
       time_zone: "America/Vancouver"
     - name: "hq2"
       slug: "hq2"
-      status: 1
+      status: active
       region: "vancouver"
       asn: 100
       time_zone: "America/Vancouver"
@@ -75,11 +75,35 @@ dcim:
 
 ipam:
   rirs:
-    -
+    - name: "RFC-1918"
+      slug: "rfc-1918"
+      is_private: true
+      description: ""
   aggregates:
-    -
+    - prefix: "10.0.0.0/8"
+      rir: "rfc-1918"
+      family: "IPv4"
+      description: ""
+    - prefix: "172.16.0.0/12"
+      rir: "rfc-1918"
+      family: "IPv4"
+      description: ""
+    - prefix: "192.168.0.0/16"
+      rir: "rfc-1918"
+      family: "IPv4"
+      description: ""
   prefixes:
-    -
+    - prefix: 192.168.100.0/24
+      description: ""
+      site: "hq1"
+      family: "IPv4"
+      is_pool: true
+      status: "active"
+      role: "access"
+      vrf:
+      vlan:
+
+
   prefix_vlan_roles:
     -
   ip_addresses:
