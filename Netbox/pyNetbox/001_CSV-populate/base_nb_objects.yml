@@ -102,13 +102,20 @@ ipam:
       role: "access"
       vrf:
       vlan:
-
-
-  prefix_vlan_roles:
-    -
-  ip_addresses:
-    -
+  roles:
+    - name: "Access"
+      slug: "access"
   vlans:
-    -
+    - vid: 10
+      name: "End user data access"
+      status: "active"
+      site: "hq1"
+      group: "End Users"
+      role: "Access"
+      Description: ""
   vlan_groups:
+    - name: "End Users"
+      slug: "end-users"
+      site: "hq1"
+  vrfs:
     -

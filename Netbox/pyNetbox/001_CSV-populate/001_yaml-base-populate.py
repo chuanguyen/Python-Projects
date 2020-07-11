@@ -13,9 +13,11 @@ def retrieve_nb_obj(app, model, searchTerm):
     # term and returns the object if it exists
     # If object can't be found, returns None
     nb_obj = None
+    searchTerm_modified = None
 
     # Alters search term to match the slug formatting (lowercase and dashes)
-    searchTerm_modified = searchTerm.lower().replace(" ", "-")
+    if (type(searchTerm) is str):
+        searchTerm_modified = searchTerm.lower().replace(" ", "-")
 
     if (app == "dcim"):
         if (model == "regions"):
@@ -27,7 +29,6 @@ def retrieve_nb_obj(app, model, searchTerm):
         elif (model == "rack_groups"):
             nb_obj = nb.dcim.rack_groups.get(slug=searchTerm_modified)
         elif (model == "racks"):
-            # Racks model lacks a slug field
             nb_obj = nb.dcim.racks.get(name=searchTerm_modified)
     elif (app == "ipam"):
         if (model == "rirs"):
@@ -38,6 +39,12 @@ def retrieve_nb_obj(app, model, searchTerm):
             nb_obj = nb.ipam.roles.get(slug=searchTerm_modified)
         elif (model == "prefixes"):
             nb_obj = nb.ipam.prefixes.get(prefix=searchTerm_modified)
+        elif (model == "vlan_groups"):
+            nb_obj = nb.ipam.vlan_groups.get(slug=searchTerm_modified)
+        elif (model == "vlans"):
+            nb_obj = nb.ipam.vlans.get(vid=searchTerm_modified)
+        elif (model == "vrfs"):
+            nb_obj = nb.ipam.vrfs.get(name=searchTeam_modified)
 
     return nb_obj
 
@@ -55,6 +62,9 @@ def retrieve_nb_identifier(model):
         aggregates="prefix",
         roles="slug",
         prefixes="prefix",
+        vlan_groups="slug",
+        vlans="vid",
+        vrfs="name"
     )
 
     return nb_obj_name_keys[model]
@@ -65,10 +75,7 @@ def retrieve_nb_id(app, model, searchTerm):
     nb_obj_id = None
     nb_obj = None
 
-    # Alters search term to match the slug formatting (lowercase and dashes)
-    searchTerm_modified = searchTerm.lower().replace(" ", "-")
-
-    nb_obj=retrieve_nb_obj(app,model,searchTerm_modified)
+    nb_obj=retrieve_nb_obj(app,model,searchTerm)
 
     if (nb_obj):
         nb_obj_id = nb_obj.id
@@ -193,6 +200,12 @@ for model,nb_obj_dicts in nb_base_data['ipam'].items():
                         # Replacing fields that require NetBox IDs as values
                         nb_obj_dict['rir'] = retrieve_nb_id("ipam","rirs",nb_obj_dict['rir'])
                         nb.ipam.aggregates.create(nb_obj_dict)
+                elif (model == "roles"):
+                    # Attempts to retrieves object, and creates object if it doesn't exist
+                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
+
+                    if (not nb_obj):
+                        nb.ipam.roles.create(nb_obj_dict)
                 elif (model == "prefixes"):
                     # Attempts to retrieves object, and creates object if it doesn't exist
                     nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['prefix'])
@@ -203,6 +216,32 @@ for model,nb_obj_dicts in nb_base_data['ipam'].items():
                         nb_obj_dict['role'] = retrieve_nb_id("ipam","roles",nb_obj_dict['role'])
 
                         nb.ipam.prefixes.create(nb_obj_dict)
+                elif (model == "vlan_groups"):
+                    # Attempts to retrieves object, and creates object if it doesn't exist
+                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
+
+                    if (not nb_obj):
+                        # Replacing fields that require NetBox IDs as values
+                        nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+
+                        nb.ipam.vlan_groups.create(nb_obj_dict)
+                elif (model == "vlans"):
+                    # Attempts to retrieves object, and creates object if it doesn't exist
+                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['vid'])
+
+                    if (not nb_obj):
+                        # Replacing fields that require NetBox IDs as values
+                        nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+                        nb_obj_dict['group'] = retrieve_nb_id("ipam","vlan_groups",nb_obj_dict['group'])
+                        nb_obj_dict['role'] = retrieve_nb_id("ipam","roles",nb_obj_dict['role'])
+
+                        nb.ipam.vlans.create(nb_obj_dict)
+                elif (model == "vrfs"):
+                    # Attempts to retrieves object, and creates object if it doesn't exist
+                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['name'])
+
+                    if (not nb_obj):
+                        nb.ipam.vrfs.create(nb_obj_dict)
 
                 if (not nb_obj):
                     created_nb_count += 1
