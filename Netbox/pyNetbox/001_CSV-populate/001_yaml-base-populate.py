@@ -118,155 +118,129 @@ existing_nb_objects['dcim'] = list()
 created_nb_objects['ipam'] = list()
 existing_nb_objects['ipam'] = list()
 
-# Cycle through DCIM objects
-for model,nb_obj_dicts in nb_base_data['dcim'].items():
-    for nb_obj_dict in nb_obj_dicts:
-        if (nb_obj_dict):
-            nb_obj = None
+# Cycle through creating NetBox App & Models
+for apps in nb_base_data:
+    for app,model_nb_objs in apps.items():
+        for model,nb_obj_dicts in model_nb_objs.items():
+            for nb_obj_dict in nb_obj_dicts:
+                if (nb_obj_dict):
+                    nb_obj = None
 
-            try:
-                if (model == "regions"):
-                    # Attempts to retrieves object, and creates object if it doesn't exist
-                    nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
-                    if (not nb_obj):
-                        nb.dcim.regions.create(nb_obj_dict)
-                elif (model == "sites"):
-                    nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
-                    if (not nb_obj):
-                        # Replacing fields that require NetBox IDs as values
-                        nb_obj_dict['region'] = retrieve_nb_id("dcim","regions",nb_obj_dict['region'])
-                        nb.dcim.sites.create(nb_obj_dict)
-                elif (model == "rack_roles"):
-                    nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
-                    if (not nb_obj):
-                        nb.dcim.rack_roles.create(nb_obj_dict)
-                elif (model == "rack_groups"):
-                    nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
-                    if (not nb_obj):
-                        nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
-                        nb.dcim.rack_groups.create(nb_obj_dict)
-                elif (model == "racks"):
-                    nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['name'])
+                    try:
+                        if (app == "dcim"):
+                            if (model == "regions"):
+                                # Attempts to retrieves object, and creates object if it doesn't exist
+                                nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
+                                if (not nb_obj):
+                                    nb.dcim.regions.create(nb_obj_dict)
+                            elif (model == "sites"):
+                                nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
+                                if (not nb_obj):
+                                    # Replacing fields that require NetBox IDs as values
+                                    nb_obj_dict['region'] = retrieve_nb_id("dcim","regions",nb_obj_dict['region'])
+                                    nb.dcim.sites.create(nb_obj_dict)
+                            elif (model == "rack_roles"):
+                                nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
+                                if (not nb_obj):
+                                    nb.dcim.rack_roles.create(nb_obj_dict)
+                            elif (model == "rack_groups"):
+                                nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
+                                if (not nb_obj):
+                                    nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+                                    nb.dcim.rack_groups.create(nb_obj_dict)
+                            elif (model == "racks"):
+                                nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['name'])
 
-                    if (not nb_obj):
-                        nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
-                        nb_obj_dict['group'] = retrieve_nb_id("dcim","rack_groups",nb_obj_dict['group'])
-                        nb_obj_dict['role'] = retrieve_nb_id("dcim","rack_roles",nb_obj_dict['role'])
-                        nb.dcim.racks.create(nb_obj_dict)
+                                if (not nb_obj):
+                                    nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+                                    nb_obj_dict['group'] = retrieve_nb_id("dcim","rack_groups",nb_obj_dict['group'])
+                                    nb_obj_dict['role'] = retrieve_nb_id("dcim","rack_roles",nb_obj_dict['role'])
+                                    nb.dcim.racks.create(nb_obj_dict)
 
-                if (not nb_obj):
-                    created_nb_count += 1
+                        if (app == "ipam"):
+                            if (model == "rirs"):
+                                # Attempts to retrieves object, and creates object if it doesn't exist
+                                nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
 
-                    created_nb_objects['dcim'].append(
-                        dict(
-                            app="dcim",
-                            model=model,
-                            name=nb_obj_dict[retrieve_nb_identifier(model)],
-                        )
-                    )
-                else:
-                    existing_nb_count += 1
+                                if (not nb_obj):
+                                    nb.dcim.rirs.create(nb_obj_dict)
+                            elif (model == "aggregates"):
+                                # Attempts to retrieves object, and creates object if it doesn't exist
+                                nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['prefix'])
 
-                    existing_nb_objects['dcim'].append(
-                        dict(
-                            app="dcim",
-                            model=model,
-                            name=nb_obj_dict[retrieve_nb_identifier(model)],
-                        )
-                    )
+                                if (not nb_obj):
+                                    # Replacing fields that require NetBox IDs as values
+                                    nb_obj_dict['rir'] = retrieve_nb_id("ipam","rirs",nb_obj_dict['rir'])
+                                    nb.ipam.aggregates.create(nb_obj_dict)
+                            elif (model == "roles"):
+                                # Attempts to retrieves object, and creates object if it doesn't exist
+                                nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
 
-            except pynetbox.core.query.RequestError as e:
-                print(e.error)
+                                if (not nb_obj):
+                                    nb.ipam.roles.create(nb_obj_dict)
+                            elif (model == "vlan_groups"):
+                                # Attempts to retrieves object, and creates object if it doesn't exist
+                                nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
 
-# Cycle through IPAM objects
-for model,nb_obj_dicts in nb_base_data['ipam'].items():
-    for nb_obj_dict in nb_obj_dicts:
+                                if (not nb_obj):
+                                    # Replacing fields that require NetBox IDs as values
+                                    nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
 
-        if (nb_obj_dict):
-            nb_obj = None
+                                    nb.ipam.vlan_groups.create(nb_obj_dict)
+                            elif (model == "vlans"):
+                                # Attempts to retrieves object, and creates object if it doesn't exist
+                                nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['vid'])
 
-            try:
-                if (model == "rirs"):
-                    # Attempts to retrieves object, and creates object if it doesn't exist
-                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
+                                if (not nb_obj):
+                                    # Replacing fields that require NetBox IDs as values
+                                    nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+                                    nb_obj_dict['group'] = retrieve_nb_id("ipam","vlan_groups",nb_obj_dict['group'])
+                                    nb_obj_dict['role'] = retrieve_nb_id("ipam","roles",nb_obj_dict['role'])
 
-                    if (not nb_obj):
-                        nb.dcim.rirs.create(nb_obj_dict)
-                elif (model == "aggregates"):
-                    # Attempts to retrieves object, and creates object if it doesn't exist
-                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['prefix'])
+                                    nb.ipam.vlans.create(nb_obj_dict)
+                            elif (model == "vrfs"):
+                                # Attempts to retrieves object, and creates object if it doesn't exist
+                                nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['name'])
 
-                    if (not nb_obj):
-                        # Replacing fields that require NetBox IDs as values
-                        nb_obj_dict['rir'] = retrieve_nb_id("ipam","rirs",nb_obj_dict['rir'])
-                        nb.ipam.aggregates.create(nb_obj_dict)
-                elif (model == "roles"):
-                    # Attempts to retrieves object, and creates object if it doesn't exist
-                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
+                                if (not nb_obj):
+                                    nb.ipam.vrfs.create(nb_obj_dict)
+                            elif (model == "prefixes"):
+                                # Attempts to retrieves object, and creates object if it doesn't exist
+                                nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['prefix'])
 
-                    if (not nb_obj):
-                        nb.ipam.roles.create(nb_obj_dict)
-                elif (model == "prefixes"):
-                    # Attempts to retrieves object, and creates object if it doesn't exist
-                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['prefix'])
+                                if (not nb_obj):
+                                    # Replacing fields that require NetBox IDs as values
+                                    nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+                                    nb_obj_dict['role'] = retrieve_nb_id("ipam","roles",nb_obj_dict['role'])
 
-                    if (not nb_obj):
-                        # Replacing fields that require NetBox IDs as values
-                        nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
-                        nb_obj_dict['role'] = retrieve_nb_id("ipam","roles",nb_obj_dict['role'])
+                                    # Fields below may not always be defined, so only searches when they are defined
+                                    if (nb_obj_dict['vlan']): nb_obj_dict['vlan'] = retrieve_nb_id("ipam","vlans",nb_obj_dict['vlan'])
+                                    if (nb_obj_dict['vrf']): nb_obj_dict['vrf'] = retrieve_nb_id("ipam","vrfs",nb_obj_dict['vrf'])
 
-                        nb.ipam.prefixes.create(nb_obj_dict)
-                elif (model == "vlan_groups"):
-                    # Attempts to retrieves object, and creates object if it doesn't exist
-                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
+                                    nb.ipam.prefixes.create(nb_obj_dict)
 
-                    if (not nb_obj):
-                        # Replacing fields that require NetBox IDs as values
-                        nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
+                        if (not nb_obj):
+                            created_nb_count += 1
 
-                        nb.ipam.vlan_groups.create(nb_obj_dict)
-                elif (model == "vlans"):
-                    # Attempts to retrieves object, and creates object if it doesn't exist
-                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['vid'])
+                            created_nb_objects[app].append(
+                                dict(
+                                    app=app,
+                                    model=model,
+                                    name=nb_obj_dict[retrieve_nb_identifier(model)],
+                                )
+                            )
+                        else:
+                            existing_nb_count += 1
 
-                    if (not nb_obj):
-                        # Replacing fields that require NetBox IDs as values
-                        nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
-                        nb_obj_dict['group'] = retrieve_nb_id("ipam","vlan_groups",nb_obj_dict['group'])
-                        nb_obj_dict['role'] = retrieve_nb_id("ipam","roles",nb_obj_dict['role'])
-
-                        nb.ipam.vlans.create(nb_obj_dict)
-                elif (model == "vrfs"):
-                    # Attempts to retrieves object, and creates object if it doesn't exist
-                    nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['name'])
-
-                    if (not nb_obj):
-                        nb.ipam.vrfs.create(nb_obj_dict)
-
-                if (not nb_obj):
-                    created_nb_count += 1
-
-                    created_nb_objects['ipam'].append(
-                        dict(
-                            app="ipam",
-                            model=model,
-                            name=nb_obj_dict[retrieve_nb_identifier(model)],
-                        )
-                    )
-                else:
-                    existing_nb_count += 1
-
-                    existing_nb_objects['ipam'].append(
-                        dict(
-                            app="ipam",
-                            model=model,
-                            name=nb_obj_dict[retrieve_nb_identifier(model)],
-                        )
-                    )
-
-            except pynetbox.core.query.RequestError as e:
-                print(e.error)
-
+                            existing_nb_objects[app].append(
+                                dict(
+                                    app=app,
+                                    model=model,
+                                    name=nb_obj_dict[retrieve_nb_identifier(model)],
+                                )
+                            )
+                    except pynetbox.core.query.RequestError as e:
+                        print(e.error)
 
 if (existing_nb_count > 0):
     print(12*"*"," The following NetBox objects already existed ",12*"*")

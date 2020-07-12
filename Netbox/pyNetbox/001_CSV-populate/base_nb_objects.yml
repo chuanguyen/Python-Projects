@@ -1,121 +1,134 @@
 ---
 
-dcim:
-  regions:
-    - name: "Burnaby"
-      slug: "burnaby"
-      tags:
-    - name: "Vancouver"
-      slug: "vancouver"
-  sites:
-    - name: "hq1"
-      slug: "hq1"
-      status: active
-      region: "burnaby"
-      asn: 100
-      time_zone: "America/Vancouver"
-    - name: "hq2"
-      slug: "hq2"
-      status: active
-      region: "vancouver"
-      asn: 100
-      time_zone: "America/Vancouver"
-      tags:
-        - "Second-Wave"
-  rack_roles:
-    - name: "networking"
-      slug: "networking"
-      color: "03a9f4"
-      description: ""
-    - name: "computing"
-      slug: "computing"
-      color: "ff2424"
-      description: "Testing creation"
-      tags:
-        - "Second-Wave"
-  rack_groups:
-    - name: "core-routing"
-      slug: "core-routing"
-      site: "hq1"
-      description: ""
-    - name: "prod-computing"
-      slug: "prod-computing"
-      site: "hq1"
-      description: "Production"
-  racks:
-    - name: "dc1-2-5"
-      site: "hq1"
-      group: "core-routing"
-      status: "active" # May need to be integer, so check
-      role: "networking"
-      serial: "XXXX-YYYY-ZZZZ"
-      asset_tag: "000-0000"
-      type: "4-post-cabinet" # May need to be integer
-      width: 19
-      u_height: 42
-      outer_width: 39
-      outer_depth: 25
-      outer_unit: "in"
-    - name: "dc1-2-10"
-      site: "hq1"
-      group: "prod-computing"
-      status: "available" # Accepts pre-defined choices
-      role: "computing"
-      serial: "XXXX-YYYY-ZZZZ"
-      asset_tag: "000-0100"
-      type: "4-post-cabinet" # Accepts pre-defined choices
-      width: 19 # Accepts pre-defined choices
-      u_height: 42
-      outer_width: 39
-      outer_depth: 25
-      outer_unit: "in"
-      tags:
-        - "Second-Wave"
-        - "prod"
-
-ipam:
-  rirs:
-    - name: "RFC-1918"
-      slug: "rfc-1918"
-      is_private: true
-      description: ""
-  aggregates:
-    - prefix: "10.0.0.0/8"
-      rir: "rfc-1918"
-      family: "IPv4"
-      description: ""
-    - prefix: "172.16.0.0/12"
-      rir: "rfc-1918"
-      family: "IPv4"
-      description: ""
-    - prefix: "192.168.0.0/16"
-      rir: "rfc-1918"
-      family: "IPv4"
-      description: ""
-  prefixes:
-    - prefix: 192.168.100.0/24
-      description: ""
-      site: "hq1"
-      family: "IPv4"
-      is_pool: true
-      status: "active"
-      role: "access"
-      vrf:
-      vlan:
-  roles:
-    - name: "Access"
-      slug: "access"
-  vlans:
-    - vid: 10
-      name: "End user data access"
-      status: "active"
-      site: "hq1"
-      group: "End Users"
-      role: "Access"
-      Description: ""
-  vlan_groups:
-    - name: "End Users"
-      slug: "end-users"
-      site: "hq1"
-  vrfs:
-    -
+- dcim:
+    regions:
+      - name: "Burnaby"
+        slug: "burnaby"
+        tags:
+      - name: "Vancouver"
+        slug: "vancouver"
+    sites:
+      - name: "hq1"
+        slug: "hq1"
+        status: active
+        region: "burnaby"
+        asn: 100
+        time_zone: "America/Vancouver"
+      - name: "hq2"
+        slug: "hq2"
+        status: active
+        region: "vancouver"
+        asn: 100
+        time_zone: "America/Vancouver"
+        tags:
+          - "Second-Wave"
+    rack_roles:
+      - name: "networking"
+        slug: "networking"
+        color: "03a9f4"
+        description: ""
+      - name: "computing"
+        slug: "computing"
+        color: "ff2424"
+        description: "Testing creation"
+        tags:
+          - "Second-Wave"
+    rack_groups:
+      - name: "core-routing"
+        slug: "core-routing"
+        site: "hq1"
+        description: ""
+      - name: "prod-computing"
+        slug: "prod-computing"
+        site: "hq1"
+        description: "Production"
+    racks:
+      - name: "dc1-2-5"
+        site: "hq1"
+        group: "core-routing"
+        status: "active" # May need to be integer, so check
+        role: "networking"
+        serial: "XXXX-YYYY-ZZZZ"
+        asset_tag: "000-0000"
+        type: "4-post-cabinet" # May need to be integer
+        width: 19
+        u_height: 42
+        outer_width: 39
+        outer_depth: 25
+        outer_unit: "in"
+      - name: "dc1-2-10"
+        site: "hq1"
+        group: "prod-computing"
+        status: "available" # Accepts pre-defined choices
+        role: "computing"
+        serial: "XXXX-YYYY-ZZZZ"
+        asset_tag: "000-0100"
+        type: "4-post-cabinet" # Accepts pre-defined choices
+        width: 19 # Accepts pre-defined choices
+        u_height: 42
+        outer_width: 39
+        outer_depth: 25
+        outer_unit: "in"
+        tags:
+          - "Second-Wave"
+          - "prod"
+- ipam:
+    rirs:
+      - name: "RFC-1918"
+        slug: "rfc-1918"
+        is_private: true
+        description: ""
+    aggregates:
+      - prefix: "10.0.0.0/8"
+        rir: "rfc-1918"
+        family: "IPv4"
+        description: ""
+      - prefix: "172.16.0.0/12"
+        rir: "rfc-1918"
+        family: "IPv4"
+        description: ""
+      - prefix: "192.168.0.0/16"
+        rir: "rfc-1918"
+        family: "IPv4"
+        description: ""
+    roles:
+      - name: "Access"
+        slug: "access"
+      - name: "Testing Role"
+        slug: "testing-role"
+    vlan_groups:
+      - name: "End Users"
+        slug: "end-users"
+        site: "hq1"
+      - name: "Testing Group"
+        slug: "testing-group"
+        site: "hq2"
+    vlans:
+      - vid: 10
+        name: "End user data access"
+        status: "active"
+        site: "hq1"
+        group: "End Users"
+        role: "Access"
+        Description: ""
+    vrfs:
+      -
+    prefixes:
+      - prefix: 192.168.100.0/24
+        description: ""
+        site: "hq1"
+        family: "IPv4"
+        is_pool: true
+        status: "active"
+        role: "access"
+        vrf:
+        vlan:
+      - prefix: 192.168.101.0/24
+        description: "TESTING"
+        site: "hq2"
+        family: "IPv4"
+        is_pool: true
+        status: "active"
+        role: "access"
+        vrf:
+        vlan: 10
