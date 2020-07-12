@@ -1,0 +1,24 @@
+---
+
+devices:
+  - r1:
+    - FastEthernet0/0:
+      - Int_Type: Physical
+        description: "Data Interface"
+        status:
+        ipv4:
+          - IP: 192.168.100.201/24
+  - r3:
+    - FastEthernet0/0:
+      - Int_Type: Physical
+        description: "Data Interface"
+        status:
+        ipv4:
+          - IP: 192.168.100.203/24
+  - r5:
+    - FastEthernet0/0:
+      - Int_Type: Physical
+        description: "Data Interface"
+        status:
+        ipv4:
+          - IP: 192.168.100.205/24
