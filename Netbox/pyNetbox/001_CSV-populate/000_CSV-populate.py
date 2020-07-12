@@ -22,6 +22,7 @@ nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
 nb_source_file = "nb_devices.csv"
 
 # Stores devices and attributes that will be created
+nb_all_created_devices_count = 0
 nb_all_devices = list()
 nb_all_devices_primaryIPs = dict()
 nb_all_devices_mgmt_intf = dict()
@@ -48,6 +49,8 @@ try:
     with open(nb_source_file) as f:
       reader = csv.DictReader(f)
       for row in reader:
+          nb_obj = None
+
           ndev_site = nb.dcim.sites.get(slug=row['site'])
           ndev_dtype = nb.dcim.device_types.get(slug=row['device_type'])
           ndev_drole = nb.dcim.device_roles.get(slug=row['device_role'])
@@ -69,24 +72,43 @@ try:
 
           # Generates dict of values for PyNetbox to create object
           if (nb_non_existent_count == 0):
-              nb_all_devices.append(
-                dict(
-                    name=row['name'],
-                    site=ndev_site.id,
-                    device_type=ndev_dtype.id,
-                    device_role=ndev_drole.id,
-                    rack=ndev_rack.id,
-                    face=row['face'],
-                    position=row['position'],
-                    serial=row['serial'],
-                    asset_tag=row['asset_tag'],
-                    status=row['status'],
-                )
-              )
+              nb_obj = nb.dcim.devices.get(name=row['name'])
 
-              nb_all_devices_primaryIPs[row['name']] = row['primary_ipv4']
-              all_IPs.append(row['primary_ipv4'])
-              nb_all_devices_mgmt_intf[row['name']] = row['mgmt_intf']
+              if (not nb_obj):
+                  nb_all_created_devices_count += 1
+
+                  nb_all_devices.append(
+                    dict(
+                        name=row['name'],
+                        site=ndev_site.id,
+                        device_type=ndev_dtype.id,
+                        device_role=ndev_drole.id,
+                        rack=ndev_rack.id,
+                        face=row['face'],
+                        position=row['position'],
+                        serial=row['serial'],
+                        asset_tag=row['asset_tag'],
+                        status=row['status'],
+                    )
+                  )
+
+                  nb_all_devices_primaryIPs[row['name']] = row['primary_ipv4']
+                  all_IPs.append(row['primary_ipv4'])
+                  nb_all_devices_mgmt_intf[row['name']] = row['mgmt_intf']
+              else:
+                  nb_existing_devices_count += 1
+
+                  nb_existing_devices.append(
+                      dict(
+                          name=nb_obj.name,
+                          site=nb_obj.site.name,
+                          rack=nb_obj.rack.name,
+                          serial=nb_obj.serial,
+                          asset_tag=nb_obj.asset_tag,
+                          status=nb_obj.status.label
+                      )
+                  )
+
 
 except FileNotFoundError as e:
     print(e)
@@ -94,6 +116,27 @@ except pynetbox.core.query.RequestError as e:
     print(e.error)
 
 flag = len(set(all_IPs)) == len(all_IPs)
+
+if (nb_existing_devices_count > 0):
+    print(24*"*"," The following NetBox devices already exist ",24*"*")
+    print()
+
+    # Formatting and header for output
+    fmt = "{:<15}{:<15}{:<15}{:<25}{:<15}{:<15}"
+    header = ("Name", "Site", "Rack", "Serial #", "Asset Tag", "Status")
+    print(fmt.format(*header))
+
+    for nb_existing_device in nb_existing_devices:
+        print(
+            fmt.format(
+                nb_existing_device['name'],
+                nb_existing_device['site'],
+                nb_existing_device['rack'],
+                nb_existing_device['serial'],
+                nb_existing_device['asset_tag'],
+                nb_existing_device['status'],
+            )
+        )
 
 ### Generates table of non-existent NetBox objects defined in CSV
 if ( (nb_non_existent_count > 0) or not(flag) ):
@@ -104,7 +147,7 @@ if ( (nb_non_existent_count > 0) or not(flag) ):
         print ("One or more of the devices have duplicated IPs")
 
     print()
-    print(12*"*"," Verify the following NetBox Objects ",12*"*")
+    print(12*"*"," Verify the following NetBox Objects Exist ",12*"*")
     print(fmt.format(*header))
 
     # Print summary of non-existent objects in CSV
@@ -117,7 +160,7 @@ if ( (nb_non_existent_count > 0) or not(flag) ):
                     "Non-Existent"
                 )
             )
-else:
+elif (nb_all_created_devices_count > 0):
     try:
         # Add devices to NetBox and store resulting object in "created_devs"
         nb_created_devices = nb.dcim.devices.create(nb_all_devices)
@@ -164,3 +207,7 @@ else:
 
     except pynetbox.core.query.RequestError as e:
         print(e.error)
+else:
+    print()
+    print(24*"*"," No NetBox devices were created ",24*"*")
+    print("\nAll defined devices already exist or there were errors for some of the objects")
