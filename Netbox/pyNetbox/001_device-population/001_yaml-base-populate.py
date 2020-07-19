@@ -18,6 +18,8 @@ def retrieve_nb_obj(app, model, searchTerm):
     # Alters search term to match the slug formatting (lowercase and dashes)
     if (type(searchTerm) is str):
         searchTerm_modified = searchTerm.lower().replace(" ", "-")
+    else:
+        searchTerm_modified = searchTerm
 
     if (app == "dcim"):
         if (model == "regions"):
@@ -194,8 +196,8 @@ for apps in nb_base_data:
                                 if (not nb_obj):
                                     # Replacing fields that require NetBox IDs as values
                                     nb_obj_dict['site'] = retrieve_nb_id("dcim","sites",nb_obj_dict['site'])
-                                    nb_obj_dict['group'] = retrieve_nb_id("ipam","vlan_groups",nb_obj_dict['group'])
-                                    nb_obj_dict['role'] = retrieve_nb_id("ipam","roles",nb_obj_dict['role'])
+                                    if (nb_obj_dict['group']): nb_obj_dict['group'] = retrieve_nb_id("ipam","vlan_groups",nb_obj_dict['group'])
+                                    if (nb_obj_dict['role']): nb_obj_dict['role'] = retrieve_nb_id("ipam","roles",nb_obj_dict['role'])
 
                                     nb.ipam.vlans.create(nb_obj_dict)
                             elif (model == "vrfs"):
