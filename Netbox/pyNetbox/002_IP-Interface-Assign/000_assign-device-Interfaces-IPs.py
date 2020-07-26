@@ -113,8 +113,8 @@ existing_nb_dev_IPs_count = 0
 existing_nb_dev_IPs = list()
 
 # Stores NetBox objects that are created
-created_nb_IPs_count = 0
-created_nb_IPs = list()
+created_nb_objs_count = 0
+created_nb_objs = list()
 
 # Cycle through assiging IPs to NB Device Interfaces
 for dev in nb_base_data['devices']:
@@ -147,9 +147,6 @@ for dev in nb_base_data['devices']:
                             )
                         )
                     else:
-                        # Verify some of the fields exist if defined
-                        # VLANs, Roles, etc
-
                         interface_ip_dict = dict(
                             address=interface['ipv4'][0]['prefix'],
                             status=1,
@@ -157,10 +154,11 @@ for dev in nb_base_data['devices']:
                             interface=dev_interface.id,
                         )
 
+                        pprint.pprint(interface_ip_dict)
                         nb.ipam.ip_addresses.create(interface_ip_dict)
 
-                        created_nb_IPs_count += 1
-                        created_nb_IPs.append(
+                        created_nb_objs_count += 1
+                        created_nb_objs.append(
                             dict(
                                 device=dev_name,
                                 interface=interface['name'],
@@ -208,17 +206,17 @@ if (existing_nb_dev_IPs_count > 0):
             )
         )
 
-if (created_nb_IPs_count > 0):
+if (created_nb_objs_count > 0):
     print()
     print(12*"*"," The following IPs have been assigned to the given device and interface ",12*"*")
     print()
 
     # Formatting and header for output
-    fmt = "{:<15}{:<20}{:<15}{:<25}"
+    fmt = "{:<15}{:<20}{:<20}{:<25}"
     header = ("Device", "Interface", "IP", "Description")
     print(fmt.format(*header))
 
-    for ip in created_nb_IPs:
+    for ip in created_nb_objs:
         print(
             fmt.format(
                 ip['device'],
