@@ -36,6 +36,14 @@
         outer_width: 39
         outer_depth: 25
         outer_unit: "in"
+    device_roles:
+      - name: Network Access
+        slug: network_access
+        description: ""
+    manufacturers:
+      - name: Cisco
+        slug: cisco
+        description: Cisco devices
 - ipam:
     rirs:
       - name: "RFC-1918"

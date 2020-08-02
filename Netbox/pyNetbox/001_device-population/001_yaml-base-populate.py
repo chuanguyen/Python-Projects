@@ -32,6 +32,10 @@ def retrieve_nb_obj(app, model, searchTerm):
             nb_obj = nb.dcim.rack_groups.get(slug=searchTerm_modified)
         elif (model == "racks"):
             nb_obj = nb.dcim.racks.get(name=searchTerm_modified)
+        elif (model == "device_roles"):
+            nb_obj = nb.dcim.device_roles.get(slug=searchTerm_modified)
+        elif (model == "manufacturers"):
+            nb_obj = nb.dcim.manufacturers.get(slug=searchTerm_modified)
     elif (app == "ipam"):
         if (model == "rirs"):
             nb_obj = nb.ipam.rirs.get(slug=searchTerm_modified)
@@ -60,6 +64,8 @@ def retrieve_nb_identifier(model):
         rack_groups="slug",
         rack_roles="slug",
         racks="name",
+        device_roles="slug",
+        manufacturers="slug",
         rirs="slug",
         aggregates="prefix",
         roles="slug",
@@ -158,6 +164,16 @@ for apps in nb_base_data:
                                     nb_obj_dict['group'] = retrieve_nb_id("dcim","rack_groups",nb_obj_dict['group'])
                                     nb_obj_dict['role'] = retrieve_nb_id("dcim","rack_roles",nb_obj_dict['role'])
                                     nb.dcim.racks.create(nb_obj_dict)
+                            elif (model == "device_roles"):
+                                nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
+
+                                if (not nb_obj):
+                                    nb.dcim.device_roles.create(nb_obj_dict)
+                            elif (model == "manufacturers"):
+                                nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
+
+                                if (not nb_obj):
+                                    nb.dcim.manufacturers.create(nb_obj_dict)
 
                         if (app == "ipam"):
                             if (model == "rirs"):
@@ -165,7 +181,7 @@ for apps in nb_base_data:
                                 nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['slug'])
 
                                 if (not nb_obj):
-                                    nb.dcim.rirs.create(nb_obj_dict)
+                                    nb.ipam.rirs.create(nb_obj_dict)
                             elif (model == "aggregates"):
                                 # Attempts to retrieves object, and creates object if it doesn't exist
                                 nb_obj = retrieve_nb_obj("ipam",model,nb_obj_dict['prefix'])
