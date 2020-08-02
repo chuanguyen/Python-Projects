@@ -2,23 +2,38 @@
 
 devices:
   - r1:
-    - FastEthernet0/0:
-      - Int_Type: Physical
-        description: "Data Interface"
-        status:
-        ipv4:
-          - IP: 192.168.100.201/24
+    - name: FastEthernet0/0
+      description: "Data Interface"
+      mac_address: 00:11:22:33:44:55
+      type: 100base-tx
+      enabled: True
+      mgmt_only: True
+      mode: access
+      untagged_vlan: 10
+      tagged_vlans:
+      ipv4:
+        - prefix: 192.168.100.201/24
   - r3:
-    - FastEthernet0/0:
-      - Int_Type: Physical
-        description: "Data Interface"
-        status:
-        ipv4:
-          - IP: 192.168.100.203/24
+    - name: FastEthernet0/0
+      description: "Data Interface"
+      mac_address: 00:11:22:33:44:55
+      type: 100base-tx
+      enabled: True
+      mgmt_only: True
+      mode: access
+      untagged_vlan: 10
+      tagged_vlans:
+      ipv4:
+        - prefix: 192.168.100.203/24
   - r5:
-    - FastEthernet0/0:
-      - Int_Type: Physical
-        description: "Data Interface"
-        status:
-        ipv4:
-          - IP: 192.168.100.205/24
+    - name: FastEthernet0/0
+      description: "Data Interface"
+      mac_address: 00:11:22:33:44:55
+      type: 100base-tx
+      enabled: True
+      mgmt_only: True
+      mode: access
+      untagged_vlan: 10
+      tagged_vlans:
+      ipv4:
+        - prefix: 192.168.100.205/24
