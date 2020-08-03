@@ -1,0 +1,13 @@
+cables:
+  - dev_a: "r1"
+    termination_a: "FastEthernet0/1"
+    termination_a_type: dcim.interface
+    dev_b: "r3"
+    termination_b: "FastEthernet0/1"
+    termination_b_type: dcim.interface
+    type: cat5e
+    status: connected
+    label: "Management link btwn R1 & R3"
+    color: "f44336"
+    length: 30
+    length_unit: cm
