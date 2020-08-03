@@ -8,8 +8,8 @@ devices:
       type: 100base-tx
       enabled: True
       mgmt_only: True
-      mode: access
-      untagged_vlan: 10
+      mode:
+      untagged_vlan:
       tagged_vlans:
       ipv4:
         - prefix: 192.168.100.201/24
@@ -20,7 +20,7 @@ devices:
       type: 100base-tx
       enabled: True
       mgmt_only: True
-      mode: access
+      mode:
       untagged_vlan: 10
       tagged_vlans:
       ipv4:
@@ -32,8 +32,8 @@ devices:
       type: 100base-tx
       enabled: True
       mgmt_only: True
-      mode: access
-      untagged_vlan: 10
+      mode:
+      untagged_vlan: 
       tagged_vlans:
       ipv4:
         - prefix: 192.168.100.205/24
