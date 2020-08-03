@@ -41,6 +41,7 @@ nb_non_existent_objects['site'] = list()
 nb_non_existent_objects['device_type'] = list()
 nb_non_existent_objects['device_role'] = list()
 nb_non_existent_objects['rack'] = list()
+nb_non_existent_objects['platforms'] = list()
 
 fmt = "{:<15}{:<25}{:<15}"
 header = ("Model","Name","Status")
@@ -55,6 +56,7 @@ try:
           ndev_dtype = nb.dcim.device_types.get(slug=row['device_type'])
           ndev_drole = nb.dcim.device_roles.get(slug=row['device_role'])
           ndev_rack = nb.dcim.racks.get(q=row['rack'])
+          ndev_platform = nb.dcim.platforms.get(slug=row['platform'])
 
           # Verifies whether DCIM object exists
           if (not ndev_site):
@@ -69,6 +71,9 @@ try:
           if (not ndev_rack):
               nb_non_existent_objects['rack'].append(row['rack'])
               nb_non_existent_count += 1
+          if (not ndev_platform):
+              nb_non_existent_objects['platform'].append(row['platform'])
+              nb_non_existent_count += 1
 
           # Generates dict of values for PyNetbox to create object
           if (nb_non_existent_count == 0):
@@ -81,6 +86,7 @@ try:
                     dict(
                         name=row['name'],
                         site=ndev_site.id,
+                        platform=ndev_platform.id,
                         device_type=ndev_dtype.id,
                         device_role=ndev_drole.id,
                         rack=ndev_rack.id,
@@ -166,8 +172,8 @@ elif (nb_all_created_devices_count > 0):
         nb_created_devices = nb.dcim.devices.create(nb_all_devices)
 
         # Formatting and header for output
-        fmt = "{:<15}{:<20}{:<15}{:<10}{:<15}{:<25}{:<20}"
-        header = ("Device", "Dev Role", "Dev Type", "Site", "Rack", "Management Interface", "IP")
+        fmt = "{:<15}{:<20}{:<20}{:<15}{:<10}{:<15}{:<25}{:<20}"
+        header = ("Device", "Dev Role", "Dev Platform", "Dev Type", "Site", "Rack", "Management Interface", "IP")
         print()
         print(50*"*"," Created Devices ",50*"*")
         print(fmt.format(*header))
@@ -197,6 +203,7 @@ elif (nb_all_created_devices_count > 0):
                 fmt.format(
                     created_dev.name,
                     created_dev.device_role.name,
+                    created_dev.platform.name,
                     created_dev.device_type.model,
                     created_dev.site.name,
                     created_dev.rack.name,

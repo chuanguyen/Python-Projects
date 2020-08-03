@@ -44,6 +44,11 @@
       - name: Cisco
         slug: cisco
         description: Cisco devices
+    platforms:
+      - name: "IOS Devices"
+        slug: "ios-devices"
+        manufacturer: "Cisco"
+        napalm_driver: "ios"
 - ipam:
     rirs:
       - name: "RFC-1918"

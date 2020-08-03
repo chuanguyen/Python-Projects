@@ -36,6 +36,8 @@ def retrieve_nb_obj(app, model, searchTerm):
             nb_obj = nb.dcim.device_roles.get(slug=searchTerm_modified)
         elif (model == "manufacturers"):
             nb_obj = nb.dcim.manufacturers.get(slug=searchTerm_modified)
+        elif (model == "platforms"):
+            nb_obj = nb.dcim.platforms.get(slug=searchTerm_modified)
     elif (app == "ipam"):
         if (model == "rirs"):
             nb_obj = nb.ipam.rirs.get(slug=searchTerm_modified)
@@ -66,6 +68,7 @@ def retrieve_nb_identifier(model):
         racks="name",
         device_roles="slug",
         manufacturers="slug",
+        platforms="slug",
         rirs="slug",
         aggregates="prefix",
         roles="slug",
@@ -174,6 +177,12 @@ for apps in nb_base_data:
 
                                 if (not nb_obj):
                                     nb.dcim.manufacturers.create(nb_obj_dict)
+                            elif (model == "platforms"):
+                                nb_obj = retrieve_nb_obj("dcim",model,nb_obj_dict['slug'])
+
+                                if (not nb_obj):
+                                    nb_obj_dict['manufacturer'] = retrieve_nb_id("dcim","manufacturers",nb_obj_dict['manufacturer'])
+                                    nb.dcim.platforms.create(nb_obj_dict)
 
                         if (app == "ipam"):
                             if (model == "rirs"):
