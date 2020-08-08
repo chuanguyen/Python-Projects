@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 
-import os
 import sys
+import os
+sys.path.append(os.getcwd()+"/../modules")
+
 import pprint
 from netaddr import *
 import pynetbox
 import csv
-from jinja2 import Template
+import yaml
+
+# Custom NB modules
+from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id)
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])

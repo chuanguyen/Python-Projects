@@ -1,89 +1,17 @@
 #!/usr/bin/env python
 
-import os
 import sys
+import os
+sys.path.append(os.getcwd()+"/../modules")
+
 import pprint
 from netaddr import *
 import pynetbox
 import csv
 import yaml
 
-def retrieve_nb_obj(app, model, searchTerm):
-    # Searches for a NetBox object of a given model based on a search
-    # term and returns the object if it exists
-    # If object can't be found, returns None
-    nb_obj = None
-    searchTerm_modified = None
-
-    # Alters search term to match the slug formatting (lowercase and dashes)
-    if (type(searchTerm) is str):
-        searchTerm_modified = searchTerm.lower().replace(" ", "-")
-    else:
-        searchTerm_modified = searchTerm
-
-    if (app == "dcim"):
-        if (model == "regions"):
-            nb_obj = nb.dcim.regions.get(slug=searchTerm_modified)
-        elif (model == "sites"):
-            nb_obj = nb.dcim.sites.get(slug=searchTerm_modified)
-        elif (model == "rack_roles"):
-            nb_obj = nb.dcim.rack_roles.get(slug=searchTerm_modified)
-        elif (model == "rack_groups"):
-            nb_obj = nb.dcim.rack_groups.get(slug=searchTerm_modified)
-        elif (model == "racks"):
-            nb_obj = nb.dcim.racks.get(name=searchTerm_modified)
-    elif (app == "ipam"):
-        if (model == "rirs"):
-            nb_obj = nb.ipam.rirs.get(slug=searchTerm_modified)
-        elif (model == "aggregates"):
-            nb_obj = nb.ipam.aggregates.get(prefix=searchTerm_modified)
-        elif (model == "roles"):
-            nb_obj = nb.ipam.roles.get(slug=searchTerm_modified)
-        elif (model == "prefixes"):
-            nb_obj = nb.ipam.prefixes.get(prefix=searchTerm_modified)
-        elif (model == "vlan_groups"):
-            nb_obj = nb.ipam.vlan_groups.get(slug=searchTerm_modified)
-        elif (model == "vlans"):
-            nb_obj = nb.ipam.vlans.get(vid=searchTerm_modified)
-        elif (model == "vrfs"):
-            nb_obj = nb.ipam.vrfs.get(name=searchTeam_modified)
-
-    return nb_obj
-
-def retrieve_nb_identifier(model):
-    # Returns human-friendly identifier for the given NetBox model
-
-    # Stores the corresponding identifying field for the given NetBox objct
-    nb_obj_name_keys = dict(
-        regions="slug",
-        sites="slug",
-        rack_groups="slug",
-        rack_roles="slug",
-        racks="name",
-        rirs="slug",
-        aggregates="prefix",
-        roles="slug",
-        prefixes="prefix",
-        vlan_groups="slug",
-        vlans="vid",
-        vrfs="name"
-    )
-
-    return nb_obj_name_keys[model]
-
-def retrieve_nb_id(app, model, searchTerm):
-    # Searches for a NetBox object of a given model based on a search term and returns the ID
-    # If object can't be found, returns the search term
-    nb_obj_id = None
-    nb_obj = None
-
-    nb_obj=retrieve_nb_obj(app,model,searchTerm)
-
-    if (nb_obj):
-        nb_obj_id = nb_obj.id
-        return nb_obj_id
-    else:
-        return searchTerm
+# Custom NB modules
+from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id)
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
