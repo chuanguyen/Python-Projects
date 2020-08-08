@@ -140,3 +140,37 @@ def retrieve_termination_obj(nb,termination_type,dev_name,termination_name):
         termination_obj = nb.dcim.rear_ports.get(device=dev_name,name=termination_name)
 
     return termination_obj
+
+def create_nb_log(title, headerValues, nb_objs_data,headerWidthPadding=5,titleSeparaterLength=12,titleSeparaterSymbol="*"):
+    """Creates a log of NetBox objects involved in a script
+
+      Args:
+        title: A string describing what the log contains
+        headerValues: A list of strings indicating the columns for the log
+        nb_objs_data: A list of lists of NetBox objects being outputed in log
+        headerWidthPadding: A integer indicating padding around column
+        titleSeparaterSymbol: A string that separates log from rest of output
+        titleSeparaterLength: A integer indicating length of separator
+    """
+    titleSeparator=titleSeparaterLength*titleSeparaterSymbol
+    numOfHeaders = len(headerValues)
+    header_fmt = ""
+
+    print()
+    print(titleSeparator + " " + title + " " + titleSeparator)
+    print()
+
+    for header in headerValues:
+        headerWidth = len(header) + headerWidthPadding
+        header_fmt += "{:<"+str(headerWidth)+"}"
+
+    print(header_fmt.format(*headerValues))
+
+    for nb_obj_data in nb_objs_data:
+        print(
+            header_fmt.format(
+                *nb_obj_data
+            )
+        )
+
+    print()
