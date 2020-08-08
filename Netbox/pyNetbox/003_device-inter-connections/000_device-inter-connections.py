@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,retrieve_termination_obj)
+from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,retrieve_termination_obj,create_nb_log)
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -34,43 +34,99 @@ except NameError as e:
 
 # Stores NetBox objects that are already created
 existing_nb_count = 0
-existing_nb_objects = dict()
+existing_nb_objects = list()
 
 # Stores NetBox objects that are created
 created_nb_count = 0
-created_nb_objects = dict()
+created_nb_objects = list()
 
 # Stores non-existent NetBox objects
 nb_non_existent_count = 0
-nb_non_existent_objects = dict()
+nb_non_existent_objects = list()
 
 try:
     for cable_dict in nb_base_data['cables']:
-        dev_a = retrieve_nb_obj(nb,"dcim","devices",cable_dict['dev_a'])
-        dev_b = retrieve_nb_obj(nb,"dcim","devices",cable_dict['dev_b'])
-        termination_a = retrieve_termination_obj(nb,cable_dict["termination_a_type"],cable_dict["dev_a"],cable_dict["termination_a"])
-        termination_b = retrieve_termination_obj(nb,cable_dict["termination_b_type"],cable_dict["dev_b"],cable_dict["termination_b"])
+        nb_dev_a = retrieve_nb_obj(nb,"dcim","devices",cable_dict['dev_a'])
+        nb_dev_b = retrieve_nb_obj(nb,"dcim","devices",cable_dict['dev_b'])
+        nb_termination_a = retrieve_termination_obj(nb,cable_dict["termination_a_type"],cable_dict["dev_a"],cable_dict["termination_a"])
+        nb_termination_b = retrieve_termination_obj(nb,cable_dict["termination_b_type"],cable_dict["dev_b"],cable_dict["termination_b"])
 
-        # Need to do check whether termintation already exists
+        if ( (nb_dev_a and nb_termination_a) and (nb_dev_b and nb_termination_b) ):
+            # Searches whether cable already exists
+            nb_cable = (nb.dcim.cables.get(termination_a_id=nb_termination_a.id,termination_a_type=cable_dict['termination_a_type'],termination_b_id=nb_termination_b.id,termination_b_type=cable_dict['termination_b_type']))
 
-        if ( (dev_a and dev_b) and (termination_a and termination_b) ):
-            nb_cable_dict = dict(
-                termination_a_id=termination_a.id,
-                termination_a_type=cable_dict["termination_a_type"],
-                termination_b_id=termination_b.id,
-                termination_b_type=cable_dict["termination_b_type"],
-                type=cable_dict["type"],
-                status=cable_dict["status"],
-                label=cable_dict["label"],
-                color=cable_dict["color"],
-                length=cable_dict["length"],
-                length_unit=cable_dict["length_unit"],
-            )
+            if (nb_cable):
+                existing_nb_count += 1
 
-            nb.dcim.cables.create(nb_cable_dict)
+                existing_nb_objects.append(
+                    [
+                        nb_dev_a.name,
+                        nb_termination_a.name,
+                        cable_dict['termination_a_type'],
+                        nb_dev_b.name,
+                        nb_termination_b.name,
+                        cable_dict['termination_b_type']
+                    ]
+                )
+            else:
+                nb_cable_dict = dict(
+                    termination_a_id=nb_termination_a.id,
+                    termination_a_type=cable_dict["termination_a_type"],
+                    termination_b_id=nb_termination_b.id,
+                    termination_b_type=cable_dict["termination_b_type"],
+                    type=cable_dict["type"],
+                    status=cable_dict["status"],
+                    label=cable_dict["label"],
+                    color=cable_dict["color"],
+                    length=cable_dict["length"],
+                    length_unit=cable_dict["length_unit"],
+                )
+
+                nb.dcim.cables.create(nb_cable_dict)
+
+                created_nb_count += 1
+                created_nb_objects.append(
+                    [
+                        nb_dev_a.name,
+                        nb_termination_a.name,
+                        cable_dict['termination_a_type'],
+                        nb_dev_b.name,
+                        nb_termination_b.name,
+                        cable_dict['termination_b_type'],
+                        cable_dict['type'],
+                        cable_dict['status']
+                    ]
+                )
         else:
-            # Have single check; present single line of the cable and indicate to verify the components
             nb_non_existent_count += 1
-            print("One or both devices don't exist")
+            nb_non_existent_objects.append(
+                [
+                    cable_dict["dev_a"],
+                    cable_dict["termination_a"],
+                    cable_dict['termination_a_type'],
+                    cable_dict["dev_b"],
+                    cable_dict["termination_b"],
+                    cable_dict['termination_b_type']
+                ]
+            )
 except pynetbox.core.query.RequestError as e:
     print(e.error)
+
+if (nb_non_existent_count > 0):
+    title = "One or more components of the following cable(s) doesn't exist"
+    headerValues = ["Device A", "Termination A", "Termination A Type", "Dev B", "Termination B", "Termination B Type"]
+    create_nb_log(title, headerValues, nb_non_existent_objects, 5, 24)
+
+if (existing_nb_count > 0):
+    title = "The following NetBox cables already exist"
+    headerValues = ["Device A", "Termination A", "Termination A Type", "Dev B", "Termination B", "Termination B Type"]
+    create_nb_log(title, headerValues, existing_nb_objects, 5, 30)
+
+if (created_nb_count > 0):
+    title = "The following NetBox cables were created"
+    headerValues = ["Device A", "Termination A", "Termination A Type", "Dev B", "Termination B", "Termination B Type", "Type", "Status"]
+    create_nb_log(title, headerValues, created_nb_objects, 5, 42)
+else:
+    print()
+    print(32*"*"," No cables were created ",32*"*")
+    print("\nAll defined cables were already configured or there were errors for some of the objects")
