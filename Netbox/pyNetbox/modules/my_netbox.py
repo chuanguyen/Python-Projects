@@ -157,7 +157,7 @@ def create_nb_log(title, headerValues, nb_objs_data,headerWidthPadding=5,titleSe
     header_fmt = ""
 
     print()
-    print(titleSeparator + " " + title + " " + titleSeparator)
+    print(f"{titleSeparator} {title} {titleSeparator}")
     print()
 
     for header in headerValues:
