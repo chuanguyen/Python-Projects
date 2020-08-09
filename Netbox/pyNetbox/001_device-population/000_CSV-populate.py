@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id)
+from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -26,30 +26,27 @@ nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
 ### Read from CSV for NetBox device data
 nb_source_file = "nb_devices.csv"
 
-# Stores devices and attributes that will be created
+# Stores info on created NB devices
 nb_all_created_devices_count = 0
-nb_all_devices = list()
-nb_all_devices_primaryIPs = dict()
-nb_all_devices_mgmt_intf = dict()
-
-# Stores IPs for duplicate checking
-all_IPs = list()
+nb_all_created_devices = list()
 
 # Stores all already created NetBox objects
 nb_existing_devices_count = 0
 nb_existing_devices = list()
 
 # Stores non-existent NetBox objects
-nb_non_existent_count = 0
-nb_non_existent_objects = dict()
-nb_non_existent_objects['site'] = list()
-nb_non_existent_objects['device_type'] = list()
-nb_non_existent_objects['device_role'] = list()
-nb_non_existent_objects['rack'] = list()
-nb_non_existent_objects['platforms'] = list()
+nb_non_existent_devices_count = 0
+nb_non_existent_devices = list()
 
-fmt = "{:<15}{:<25}{:<15}"
-header = ("Model","Name","Status")
+# Stores devices and attributes that will be created
+nb_all_devices = list()
+nb_all_devices_primaryIPs = dict()
+nb_all_devices_mgmt_intf = dict()
+
+# Stores IPs for duplicate checking
+all_IPs = list()
+unique_IPs = set()
+duplicated_IPs = list()
 
 try:
     with open(nb_source_file) as f:
@@ -57,32 +54,33 @@ try:
       for row in reader:
           nb_obj = None
 
-          ndev_site = nb.dcim.sites.get(slug=row['site'])
-          ndev_dtype = nb.dcim.device_types.get(slug=row['device_type'])
-          ndev_drole = nb.dcim.device_roles.get(slug=row['device_role'])
-          ndev_rack = nb.dcim.racks.get(q=row['rack'])
-          ndev_platform = nb.dcim.platforms.get(slug=row['platform'])
+          ndev_site = retrieve_nb_obj(nb,"dcim","sites",row['site'])
+          ndev_rack = retrieve_nb_obj(nb,"dcim","racks",row['rack'])
+          ndev_dtype = retrieve_nb_obj(nb,"dcim","device_types",row['device_type'])
+          ndev_drole = retrieve_nb_obj(nb,"dcim","device_roles",row['device_role'])
+          ndev_platform = retrieve_nb_obj(nb,"dcim","platforms",row['platform'])
 
           # Verifies whether DCIM object exists
-          if (not ndev_site):
-              nb_non_existent_objects['site'].append(row['site'])
-              nb_non_existent_count += 1
-          if (not ndev_dtype):
-              nb_non_existent_objects['device_type'].append(row['device_type'])
-              nb_non_existent_count += 1
-          if (not ndev_drole):
-              nb_non_existent_objects['device_role'].append(row['device_role'])
-              nb_non_existent_count += 1
-          if (not ndev_rack):
-              nb_non_existent_objects['rack'].append(row['rack'])
-              nb_non_existent_count += 1
-          if (not ndev_platform):
-              nb_non_existent_objects['platform'].append(row['platform'])
-              nb_non_existent_count += 1
+          if (not (ndev_site and ndev_dtype and ndev_drole and ndev_rack and ndev_platform) ):
+              nb_non_existent_devices_count += 1
+
+              nb_non_existent_devices.append(
+                [
+                    row['name'],
+                    row['site'],
+                    row['rack'],
+                    row['device_type'],
+                    row['device_role'],
+                    row['platform']
+                ]
+              )
 
           # Generates dict of values for PyNetbox to create object
-          if (nb_non_existent_count == 0):
+          if (nb_non_existent_devices_count == 0):
               nb_obj = nb.dcim.devices.get(name=row['name'])
+
+              # Adds primary IPs to list for duplicate checking
+              all_IPs.append(row['primary_ipv4'])
 
               if (not nb_obj):
                   nb_all_created_devices_count += 1
@@ -103,21 +101,31 @@ try:
                     )
                   )
 
+                  nb_all_created_devices.append(
+                    [
+                        row['name'],
+                        row['device_type'],
+                        row['site'],
+                        row['rack'],
+                        row['mgmt_intf'],
+                        row['primary_ipv4']
+                    ]
+                  )
+
                   nb_all_devices_primaryIPs[row['name']] = row['primary_ipv4']
-                  all_IPs.append(row['primary_ipv4'])
                   nb_all_devices_mgmt_intf[row['name']] = row['mgmt_intf']
               else:
                   nb_existing_devices_count += 1
 
                   nb_existing_devices.append(
-                      dict(
-                          name=nb_obj.name,
-                          site=nb_obj.site.name,
-                          rack=nb_obj.rack.name,
-                          serial=nb_obj.serial,
-                          asset_tag=nb_obj.asset_tag,
-                          status=nb_obj.status.label
-                      )
+                      [
+                          nb_obj.name,
+                          nb_obj.site.name,
+                          nb_obj.rack.name,
+                          nb_obj.serial,
+                          nb_obj.asset_tag,
+                          nb_obj.status.label
+                      ]
                   )
 
 
@@ -126,62 +134,37 @@ except FileNotFoundError as e:
 except pynetbox.core.query.RequestError as e:
     print(e.error)
 
-flag = len(set(all_IPs)) == len(all_IPs)
-
 if (nb_existing_devices_count > 0):
-    print(24*"*"," The following NetBox devices already exist ",24*"*")
-    print()
-
-    # Formatting and header for output
-    fmt = "{:<15}{:<15}{:<15}{:<25}{:<15}{:<15}"
-    header = ("Name", "Site", "Rack", "Serial #", "Asset Tag", "Status")
-    print(fmt.format(*header))
-
-    for nb_existing_device in nb_existing_devices:
-        print(
-            fmt.format(
-                nb_existing_device['name'],
-                nb_existing_device['site'],
-                nb_existing_device['rack'],
-                nb_existing_device['serial'],
-                nb_existing_device['asset_tag'],
-                nb_existing_device['status'],
-            )
-        )
+    title = "The following NetBox devices already exist"
+    headerValues = ["Name", "Site", "Rack", "Serial #", "Asset Tag", "Status"]
+    create_nb_log(title, headerValues, nb_existing_devices, 15, 36)
 
 ### Generates table of non-existent NetBox objects defined in CSV
-if ( (nb_non_existent_count > 0) or not(flag) ):
-    # Print results of verifying duplicated IPs
-    if(not flag):
-        print()
-        print(12*"*"," Verify for duplicated IPs ",12*"*")
-        print ("One or more of the devices have duplicated IPs")
+if ( nb_non_existent_devices_count > 0 ):
+    title = "One or more of the following device attributes are invalid"
+    headerValues = ["Name", "Site", "Rack", "Device Type", "Device Role", "Platform"]
+    create_nb_log(title, headerValues, nb_non_existent_devices, 15, 30)
 
-    print()
-    print(12*"*"," Verify the following NetBox Objects Exist ",12*"*")
-    print(fmt.format(*header))
+# Creates a set to remove duplicate IPs
+# If length of set differs from list, indicates there are duplicate IPs
+flag = len(set(all_IPs)) == len(all_IPs)
 
-    # Print summary of non-existent objects in CSV
-    for model,nb_objects in nb_non_existent_objects.items():
-        for nb_object in nb_objects:
-            print(
-                fmt.format(
-                    model,
-                    nb_object,
-                    "Non-Existent"
-                )
-            )
+# Print results of verifying duplicated IPs
+if(not flag):
+    for device_ip in all_IPs:
+        if (device_ip not in unique_IPs):
+            unique_IPs.add(device_ip)
+        else:
+            duplicated_IPs.append([device_ip,])
+
+    title = "The following IPs are duplicated"
+    headerValues = ["Duplicated IP Addresses"]
+    create_nb_log(title, headerValues, duplicated_IPs, 15, 12)
+
 elif (nb_all_created_devices_count > 0):
     try:
         # Add devices to NetBox and store resulting object in "created_devs"
         nb_created_devices = nb.dcim.devices.create(nb_all_devices)
-
-        # Formatting and header for output
-        fmt = "{:<15}{:<20}{:<20}{:<15}{:<10}{:<15}{:<25}{:<20}"
-        header = ("Device", "Dev Role", "Dev Platform", "Dev Type", "Site", "Rack", "Management Interface", "IP")
-        print()
-        print(50*"*"," Created Devices ",50*"*")
-        print(fmt.format(*header))
 
         for created_dev in nb_created_devices:
             # Retrieve specific interface associated w/ created device
@@ -191,7 +174,7 @@ elif (nb_all_created_devices_count > 0):
             primary_ip_addr_dict = dict(
                 address=nb_all_devices_primaryIPs[created_dev.name],
                 status=1,
-                description="Management IP for {}".format(created_dev.name),
+                description=f"Management IP for {created_dev.name}",
                 interface=nb_primary_interface[0].id,
             )
 
@@ -203,19 +186,9 @@ elif (nb_all_created_devices_count > 0):
             dev.primary_ip4 = new_primary_ip.id
             dev.save()
 
-            # Print summary info for each created device
-            print(
-                fmt.format(
-                    created_dev.name,
-                    created_dev.device_role.name,
-                    created_dev.platform.name,
-                    created_dev.device_type.model,
-                    created_dev.site.name,
-                    created_dev.rack.name,
-                    nb_all_devices_mgmt_intf[created_dev.name],
-                    new_primary_ip.address
-                )
-            )
+            title = "The following NetBox objects were created"
+            headerValues = ["Device", "Type", "Site", "Rack", "Management Interface", "IP"]
+            create_nb_log(title, headerValues, nb_all_created_devices, 10, 36)
 
     except pynetbox.core.query.RequestError as e:
         print(e.error)
