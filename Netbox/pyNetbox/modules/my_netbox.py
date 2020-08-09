@@ -38,6 +38,8 @@ def retrieve_nb_obj(nb, app, model, searchTerm):
             nb_obj = nb.dcim.devices.get(name=searchTerm)
         elif (model == "device_roles"):
             nb_obj = nb.dcim.device_roles.get(slug=searchTerm_modified)
+        elif (model == "device_types"):
+            nb_obj = nb.dcim.device_types.get(slug=searchTerm_modified)
         elif (model == "manufacturers"):
             nb_obj = nb.dcim.manufacturers.get(slug=searchTerm_modified)
         elif (model == "platforms"):
@@ -77,6 +79,7 @@ def retrieve_nb_identifier(model):
         racks="name",
         devices="name",
         device_roles="slug",
+        device_type="slug",
         manufacturers="slug",
         platforms="slug",
         rirs="slug",
