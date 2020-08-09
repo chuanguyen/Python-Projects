@@ -52,20 +52,32 @@ try:
         nb_termination_b = retrieve_termination_obj(nb,cable_dict["termination_b_type"],cable_dict["dev_b"],cable_dict["termination_b"])
 
         if ( (nb_dev_a and nb_termination_a) and (nb_dev_b and nb_termination_b) ):
-            # Searches whether cable already exists
-            nb_cable = (nb.dcim.cables.get(termination_a_id=nb_termination_a.id,termination_a_type=cable_dict['termination_a_type'],termination_b_id=nb_termination_b.id,termination_b_type=cable_dict['termination_b_type']))
+            nb_cable = None
+
+            # With cables, unable to search from both ends using NetBox API
+            # Queries are only from the perspective from one end
+            # Must retrieve cables from a given device. Returned object has info on both ends
+            # Must then manually sift through through cables and verify the interface IDs from the returned object
+            nb_cables_search = nb.dcim.cables.filter(device_id=nb_dev_a.id)
+
+            # Check if termination A & B from returned cables match interface and type
+            for nb_cable_search in nb_cables_search:
+                if ((nb_cable_search.termination_a_id == nb_termination_a.id and nb_cable_search.termination_a_type == cable_dict["termination_a_type"]) and (nb_cable_search.termination_b_id == nb_termination_b.id and nb_cable_search.termination_b_type == cable_dict["termination_b_type"])):
+                    nb_cable = nb_cable_search
 
             if (nb_cable):
                 existing_nb_count += 1
 
                 existing_nb_objects.append(
                     [
-                        nb_dev_a.name,
-                        nb_termination_a.name,
-                        cable_dict['termination_a_type'],
-                        nb_dev_b.name,
-                        nb_termination_b.name,
-                        cable_dict['termination_b_type']
+                        nb_cable.termination_a.device.name,
+                        nb_cable.termination_a.name,
+                        nb_cable.termination_a_type,
+                        nb_cable.termination_b.device.name,
+                        nb_cable.termination_b.name,
+                        nb_cable.termination_b_type,
+                        nb_cable.type,
+                        nb_cable.status.label
                     ]
                 )
             else:
@@ -87,11 +99,11 @@ try:
                 created_nb_count += 1
                 created_nb_objects.append(
                     [
-                        nb_dev_a.name,
-                        nb_termination_a.name,
+                        cable_dict['dev_a'],
+                        cable_dict['termination_a'],
                         cable_dict['termination_a_type'],
-                        nb_dev_b.name,
-                        nb_termination_b.name,
+                        cable_dict['dev_b'],
+                        cable_dict['termination_b'],
                         cable_dict['termination_b_type'],
                         cable_dict['type'],
                         cable_dict['status']
@@ -119,7 +131,7 @@ if (nb_non_existent_count > 0):
 
 if (existing_nb_count > 0):
     title = "The following NetBox cables already exist"
-    headerValues = ["Device A", "Termination A", "Termination A Type", "Dev B", "Termination B", "Termination B Type"]
+    headerValues = ["Device A", "Termination A", "Termination A Type", "Dev B", "Termination B", "Termination B Type","Type","Status"]
     create_nb_log(title, headerValues, existing_nb_objects, 5, 30)
 
 if (created_nb_count > 0):
