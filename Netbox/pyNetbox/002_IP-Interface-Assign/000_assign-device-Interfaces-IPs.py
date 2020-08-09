@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id)
+from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -54,10 +54,10 @@ for dev in nb_base_data['devices']:
                 if (not dev_interface):
                     unknown_nb_dev_interfaces_count += 1
                     unknown_nb_dev_interfaces.append(
-                        dict(
-                            device=dev_name,
-                            name=interface['name'],
-                        )
+                        [
+                            dev_name,
+                            interface['name']
+                        ]
                     )
                 else:
                     # Verifies whether IP has already been assigned
@@ -66,13 +66,13 @@ for dev in nb_base_data['devices']:
                     if (nb_existing_ip):
                         existing_nb_dev_IPs_count += 1
                         existing_nb_dev_IPs.append(
-                            dict(
-                                expected_dev=dev_name,
-                                expected_int=interface['name'],
-                                current_dev=nb_existing_ip.interface.device.name,
-                                current_int=nb_existing_ip.interface.name,
-                                ip=interface['ipv4'][0]['prefix']
-                            )
+                            [
+                                dev_name,
+                                interface['name'],
+                                nb_existing_ip.interface.device.name,
+                                nb_existing_ip.interface.name,
+                                interface['ipv4'][0]['prefix']
+                            ]
                         )
                     else:
                         interface_ip_dict = dict(
@@ -82,77 +82,35 @@ for dev in nb_base_data['devices']:
                             interface=dev_interface.id,
                         )
 
-                        pprint.pprint(interface_ip_dict)
                         nb.ipam.ip_addresses.create(interface_ip_dict)
 
                         created_nb_objs_count += 1
                         created_nb_objs.append(
-                            dict(
-                                device=dev_name,
-                                interface=interface['name'],
-                                ip=interface['ipv4'][0]['prefix'],
-                                description=interface['description']
-                            )
+                            [
+                                dev_name,
+                                interface['name'],
+                                interface['ipv4'][0]['prefix'],
+                                interface['description']
+                            ]
                         )
             except pynetbox.core.query.RequestError as e:
                 print(e.error)
 
 if (unknown_nb_dev_interfaces_count > 0):
-    print(12*"*"," Verify the following interfaces exist on the devices ",12*"*")
-    print()
-
-    # Formatting and header for output
-    fmt = "{:<15}{:<15}"
-    header = ("Device", "Interface")
-    print(fmt.format(*header))
-
-    for interface in unknown_nb_dev_interfaces:
-        print(
-            fmt.format(
-                interface['device'],
-                interface['name']
-            )
-        )
+    title = "Verify the following interfaces exist on the devices"
+    headerValues = ["Device", "Interface"]
+    create_nb_log(title, headerValues, unknown_nb_dev_interfaces, 5, 12)
 
 if (existing_nb_dev_IPs_count > 0):
-    print(12*"*"," The following IPs are already assigned ",12*"*")
-    print()
+    title = "The following IPs are already assigned"
+    headerValues = ["Expected Device", "Expected Interface", "Current NB Device", "Current NB Interface", "IP Address"]
+    create_nb_log(title, headerValues, existing_nb_dev_IPs, 5, 34)
 
-    # Formatting and header for output
-    fmt = "{:<20}{:<20}{:<20}{:<25}{:<15}"
-    header = ("Expected Device", "Expected Interface", "Current NB Device", "Current NB Interface", "IP Address")
-    print(fmt.format(*header))
-
-    for ip_address in existing_nb_dev_IPs:
-        print(
-            fmt.format(
-                ip_address['expected_dev'],
-                ip_address['expected_int'],
-                ip_address['current_dev'],
-                ip_address['current_int'],
-                ip_address['ip']
-            )
-        )
 
 if (created_nb_objs_count > 0):
-    print()
-    print(12*"*"," The following IPs have been assigned to the given device and interface ",12*"*")
-    print()
-
-    # Formatting and header for output
-    fmt = "{:<15}{:<20}{:<20}{:<25}"
-    header = ("Device", "Interface", "IP", "Description")
-    print(fmt.format(*header))
-
-    for ip in created_nb_objs:
-        print(
-            fmt.format(
-                ip['device'],
-                ip['interface'],
-                ip['ip'],
-                ip['description']
-            )
-        )
+    title = "The following IPs have been assigned to the given device and interface"
+    headerValues = ["Device", "Interface", "IP", "Description"]
+    create_nb_log(title, headerValues, created_nb_objs, 20, 12)
 
 else:
     print()

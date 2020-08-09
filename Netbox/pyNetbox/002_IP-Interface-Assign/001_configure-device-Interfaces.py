@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id)
+from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -49,14 +49,14 @@ for dev in nb_base_data['devices']:
 
                 if (not dev_interface):
                     unknown_nb_dev_interfaces_count += 1
+
                     unknown_nb_dev_interfaces.append(
-                        dict(
-                            device=dev_name,
-                            name=interface['name'],
-                        )
+                        [
+                            dev_name,
+                            interface['name']
+                        ]
                     )
                 else:
-                    # Code to configure interfaces
                     ## Can make changes without verification
                     ## Netbox change log can be used to track history
                     nb_interface_config_dict = dict(
@@ -98,56 +98,28 @@ for dev in nb_base_data['devices']:
 
                     configured_nb_interfaces_count += 1
                     configured_nb_interfaces.append(
-                        dict(
-                            device=dev_name,
-                            interface=interface['name'],
-                            description=interface['description'],
-                            enabled=interface['enabled'],
-                            mgmt_only=interface['mgmt_only'],
-                            mode=interface['mode'],
-                        )
+                        [
+                            dev_name,
+                            interface['name'],
+                            interface['description'],
+                            interface['enabled'],
+                            interface['mgmt_only'],
+                            interface['mode']
+                        ]
                     )
+
             except pynetbox.core.query.RequestError as e:
                 print(e.error)
 
 if (unknown_nb_dev_interfaces_count > 0):
-    print(12*"*"," Verify the following interfaces exist on the devices ",12*"*")
-    print()
-
-    # Formatting and header for output
-    fmt = "{:<15}{:<15}"
-    header = ("Device", "Interface")
-    print(fmt.format(*header))
-
-    for interface in unknown_nb_dev_interfaces:
-        print(
-            fmt.format(
-                interface['device'],
-                interface['name']
-            )
-        )
+    title = "Verify the following interfaces exist on the devices"
+    headerValues = ["Device", "Interface"]
+    create_nb_log(title, headerValues, unknown_nb_dev_interfaces, 5, 12)
 
 if (configured_nb_interfaces_count > 0):
-    print()
-    print(12*"*"," The following interfaces have been configured ",12*"*")
-    print()
-
-    # Formatting and header for output
-    fmt = "{:<15}{:<20}{:<25}{:<10}{:<20}{:<20}"
-    header = ("Device", "Interface", "Description","Status","Management Only","802.1Q Mode")
-    print(fmt.format(*header))
-
-    for interface in configured_nb_interfaces:
-        print(
-            fmt.format(
-                interface['device'],
-                interface['interface'],
-                interface['description'],
-                str(bool(interface['enabled'])),
-                str(bool(interface['mgmt_only'])),
-                interface['mode'] or "",
-            )
-        )
+    title = "The following interfaces have been configured"
+    headerValues = ["Device", "Interface", "Description","Status","Management Only","802.1Q Mode"]
+    create_nb_log(title, headerValues, configured_nb_interfaces, 5, 24)
 
 else:
     print()

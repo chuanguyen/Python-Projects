@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id)
+from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -34,30 +34,22 @@ except NameError as e:
 
 # Stores NetBox objects that are already created
 existing_nb_count = 0
-existing_nb_objects = dict()
+existing_nb_objects = list()
 
 # Stores NetBox objects that are created
 created_nb_count = 0
-created_nb_objects = dict()
-
-# DCIM App
-created_nb_objects['dcim'] = list()
-existing_nb_objects['dcim'] = list()
-
-# IPAM App
-created_nb_objects['ipam'] = list()
-existing_nb_objects['ipam'] = list()
+created_nb_objects = list()
 
 # Cycle through creating NetBox App & Models
-for apps in nb_base_data:
-    for app,model_nb_objs in apps.items():
+for nb_apps in nb_base_data:
+    for nb_app,model_nb_objs in nb_apps.items():
         for model,nb_obj_dicts in model_nb_objs.items():
             for nb_obj_dict in nb_obj_dicts:
                 if (nb_obj_dict):
                     nb_obj = None
 
                     try:
-                        if (app == "dcim"):
+                        if (nb_app == "dcim"):
                             if (model == "regions"):
                                 # Attempts to retrieves object, and creates object if it doesn't exist
                                 nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['slug'])
@@ -103,7 +95,7 @@ for apps in nb_base_data:
                                     nb_obj_dict['manufacturer'] = retrieve_nb_id(nb,"dcim","manufacturers",nb_obj_dict['manufacturer'])
                                     nb.dcim.platforms.create(nb_obj_dict)
 
-                        if (app == "ipam"):
+                        if (nb_app == "ipam"):
                             if (model == "rirs"):
                                 # Attempts to retrieves object, and creates object if it doesn't exist
                                 nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['slug'])
@@ -168,65 +160,35 @@ for apps in nb_base_data:
                         if (not nb_obj):
                             created_nb_count += 1
 
-                            created_nb_objects[app].append(
-                                dict(
-                                    app=app,
-                                    model=model,
-                                    name=nb_obj_dict[retrieve_nb_identifier(model)],
-                                )
+                            created_nb_objects.append(
+                                [
+                                    nb_app,
+                                    model,
+                                    nb_obj_dict[retrieve_nb_identifier(model)]
+                                ]
                             )
                         else:
                             existing_nb_count += 1
 
-                            existing_nb_objects[app].append(
-                                dict(
-                                    app=app,
-                                    model=model,
-                                    name=nb_obj_dict[retrieve_nb_identifier(model)],
-                                )
+                            existing_nb_objects.append(
+                                [
+                                    nb_app,
+                                    model,
+                                    nb_obj_dict[retrieve_nb_identifier(model)]
+                                ]
                             )
                     except pynetbox.core.query.RequestError as e:
                         print(e.error)
 
 if (existing_nb_count > 0):
-    print(12*"*"," The following NetBox objects already existed ",12*"*")
-    print()
-
-    # Formatting and header for output
-    fmt = "{:<15}{:<15}{:<20}"
-    header = ("App", "Model", "Name")
-    print(fmt.format(*header))
-
-    for app,model_objs in existing_nb_objects.items():
-        for obj in model_objs:
-            print(
-                fmt.format(
-                    obj['app'],
-                    obj['model'],
-                    obj['name']
-                )
-            )
-
+    title = "The following NetBox objects already existed"
+    headerValues = ["App", "Model", "Name"]
+    create_nb_log(title, headerValues, existing_nb_objects, 15, 12)
 
 if (created_nb_count > 0):
-    print()
-    print(12*"*"," The following NetBox objects have been created ",12*"*")
-    print()
-
-    # Formatting and header for output
-    fmt = "{:<15}{:<15}{:<20}"
-    header = ("App", "Model", "Name")
-    print(fmt.format(*header))
-
-    for app,model_objs in created_nb_objects.items():
-        for obj in model_objs:
-            print(
-                fmt.format(
-                    obj['app'],
-                    obj['model'],
-                    obj['name']
-                )
-            )
+    title = "The following NetBox objects have been created"
+    headerValues = ["App", "Model", "Name"]
+    create_nb_log(title, headerValues, created_nb_objects, 15, 12)
 
 else:
     print()
