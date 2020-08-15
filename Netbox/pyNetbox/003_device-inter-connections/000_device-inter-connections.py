@@ -21,7 +21,6 @@ try:
 
     nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
 
-    ### Read from CSV for NetBox device data
     nb_source_file = "inter-connections.yml"
 
     with open(nb_source_file) as f:

@@ -15,22 +15,22 @@ from my_netbox import (create_nb_obj_dict,retrieve_nb_obj,retrieve_nb_identifier
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
-except KeyError as exc:
-    sys.exit(f"ERROR: missing ENVAR: {exc}")
 
-NETBOX_URL = "http://localhost:8000"
-NETBOX_TOKEN = os.environ['NETBOX_TOKEN']
+    NETBOX_URL = "http://localhost:8000"
+    NETBOX_TOKEN = os.environ['NETBOX_TOKEN']
 
-nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
+    nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
 
-### Read from CSV for NetBox device data
-nb_source_file = "base_nb_objects.yml"
+    nb_source_file = "base_nb_objects.yml"
 
-try:
     with open(nb_source_file) as f:
         nb_base_data = yaml.load(f, Loader=yaml.FullLoader)
-except NameError as e:
-    print(e)
+except FileNotFoundError as e:
+    print(f"ERROR: FILE {nb_source_file} not found", file=sys.stderr)
+    raise
+except KeyError as e:
+    print(f"ERROR: ENVAR {e} not found", file=sys.stderr)
+    sys.exit()
 
 # Stores NetBox objects that are already created
 existing_nb_count = 0
@@ -149,7 +149,7 @@ for nb_apps in nb_base_data:
                                 ]
                             )
                     except pynetbox.core.query.RequestError as e:
-                        print(e.error)
+                        print(f"ERROR: NetBox query request failed {e}", file=sys.stderr)
 
 if (existing_nb_count > 0):
     title = "The following NetBox objects already existed"

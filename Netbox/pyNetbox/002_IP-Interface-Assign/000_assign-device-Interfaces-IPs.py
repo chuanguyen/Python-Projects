@@ -15,22 +15,22 @@ from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,cre
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
-except KeyError as exc:
-    sys.exit(f"ERROR: missing ENVAR: {exc}")
 
-NETBOX_URL = "http://localhost:8000"
-NETBOX_TOKEN = os.environ['NETBOX_TOKEN']
+    NETBOX_URL = "http://localhost:8000"
+    NETBOX_TOKEN = os.environ['NETBOX_TOKEN']
 
-nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
+    nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
 
-### Read from CSV for NetBox device data
-nb_source_file = "nb_devices_interfaces.yml"
+    nb_source_file = "nb_devices_interfaces.yml"
 
-try:
     with open(nb_source_file) as f:
         nb_base_data = yaml.load(f, Loader=yaml.FullLoader)
-except NameError as e:
-    print(e)
+except FileNotFoundError as e:
+    print(f"ERROR: FILE {nb_source_file} not found", file=sys.stderr)
+    raise
+except KeyError as e:
+    print(f"ERROR: ENVAR {e} not found", file=sys.stderr)
+    sys.exit()
 
 # Stores references to non-existent or unrecognized interfaces on NB devices
 unknown_nb_dev_interfaces_count = 0
@@ -94,7 +94,7 @@ for dev in nb_base_data['devices']:
                             ]
                         )
             except pynetbox.core.query.RequestError as e:
-                print(e.error)
+                print(f"ERROR: NetBox query request failed {e}", file=sys.stderr)
 
 if (unknown_nb_dev_interfaces_count > 0):
     title = "Verify the following interfaces exist on the devices"

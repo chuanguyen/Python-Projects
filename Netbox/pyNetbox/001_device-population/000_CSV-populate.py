@@ -16,7 +16,8 @@ from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,cre
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
 except KeyError as exc:
-    sys.exit(f"ERROR: missing ENVAR: {exc}")
+    print(f"ERROR: ENVAR {e} not found", file=sys.stderr)
+    sys.exit()
 
 NETBOX_URL = "http://localhost:8000"
 NETBOX_TOKEN = os.environ['NETBOX_TOKEN']
@@ -130,9 +131,9 @@ try:
 
 
 except FileNotFoundError as e:
-    print(e)
+    print(f"ERROR: File {nb_source_file} not found", file=sys.stderr)
 except pynetbox.core.query.RequestError as e:
-    print(e.error)
+    print(f"ERROR: NetBox query request failed {e}", file=sys.stderr)
 
 if (nb_existing_devices_count > 0):
     title = "The following NetBox devices already exist"
@@ -191,7 +192,7 @@ elif (nb_all_created_devices_count > 0):
             create_nb_log(title, headerValues, nb_all_created_devices, 10, 36)
 
     except pynetbox.core.query.RequestError as e:
-        print(e.error)
+        print(f"ERROR: NetBox query request failed {e}", file=sys.stderr)
 else:
     print()
     print(24*"*"," No NetBox devices were created ",24*"*")
