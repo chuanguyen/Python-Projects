@@ -15,22 +15,23 @@ from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,ret
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
-except KeyError as exc:
-    sys.exit(f"ERROR: missing ENVAR: {exc}")
 
-NETBOX_URL = "http://localhost:8000"
-NETBOX_TOKEN = os.environ['NETBOX_TOKEN']
+    NETBOX_URL = "http://localhost:8000"
+    NETBOX_TOKEN = os.environ['NETBOX_TOKEN']
 
-nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
+    nb = pynetbox.api(url=NETBOX_URL, token=NETBOX_TOKEN)
 
-### Read from CSV for NetBox device data
-nb_source_file = "inter-connections.yml"
+    ### Read from CSV for NetBox device data
+    nb_source_file = "inter-connections.yml"
 
-try:
     with open(nb_source_file) as f:
         nb_base_data = yaml.load(f, Loader=yaml.FullLoader)
-except NameError as e:
-    print(e)
+except FileNotFoundError as e:
+    print(f"ERROR: FILE {nb_source_file} not found", file=sys.stderr)
+    raise
+except KeyError as e:
+    print(f"ERROR: ENVAR {e} not found", file=sys.stderr)
+    sys.exit()
 
 # Stores NetBox objects that are already created
 existing_nb_count = 0
@@ -121,8 +122,8 @@ try:
                     cable_dict['termination_b_type']
                 ]
             )
-except pynetbox.core.query.RequestError as e:
-    print(e.error)
+except pynetbox.core.query.RequestError:
+    print(f"ERROR: NetBox query request failed {e}", file=sys.stderr)
 
 if (nb_non_existent_count > 0):
     title = "One or more components of the following cable(s) doesn't exist"
