@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
+from my_netbox import (create_nb_obj_dict,retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -51,111 +51,82 @@ for nb_apps in nb_base_data:
                     try:
                         if (nb_app == "dcim"):
                             if (model == "regions"):
-                                # Attempts to retrieves object, and creates object if it doesn't exist
-                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['required_non_id']['slug'])
+
                                 if (not nb_obj):
-                                    nb.dcim.regions.create(nb_obj_dict)
+                                    nb.dcim.regions.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "sites"):
-                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['required_non_id']['slug'])
+
                                 if (not nb_obj):
-                                    # Replacing fields that require NetBox IDs as values
-                                    nb_obj_dict['region'] = retrieve_nb_id(nb,"dcim","regions",nb_obj_dict['region'])
-                                    nb.dcim.sites.create(nb_obj_dict)
+                                    nb.dcim.sites.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "rack_roles"):
-                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['required_non_id']['slug'])
+
                                 if (not nb_obj):
-                                    nb.dcim.rack_roles.create(nb_obj_dict)
+                                    nb.dcim.rack_roles.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "rack_groups"):
-                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['required_non_id']['slug'])
+
                                 if (not nb_obj):
-                                    nb_obj_dict['site'] = retrieve_nb_id(nb,"dcim","sites",nb_obj_dict['site'])
-                                    nb.dcim.rack_groups.create(nb_obj_dict)
+                                    nb.dcim.rack_groups.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "racks"):
-                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['name'])
+                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['required_non_id']['name'])
 
                                 if (not nb_obj):
-                                    nb_obj_dict['site'] = retrieve_nb_id(nb,"dcim","sites",nb_obj_dict['site'])
-                                    nb_obj_dict['group'] = retrieve_nb_id(nb,"dcim","rack_groups",nb_obj_dict['group'])
-                                    nb_obj_dict['role'] = retrieve_nb_id(nb,"dcim","rack_roles",nb_obj_dict['role'])
-                                    nb.dcim.racks.create(nb_obj_dict)
+                                    nb.dcim.racks.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "device_roles"):
-                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['required_non_id']['slug'])
 
                                 if (not nb_obj):
-                                    nb.dcim.device_roles.create(nb_obj_dict)
+                                    nb.dcim.device_roles.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "manufacturers"):
-                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['required_non_id']['slug'])
 
                                 if (not nb_obj):
-                                    nb.dcim.manufacturers.create(nb_obj_dict)
+                                    nb.dcim.manufacturers.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "platforms"):
-                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"dcim",model,nb_obj_dict['required_non_id']['slug'])
 
                                 if (not nb_obj):
-                                    nb_obj_dict['manufacturer'] = retrieve_nb_id(nb,"dcim","manufacturers",nb_obj_dict['manufacturer'])
-                                    nb.dcim.platforms.create(nb_obj_dict)
+                                    nb.dcim.platforms.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
 
                         if (nb_app == "ipam"):
                             if (model == "rirs"):
-                                # Attempts to retrieves object, and creates object if it doesn't exist
-                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['required_non_id']['slug'])
 
                                 if (not nb_obj):
-                                    nb.ipam.rirs.create(nb_obj_dict)
+                                    nb.ipam.rirs.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "aggregates"):
-                                # Attempts to retrieves object, and creates object if it doesn't exist
-                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['prefix'])
+                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['required_non_id']['prefix'])
 
                                 if (not nb_obj):
-                                    # Replacing fields that require NetBox IDs as values
-                                    nb_obj_dict['rir'] = retrieve_nb_id(nb,"ipam","rirs",nb_obj_dict['rir'])
-                                    nb.ipam.aggregates.create(nb_obj_dict)
+                                    nb.ipam.aggregates.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "roles"):
-                                # Attempts to retrieves object, and creates object if it doesn't exist
-                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['required_non_id']['slug'])
 
                                 if (not nb_obj):
-                                    nb.ipam.roles.create(nb_obj_dict)
+                                    nb.ipam.roles.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "vlan_groups"):
-                                # Attempts to retrieves object, and creates object if it doesn't exist
-                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['slug'])
+                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['required_non_id']['slug'])
 
                                 if (not nb_obj):
-                                    # Replacing fields that require NetBox IDs as values
-                                    nb_obj_dict['site'] = retrieve_nb_id(nb,"dcim","sites",nb_obj_dict['site'])
-
-                                    nb.ipam.vlan_groups.create(nb_obj_dict)
+                                    nb.ipam.vlan_groups.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "vlans"):
-                                # Attempts to retrieves object, and creates object if it doesn't exist
-                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['vid'])
+                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['required_non_id']['vid'])
 
                                 if (not nb_obj):
-                                    # Replacing fields that require NetBox IDs as values
-                                    nb_obj_dict['site'] = retrieve_nb_id(nb,"dcim","sites",nb_obj_dict['site'])
-                                    if (nb_obj_dict['group']): nb_obj_dict['group'] = retrieve_nb_id(nb,"ipam","vlan_groups",nb_obj_dict['group'])
-                                    if (nb_obj_dict['role']): nb_obj_dict['role'] = retrieve_nb_id(nb,"ipam","roles",nb_obj_dict['role'])
-
-                                    nb.ipam.vlans.create(nb_obj_dict)
+                                    nb.ipam.vlans.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "vrfs"):
-                                # Attempts to retrieves object, and creates object if it doesn't exist
-                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['name'])
+                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['required_non_id']['name'])
 
                                 if (not nb_obj):
-                                    nb.ipam.vrfs.create(nb_obj_dict)
+                                    nb.ipam.vrfs.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
                             elif (model == "prefixes"):
-                                # Attempts to retrieves object, and creates object if it doesn't exist
-                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['prefix'])
+                                nb_obj = retrieve_nb_obj(nb,"ipam",model,nb_obj_dict['required_non_id']['prefix'])
 
                                 if (not nb_obj):
-                                    # Replacing fields that require NetBox IDs as values
-                                    nb_obj_dict['site'] = retrieve_nb_id(nb,"dcim","sites",nb_obj_dict['site'])
-                                    nb_obj_dict['role'] = retrieve_nb_id(nb,"ipam","roles",nb_obj_dict['role'])
-
-                                    # Fields below may not always be defined, so only searches when they are defined
-                                    if (nb_obj_dict['vlan']): nb_obj_dict['vlan'] = retrieve_nb_id(nb,"ipam","vlans",nb_obj_dict['vlan'])
-                                    if (nb_obj_dict['vrf']): nb_obj_dict['vrf'] = retrieve_nb_id(nb,"ipam","vrfs",nb_obj_dict['vrf'])
-
-                                    nb.ipam.prefixes.create(nb_obj_dict)
+                                    nb.ipam.prefixes.create(create_nb_obj_dict(nb, nb_obj_dict['required_non_id'], nb_obj_dict['required_id'], nb_obj_dict['optional_non_id'], nb_obj_dict['optional_id']))
 
                         if (not nb_obj):
                             created_nb_count += 1
@@ -164,7 +135,7 @@ for nb_apps in nb_base_data:
                                 [
                                     nb_app,
                                     model,
-                                    nb_obj_dict[retrieve_nb_identifier(model)]
+                                    nb_obj_dict['required_non_id'][retrieve_nb_identifier(model)]
                                 ]
                             )
                         else:
@@ -174,7 +145,7 @@ for nb_apps in nb_base_data:
                                 [
                                     nb_app,
                                     model,
-                                    nb_obj_dict[retrieve_nb_identifier(model)]
+                                    nb_obj_dict['required_non_id'][retrieve_nb_identifier(model)]
                                 ]
                             )
                     except pynetbox.core.query.RequestError as e:

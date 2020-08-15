@@ -1,5 +1,41 @@
 #!/usr/bin/env python
 
+def create_nb_obj_dict(nb, required_non_id, required_id, optional_non_id, optional_id):
+    """Accepts attributes for NetBox model and will create a dict that can be used for object creation
+
+    Args:
+        nb: PyNetbox connection to a Netbox instance
+        required_non_id: NB Model attributes that don't require NB IDs
+        required_id: NB Model attributes that only accept NB IDs
+        optional_non_id: NB Model attributes that don't require NB IDs
+        optional_id: NB Model attributes that only accept NB IDs
+
+    Returns:
+        nb_obj_dict: Dictionary containing all the required and any optional fields for NetBox object creation
+
+    """
+    nb_obj_dict = dict()
+
+    if (required_non_id):
+        for attr_key,attr_value in required_non_id.items():
+            nb_obj_dict[attr_key] = attr_value
+
+    if (required_id):
+        for attr_key,attr_values in required_id.items():
+            nb_obj_dict[attr_key] = retrieve_nb_id(nb, attr_values['app'], attr_values['model'], attr_values['name'])
+
+    if (optional_non_id):
+        for attr_key,attr_value in optional_non_id.items():
+            if (attr_value):
+                nb_obj_dict[attr_key] = attr_value
+
+    if (optional_id):
+        for attr_key,attr_values in optional_id.items():
+            if (attr_values):
+                nb_obj_dict[attr_key] = retrieve_nb_id(nb, attr_values['app'], attr_values['model'], attr_values['name'])
+
+    return nb_obj_dict
+
 def retrieve_nb_obj(nb, app, model, searchTerm):
     """Searches for a NetBox object of a given model based on a search term and returns the object
 
