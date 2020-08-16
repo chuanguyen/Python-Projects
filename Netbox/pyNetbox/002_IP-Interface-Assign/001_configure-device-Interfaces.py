@@ -101,10 +101,10 @@ for dev in nb_base_data['devices']:
                         [
                             dev_name,
                             interface['name'],
-                            interface['description'],
-                            interface['enabled'],
-                            interface['mgmt_only'],
-                            interface['mode']
+                            str(bool(interface['enabled'])),
+                            str(bool(interface['mgmt_only'])),
+                            interface['mode'],
+                            interface['description']
                         ]
                     )
 
@@ -118,8 +118,8 @@ if (unknown_nb_dev_interfaces_count > 0):
 
 if (configured_nb_interfaces_count > 0):
     title = "The following interfaces have been configured"
-    headerValues = ["Device", "Interface", "Description","Status","Management Only","802.1Q Mode"]
-    create_nb_log(title, headerValues, configured_nb_interfaces, 5, 24)
+    headerValues = ["Device", "Interface","Status","Management Only","802.1Q Mode","Description"]
+    create_nb_log(title, headerValues, configured_nb_interfaces, 10, 24)
 
 else:
     print()
