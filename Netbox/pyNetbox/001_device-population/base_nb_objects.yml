@@ -11,15 +11,6 @@
           tags:
         optional_id:
           parent:
-      - required_non_id:
-          name: "region2"
-          slug: "region2"
-        required_id:
-        optional_non_id:
-          description:
-          tags:
-        optional_id:
-          parent:
     sites:
       - required_non_id:
           name: "hq1"
@@ -38,35 +29,11 @@
             app: "dcim"
             model: "regions"
           tenant:
-      - required_non_id:
-          name: "hq2"
-          slug: "hq2"
-        required_id:
-        optional_non_id:
-          description:
-          status: active
-          asn: 100
-          time_zone: "America/Vancouver"
-          facility:
-          tags:
-        optional_id:
-          region:
-            name: "burnaby"
-            app: "dcim"
-            model: "regions"
-          tenant:
+
     rack_roles:
       - required_non_id:
           name: "networking"
           slug: "networking"
-        required_id:
-        optional_non_id:
-          description: ""
-          color: "03a9f4"
-        optional_id:
-      - required_non_id:
-          name: "testing"
-          slug: "testing"
         required_id:
         optional_non_id:
           description: ""
@@ -77,18 +44,6 @@
       - required_non_id:
           name: "core-routing"
           slug: "core-routing"
-        required_id:
-          site:
-            name: "hq1"
-            app: "dcim"
-            model: "sites"
-        optional_non_id:
-          description:
-        optional_id:
-          parent:
-      - required_non_id:
-          name: "testing"
-          slug: "testing"
         required_id:
           site:
             name: "hq1"
@@ -131,50 +86,11 @@
             name: "networking"
             app: "dcim"
             model: "rack_roles"
-      - required_non_id:
-          name: "dc2-2-5"
-        required_id:
-          site:
-            name: "hq1"
-            app: "dcim"
-            model: "sites"
-        optional_non_id:
-          display_name: "dc2-2-5"
-          status: "active" # May need to be integer, so check
-          serial: "XXXX-YYYY-ZZZZ"
-          asset_tag: "000-9999"
-          type: "4-post-cabinet" # May need to be integer
-          width: 19
-          u_height: 42
-          outer_width: 39
-          outer_depth: 25
-          outer_unit: "in"
-          facility_id:
-          comments:
-          tags:
-        optional_id:
-          tenant:
-          group:
-            name: "core-routing"
-            app: "dcim"
-            model: "rack_groups"
-          role:
-            name: "networking"
-            app: "dcim"
-            model: "rack_roles"
+
     device_roles:
       - required_non_id:
-          name: "Network Access"
+          name: "network_access"
           slug: "network_access"
-        required_id:
-        optional_non_id:
-          description: ""
-          color:
-          vm_role:
-        optional_id:
-      - required_non_id:
-          name: "testing"
-          slug: "testing"
         required_id:
         optional_non_id:
           description: ""
@@ -190,18 +106,11 @@
         optional_non_id:
           description: Cisco devices
         optional_id:
-      - required_non_id:
-          name: "testing"
-          slug: "testing"
-        required_id:
-        optional_non_id:
-          description: testing
-        optional_id:
 
     platforms:
       - required_non_id:
           name: "IOS Devices"
-          slug: "ios-devices"
+          slug: "ios"
         required_id:
         optional_non_id:
           description:
@@ -211,32 +120,11 @@
             name: "Cisco"
             app: "dcim"
             model: "manufacturers"
-      - required_non_id:
-          name: "testing"
-          slug: "testing"
-        required_id:
-        optional_non_id:
-          description:
-          napalm_driver: "ios"
-        optional_id:
-          manufacturer:
-            name: "Cisco"
-            app: "dcim"
-            model: "manufacturers"
-
 - ipam:
     rirs:
       - required_non_id:
           name: "RFC-1918"
           slug: "rfc-1918"
-        required_id:
-        optional_non_id:
-          description:
-          is_private: true
-        optional_id:
-      - required_non_id:
-          name: "testing"
-          slug: "testing"
         required_id:
         optional_non_id:
           description:
@@ -277,17 +165,6 @@
           description:
           family: "IPv4"
         optional_id:
-      - required_non_id:
-          prefix: "1.1.1.0/24"
-        required_id:
-          rir:
-            name: "rfc-1918"
-            app: "ipam"
-            model: "rirs"
-        optional_non_id:
-          description:
-          family: "IPv4"
-        optional_id:
     roles:
       - required_non_id:
           name: "Access"
@@ -297,29 +174,11 @@
           description:
           weight:
         optional_id:
-      - required_non_id:
-          name: "Testing Role"
-          slug: "testing-role"
-        required_id:
-        optional_non_id:
-          description:
-          weight:
-        optional_id:
+
     vlan_groups:
       - required_non_id:
           name: "Access VLANs"
           slug: "access-vlans"
-        required_id:
-        optional_non_id:
-          description:
-        optional_id:
-          site:
-            name: "hq1"
-            app: "dcim"
-            model: "sites"
-      - required_non_id:
-          name: "Testing"
-          slug: "testing"
         required_id:
         optional_non_id:
           description:
@@ -348,25 +207,6 @@
           role:
             name: "access"
             app: "dcim"
-            model: "roles"
-      - required_non_id:
-          vid: 20
-          name: "Testing VLAN"
-        required_id:
-        optional_non_id:
-          status: "active"
-        optional_id:
-          site:
-            name: "hq1"
-            app: "dcim"
-            model: "sites"
-          group:
-            name: "access-vlans"
-            app: "ipam"
-            model: "vlan_groups"
-          role:
-            name: "access"
-            app: "ipam"
             model: "roles"
 
     # vrfs:
@@ -403,29 +243,5 @@
             app: "ipam"
             model: "roles"
           vlan:
-          vrf:
-          tenant:
-      - required_non_id:
-          prefix: "2.2.2.0/24"
-        required_id:
-        optional_non_id:
-          description:
-          family: "IPv4"
-          is_pool: true
-          status: "active"
-          tags:
-        optional_id:
-          site:
-            name: "hq1"
-            app: "dcim"
-            model: "sites"
-          role:
-            name: "access"
-            app: "ipam"
-            model: "roles"
-          vlan:
-            name: 10
-            app: "ipam"
-            model: "vlans"
           vrf:
           tenant:
