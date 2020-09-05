@@ -10,9 +10,20 @@ devices:
       mgmt_only: True
       mode: access
       untagged_vlan: 10
-      tagged_vlans:
+      tagged_vlans: ""
       ipv4:
         - prefix: 192.168.100.201/24
+    - name: FastEthernet0/1
+      description: "Automation shutdown"
+      mac_address: 00:11:22:33:44:55
+      type: 100base-tx
+      enabled: False
+      mgmt_only: False
+      mode: ""
+      untagged_vlan: ""
+      tagged_vlans: ""
+      ipv4:
+        - prefix: ""
     - name: FastEthernet1/0
       description: "Management Interface to R3"
       mac_address: 00:11:22:33:44:55
@@ -80,15 +91,26 @@ devices:
       tagged_vlans: ""
       ipv4:
         - prefix: 10.13.1.3/24
+    - name: FastEthernet1/1
+      description: "Automation shutdown"
+      mac_address: 00:11:22:33:44:55
+      type: 100base-tx
+      enabled: False
+      mgmt_only: False
+      mode: ""
+      untagged_vlan: ""
+      tagged_vlans: ""
+      ipv4:
+        - prefix: ""
     - name: Loopback1
       description: "Virtual LAN 1"
       mac_address: 00:11:22:33:44:55
       type: virtual
       enabled: True
       mgmt_only: True
-      mode:
-      untagged_vlan:
-      tagged_vlans:
+      mode: ""
+      untagged_vlan: ""
+      tagged_vlans: ""
       ipv4:
         - prefix: 192.168.3.1/24
     - name: Loopback1
@@ -125,6 +147,17 @@ devices:
       tagged_vlans: ""
       ipv4:
         - prefix: 10.1.1.5/24
+    - name: FastEthernet1/0
+      description: "Automation shutdown"
+      mac_address: 00:11:22:33:44:55
+      type: 100base-tx
+      enabled: False
+      mgmt_only: False
+      mode: ""
+      untagged_vlan: ""
+      tagged_vlans: ""
+      ipv4:
+        - prefix: ""
     - name: FastEthernet1/1
       description: "Management Interface to R1"
       mac_address: 00:11:22:33:44:55
