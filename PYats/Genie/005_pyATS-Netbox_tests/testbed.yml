@@ -1,0 +1,88 @@
+testbed:
+  name: testbed.yml
+  credentials:
+    default:
+      username: "%ENV{PYATS_USERNAME}"
+      password: "%ENV{PYATS_PASSWORD}"
+    enable:
+      password: '%ENV{PYATS_PASSWORD}'
+devices:
+  r1:
+    os: ios
+    platform: 7200-series
+    type: router
+    connections:
+      mgmt:
+        ip: 192.168.100.201
+        protocol: ssh
+  r3:
+    os: ios
+    platform: 7200-series
+    type: router
+    connections:
+      mgmt:
+        ip: 192.168.100.203
+        protocol: ssh
+  r5:
+    os: ios
+    platform: 7200-series
+    type: router
+    connections:
+      mgmt:
+        ip: 192.168.100.205
+        protocol: ssh
+topology:
+  r1:
+    interfaces:
+      FastEthernet0/0:
+        ipv4: 192.168.100.201/24
+        type: 100base-tx
+      FastEthernet1/0:
+        ipv4: 10.13.1.1/24
+        type: 100base-tx
+        link: r1-to-r3
+      FastEthernet1/1:
+        ipv4: 10.15.1.1/24
+        type: 100base-tx
+        link: r1-to-r5
+      Loopback1:
+        ipv4: 8.8.8.8/24
+        type: virtual
+  r3:
+    interfaces:
+      FastEthernet0/0:
+        ipv4: 192.168.100.203/24
+        type: 100base-tx
+      FastEthernet0/1:
+        ipv4: 10.1.1.3/24
+        type: 100base-tx
+        link: r3-to-r5
+      FastEthernet1/0:
+        ipv4: 10.13.1.3/24
+        type: 100base-tx
+        link: r1-to-r3
+      Loopback1:
+        ipv4: 192.168.3.1/24
+        type: virtual
+      Loopback2:
+        ipv4: 192.168.32.1/24
+        type: virtual
+  r5:
+    interfaces:
+      FastEthernet0/0:
+        ipv4: 192.168.100.205/24
+        type: 100base-tx
+      FastEthernet0/1:
+        ipv4: 10.1.1.5/24
+        type: 100base-tx
+        link: r3-to-r5
+      FastEthernet1/1:
+        ipv4: 10.15.1.5/24
+        type: 100base-tx
+        link: r1-to-r5
+      Loopback1:
+        ipv4: 192.168.5.1/24
+        type: virtual
+      Loopback2:
+        ipv4: 192.168.52.1/24
+        type: virtual
