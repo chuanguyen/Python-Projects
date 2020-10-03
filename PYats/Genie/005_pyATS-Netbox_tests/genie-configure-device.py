@@ -1,6 +1,13 @@
-#!/bin/env python
+#!/usr/bin/env python
 from genie.conf import Genie
 from genie.libs.conf.interface import Interface
+
+import os
+
+try:
+    assert all(os.environ[env] for env in ['PYATS_USERNAME', 'PYATS_PASSWORD'])
+except KeyError as exc:
+    sys.exit(f"ERROR: missing ENVAR: {exc}")
 
 testbed = Genie.init("testbed.yml")
 
