@@ -29,3 +29,19 @@ def interface_enable_state_configure(testbed, device_name, netbox_interfaces):
 
         # Build and print out the configuration
         new_interface.build_config()
+
+def interface_description_configure(testbed, device_name, netbox_interfaces):
+    device = testbed.devices[device_name]
+    device.connect(learn_hostname=True, log_stdout=False)
+
+    for interface in netbox_interfaces:
+        print(f"Setting Interface {interface.name} description to '{interface.description}'")
+        if (interface.name in device.interfaces.keys()):
+            new_interface = device.interfaces[interface.name]
+        else:
+            new_interface = Interface(name = interface.name, device = device)
+
+        new_interface.description = interface.description
+
+        # Build and print out the configuration
+        new_interface.build_config()
