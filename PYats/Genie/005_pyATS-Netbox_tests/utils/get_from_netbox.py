@@ -12,6 +12,14 @@ except KeyError as exception:
     raise
 
 def interfaces_sot(device_name):
+    """Returns NetBox interface details for a given device
+
+    Args:
+        device_name: Name of device
+
+    Returns:
+        interfaces: Dictionary of interface details from NetBox
+    """
     device = netbox.dcim.devices.get(name=device_name)
     interfaces = netbox.dcim.interfaces.filter(device_id=device.id)
 
