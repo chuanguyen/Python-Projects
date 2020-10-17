@@ -56,7 +56,7 @@
 
     racks:
       - required_non_id:
-          name: "dc2-2-5"
+          name: "dc1-2-5"
         required_id:
           site:
             name: "hq1"
