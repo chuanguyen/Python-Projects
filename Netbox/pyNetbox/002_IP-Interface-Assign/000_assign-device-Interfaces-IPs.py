@@ -40,6 +40,10 @@ unknown_nb_dev_interfaces = list()
 existing_nb_dev_IPs_count = 0
 existing_nb_dev_IPs = list()
 
+# Stores duplicated IP addresses
+duplicated_nb_dev_IPs_count = 0
+duplicated_nb_dev_IPs = list()
+
 # Stores NetBox objects that are created
 created_nb_objs_count = 0
 created_nb_objs = list()
@@ -60,39 +64,53 @@ for dev in nb_base_data['devices']:
                         ]
                     )
                 else:
-                    # Verifies whether IP has already been assigned
-                    nb_existing_ip = nb.ipam.ip_addresses.get(address=interface['ipv4'][0]['prefix'])
+                    interface_has_ip = (interface['ipv4'][0]['prefix'] != "") 
 
-                    if (nb_existing_ip):
-                        existing_nb_dev_IPs_count += 1
-                        existing_nb_dev_IPs.append(
-                            [
-                                dev_name,
-                                interface['name'],
-                                nb_existing_ip.interface.device.name,
-                                nb_existing_ip.interface.name,
-                                interface['ipv4'][0]['prefix']
-                            ]
-                        )
-                    else:
-                        interface_ip_dict = dict(
-                            address=interface['ipv4'][0]['prefix'],
-                            status=1,
-                            description=interface['description'],
-                            interface=dev_interface.id,
-                        )
+                    if (interface_has_ip):
+                        # Verifies whether IP has already been assigned
+                        nb_existing_ips = nb.ipam.ip_addresses.filter(address=interface['ipv4'][0]['prefix'])
 
-                        nb.ipam.ip_addresses.create(interface_ip_dict)
+                        if (len(nb_existing_ips) == 1):
+                            existing_nb_dev_IPs_count += 1
+                            existing_nb_dev_IPs.append(
+                                [
+                                    dev_name,
+                                    interface['name'],
+                                    nb_existing_ips[0].interface.device.name,
+                                    nb_existing_ips[0].interface.name,
+                                    interface['ipv4'][0]['prefix']
+                                ]
+                            )
+                        elif (len(nb_existing_ips) == 0):
+                            interface_ip_dict = dict(
+                                address=interface['ipv4'][0]['prefix'],
+                                status=1,
+                                description=interface['description'],
+                                interface=dev_interface.id,
+                            )
 
-                        created_nb_objs_count += 1
-                        created_nb_objs.append(
-                            [
-                                dev_name,
-                                interface['name'],
-                                interface['ipv4'][0]['prefix'],
-                                interface['description']
-                            ]
-                        )
+                            nb.ipam.ip_addresses.create(interface_ip_dict)
+
+                            created_nb_objs_count += 1
+                            created_nb_objs.append(
+                                [
+                                    dev_name,
+                                    interface['name'],
+                                    interface['ipv4'][0]['prefix'],
+                                    interface['description']
+                                ]
+                            )
+                        else:
+                            duplicated_nb_dev_IPs_count += 1
+
+                            for nb_existing_ip in nb_existing_ips:
+                                duplicated_nb_dev_IPs.append([
+                                        nb_existing_ip.interface.device.name,
+                                        nb_existing_ip.interface.name,
+                                        interface['ipv4'][0]['prefix']
+                                    ]
+                                )
+
             except pynetbox.core.query.RequestError as e:
                 print(f"ERROR: NetBox query request failed {e}", file=sys.stderr)
 
@@ -100,6 +118,11 @@ if (unknown_nb_dev_interfaces_count > 0):
     title = "Verify the following interfaces exist on the devices"
     headerValues = ["Device", "Interface"]
     create_nb_log(title, headerValues, unknown_nb_dev_interfaces, 5, 12)
+
+if (duplicated_nb_dev_IPs_count > 0):
+    title = "The following IPs are duplicated"
+    headerValues = ["Device","Interface","Duplicated IPs"]
+    create_nb_log(title, headerValues, duplicated_nb_dev_IPs, 20, 34)
 
 if (existing_nb_dev_IPs_count > 0):
     title = "The following IPs are already assigned"
