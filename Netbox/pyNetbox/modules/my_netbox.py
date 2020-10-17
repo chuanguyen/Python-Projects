@@ -36,6 +36,50 @@ def create_nb_obj_dict(nb, required_non_id, required_id, optional_non_id, option
 
     return nb_obj_dict
 
+def create_nb_obj(nb, nb_app, model, nb_obj_dict):
+    """Accepts dictionary of NetBox model attributes and will create the NetBox object
+
+    Args:
+        nb: PyNetbox connection to a Netbox instance
+        nb_app: String of NetBox app type
+        model: String of NetBox model type
+        nb_obj_dict: Dictionary of NetBox model attributes
+    """
+
+    if (nb_app == "dcim"):
+        if (model == "regions"):
+            nb.dcim.regions.create(nb_obj_dict)
+        elif (model == "sites"):
+            nb.dcim.sites.create(nb_obj_dict)
+        elif (model == "rack_roles"):
+            nb.dcim.rack_roles.create(nb_obj_dict)
+        elif (model == "rack_groups"):
+            nb.dcim.rack_groups.create(nb_obj_dict)
+        elif (model == "racks"):
+            nb.dcim.racks.create(nb_obj_dict)
+        elif (model == "device_roles"):
+            nb.dcim.device_roles.create(nb_obj_dict)
+        elif (model == "manufacturers"):
+            nb.dcim.manufacturers.create(nb_obj_dict)
+        elif (model == "platforms"):
+            nb.dcim.platforms.create(nb_obj_dict)
+
+    if (nb_app == "ipam"):
+        if (model == "rirs"):
+            nb.ipam.rirs.create(nb_obj_dict)
+        elif (model == "aggregates"):
+            nb.ipam.aggregates.create(nb_obj_dict)
+        elif (model == "roles"):
+            nb.ipam.roles.create(nb_obj_dict)
+        elif (model == "vlan_groups"):
+            nb.ipam.vlan_groups.create(nb_obj_dict)
+        elif (model == "vlans"):
+            nb.ipam.vlans.create(nb_obj_dict)
+        elif (model == "vrfs"):
+            nb.ipam.vrfs.create(nb_obj_dict)
+        elif (model == "prefixes"):
+            nb.ipam.prefixes.create(nb_obj_dict)
+
 def retrieve_nb_obj(nb, app, model, searchTerm):
     """Searches for a NetBox object of a given model based on a search term and returns the object
 
