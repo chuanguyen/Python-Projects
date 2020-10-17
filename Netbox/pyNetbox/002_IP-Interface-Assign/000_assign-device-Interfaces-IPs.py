@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
+import my_netbox as nb_tools
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -64,7 +64,7 @@ for dev in nb_base_data['devices']:
                         ]
                     )
                 else:
-                    interface_has_ip = (interface['ipv4'][0]['prefix'] != "") 
+                    interface_has_ip = (interface['ipv4'][0]['prefix'] != "")
 
                     if (interface_has_ip):
                         # Verifies whether IP has already been assigned
@@ -117,23 +117,23 @@ for dev in nb_base_data['devices']:
 if (unknown_nb_dev_interfaces_count > 0):
     title = "Verify the following interfaces exist on the devices"
     headerValues = ["Device", "Interface"]
-    create_nb_log(title, headerValues, unknown_nb_dev_interfaces, 5, 12)
+    nb_tools.create_nb_log(title, headerValues, unknown_nb_dev_interfaces, 5, 12)
 
 if (duplicated_nb_dev_IPs_count > 0):
     title = "The following IPs are duplicated"
     headerValues = ["Device","Interface","Duplicated IPs"]
-    create_nb_log(title, headerValues, duplicated_nb_dev_IPs, 20, 34)
+    nb_tools.create_nb_log(title, headerValues, duplicated_nb_dev_IPs, 20, 34)
 
 if (existing_nb_dev_IPs_count > 0):
     title = "The following IPs are already assigned"
     headerValues = ["Expected Device", "Expected Interface", "Current NB Device", "Current NB Interface", "IP Address"]
-    create_nb_log(title, headerValues, existing_nb_dev_IPs, 5, 34)
+    nb_tools.create_nb_log(title, headerValues, existing_nb_dev_IPs, 5, 34)
 
 
 if (created_nb_objs_count > 0):
     title = "The following IPs have been assigned to the given device and interface"
     headerValues = ["Device", "Interface", "IP", "Description"]
-    create_nb_log(title, headerValues, created_nb_objs, 20, 12)
+    nb_tools.create_nb_log(title, headerValues, created_nb_objs, 20, 12)
 
 else:
     print()

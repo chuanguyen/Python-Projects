@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
+import my_netbox as nb_tools
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -55,14 +55,14 @@ try:
       for row in reader:
           nb_obj = None
 
-          ndev_site = retrieve_nb_obj(nb,"dcim","sites",row['site'])
-          ndev_rack = retrieve_nb_obj(nb,"dcim","racks",row['rack'])
-          ndev_dtype = retrieve_nb_obj(nb,"dcim","device_types",row['device_type'])
-          ndev_drole = retrieve_nb_obj(nb,"dcim","device_roles",row['device_role'])
-          ndev_platform = retrieve_nb_obj(nb,"dcim","platforms",row['platform'])
+          nb_site = nb_tools.retrieve_nb_obj(nb,"dcim","sites",row['site'])
+          nb_rack = nb_tools.retrieve_nb_obj(nb,"dcim","racks",row['rack'])
+          nb_dtype = nb_tools.retrieve_nb_obj(nb,"dcim","device_types",row['device_type'])
+          nb_drole = nb_tools.retrieve_nb_obj(nb,"dcim","device_roles",row['device_role'])
+          nb_platform = nb_tools.retrieve_nb_obj(nb,"dcim","platforms",row['platform'])
 
           # Verifies whether DCIM object exists
-          if (not (ndev_site and ndev_dtype and ndev_drole and ndev_rack and ndev_platform) ):
+          if (not (nb_site and nb_dtype and nb_drole and nb_rack and nb_platform) ):
               nb_non_existent_devices_count += 1
 
               nb_non_existent_devices.append(
@@ -89,11 +89,11 @@ try:
                   nb_all_devices.append(
                     dict(
                         name=row['name'],
-                        site=ndev_site.id,
-                        platform=ndev_platform.id,
-                        device_type=ndev_dtype.id,
-                        device_role=ndev_drole.id,
-                        rack=ndev_rack.id,
+                        site=nb_site.id,
+                        platform=nb_platform.id,
+                        device_type=nb_dtype.id,
+                        device_role=nb_drole.id,
+                        rack=nb_rack.id,
                         face=row['face'],
                         position=row['position'],
                         serial=row['serial'],
@@ -138,13 +138,13 @@ except pynetbox.core.query.RequestError as e:
 if (nb_existing_devices_count > 0):
     title = "The following NetBox devices already exist"
     headerValues = ["Name", "Site", "Rack", "Serial #", "Asset Tag", "Status"]
-    create_nb_log(title, headerValues, nb_existing_devices, 15, 36)
+    nb_tools.create_nb_log(title, headerValues, nb_existing_devices, 15, 36)
 
 ### Generates table of non-existent NetBox objects defined in CSV
 if ( nb_non_existent_devices_count > 0 ):
     title = "One or more of the following device attributes are invalid"
     headerValues = ["Name", "Site", "Rack", "Device Type", "Device Role", "Platform"]
-    create_nb_log(title, headerValues, nb_non_existent_devices, 15, 30)
+    nb_tools.create_nb_log(title, headerValues, nb_non_existent_devices, 15, 30)
 
 # Creates a set to remove duplicate IPs
 # If length of set differs from list, indicates there are duplicate IPs
@@ -160,7 +160,7 @@ if(not flag):
 
     title = "The following IPs are duplicated"
     headerValues = ["Duplicated IP Addresses"]
-    create_nb_log(title, headerValues, duplicated_IPs, 15, 12)
+    nb_tools.create_nb_log(title, headerValues, duplicated_IPs, 15, 12)
 
 elif (nb_all_created_devices_count > 0):
     try:
@@ -189,7 +189,7 @@ elif (nb_all_created_devices_count > 0):
 
             title = "The following NetBox objects were created"
             headerValues = ["Device", "Type", "Site", "Rack", "Management Interface", "IP"]
-            create_nb_log(title, headerValues, nb_all_created_devices, 10, 36)
+            nb_tools.create_nb_log(title, headerValues, nb_all_created_devices, 10, 36)
 
     except pynetbox.core.query.RequestError as e:
         print(f"ERROR: NetBox query request failed {e}", file=sys.stderr)

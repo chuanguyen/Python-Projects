@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,retrieve_termination_obj,create_nb_log)
+import my_netbox as nb_tools
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -46,10 +46,10 @@ nb_non_existent_objects = list()
 
 try:
     for cable_dict in nb_base_data['cables']:
-        nb_dev_a = retrieve_nb_obj(nb,"dcim","devices",cable_dict['dev_a'])
-        nb_dev_b = retrieve_nb_obj(nb,"dcim","devices",cable_dict['dev_b'])
-        nb_termination_a = retrieve_termination_obj(nb,cable_dict["termination_a_type"],cable_dict["dev_a"],cable_dict["termination_a"])
-        nb_termination_b = retrieve_termination_obj(nb,cable_dict["termination_b_type"],cable_dict["dev_b"],cable_dict["termination_b"])
+        nb_dev_a = nb_tools.retrieve_nb_obj(nb,"dcim","devices",cable_dict['dev_a'])
+        nb_dev_b = nb_tools.retrieve_nb_obj(nb,"dcim","devices",cable_dict['dev_b'])
+        nb_termination_a = nb_tools.retrieve_termination_obj(nb,cable_dict["termination_a_type"],cable_dict["dev_a"],cable_dict["termination_a"])
+        nb_termination_b = nb_tools.retrieve_termination_obj(nb,cable_dict["termination_b_type"],cable_dict["dev_b"],cable_dict["termination_b"])
 
         if ( (nb_dev_a and nb_termination_a) and (nb_dev_b and nb_termination_b) ):
             nb_cable = None
@@ -62,7 +62,11 @@ try:
 
             # Check if termination A & B from returned cables match interface and type
             for nb_cable_search in nb_cables_search:
-                if ((nb_cable_search.termination_a_id == nb_termination_a.id and nb_cable_search.termination_a_type == cable_dict["termination_a_type"]) and (nb_cable_search.termination_b_id == nb_termination_b.id and nb_cable_search.termination_b_type == cable_dict["termination_b_type"])):
+                nb_cable_termination_a_matches = (nb_cable_search.termination_a_id == nb_termination_a.id and nb_cable_search.termination_a_type == cable_dict["termination_a_type"])
+
+                nb_cable_termination_b_matches = (nb_cable_search.termination_b_id == nb_termination_b.id and nb_cable_search.termination_b_type == cable_dict["termination_b_type"])
+
+                if ( nb_cable_termination_a_matches and nb_cable_termination_b_matches):
                     nb_cable = nb_cable_search
 
             if (nb_cable):
@@ -127,17 +131,17 @@ except pynetbox.core.query.RequestError:
 if (nb_non_existent_count > 0):
     title = "One or more components of the following cable(s) doesn't exist"
     headerValues = ["Device A", "Termination A", "Termination A Type", "Dev B", "Termination B", "Termination B Type"]
-    create_nb_log(title, headerValues, nb_non_existent_objects, 5, 24)
+    nb_tools.create_nb_log(title, headerValues, nb_non_existent_objects, 5, 24)
 
 if (existing_nb_count > 0):
     title = "The following NetBox cables already exist"
     headerValues = ["Device A", "Termination A", "Termination A Type", "Dev B", "Termination B", "Termination B Type","Type","Status"]
-    create_nb_log(title, headerValues, existing_nb_objects, 5, 30)
+    nb_tools.create_nb_log(title, headerValues, existing_nb_objects, 5, 30)
 
 if (created_nb_count > 0):
     title = "The following NetBox cables were created"
     headerValues = ["Device A", "Termination A", "Termination A Type", "Dev B", "Termination B", "Termination B Type", "Type", "Status"]
-    create_nb_log(title, headerValues, created_nb_objects, 5, 42)
+    nb_tools.create_nb_log(title, headerValues, created_nb_objects, 5, 42)
 else:
     print()
     print(32*"*"," No cables were created ",32*"*")
