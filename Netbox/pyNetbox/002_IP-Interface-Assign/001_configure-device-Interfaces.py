@@ -11,7 +11,7 @@ import csv
 import yaml
 
 # Custom NB modules
-from my_netbox import (retrieve_nb_obj,retrieve_nb_identifier,retrieve_nb_id,create_nb_log)
+import my_netbox as nb_tools
 
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
@@ -68,31 +68,32 @@ for dev in nb_base_data['devices']:
                     )
 
                     # Verifies if mode is defined, which indicates if VLANs are specified
-                    if (interface['mode']):
-                        if (interface['untagged_vlan']):
-                            interface['untagged_vlan'] = retrieve_nb_id(nb, "ipam", "vlans", interface['untagged_vlan'])
+                    if (interface['mode'] and interface['mode'] != ""):
+
+                        nb_interface_config_dict.update(mode=interface['mode'])
+
+                        if (interface['untagged_vlan'] and interface['untagged_vlan'] != ""):
+                            interface['untagged_vlan'] = nb_tools.retrieve_nb_id(nb, "ipam", "vlans", interface['untagged_vlan'])
+                            nb_interface_config_dict.update(untagged_vlan=interface['untagged_vlan'])
+                        else:
+                            nb_interface_config_dict.update(untagged_vlan="")
 
                         if (interface['tagged_vlans']):
                             # Stores list of IDs of tagged vlans defined for interface
                             tagged_vlan_id_list = list()
 
                             for tagged_vlan in interface['tagged_vlans']:
-                                tagged_vlan_id_list.append(
-                                    retrieve_nb_id(nb, "ipam", "vlans", tagged_vlan)
-                                )
+                                if (tagged_vlan and tagged_vlan != ""):
+                                    tagged_vlan_id_list.append(
+                                        nb_tools.retrieve_nb_id(nb, "ipam", "vlans", tagged_vlan)
+                                    )
                             interface['tagged_vlans'] = tagged_vlan_id_list
 
-                        if (interface['mode'] == "access"):
-                            nb_interface_config_dict.update(
-                                mode=interface['mode'],
-                                untagged_vlan=interface['untagged_vlan'],
-                            )
+                            nb_interface_config_dict.update(tagged_vlans=interface['tagged_vlans'])
                         else:
-                            nb_interface_config_dict.update(
-                                mode=interface['mode'],
-                                untagged_vlan=interface['untagged_vlan'],
-                                tagged_vlans=interface['tagged_vlans'],
-                            )
+                            nb_interface_config_dict.update(tagged_vlans="")
+                    else:
+                        nb_interface_config_dict.update(mode="")
 
                     dev_interface.update(nb_interface_config_dict)
 
@@ -103,7 +104,7 @@ for dev in nb_base_data['devices']:
                             interface['name'],
                             str(bool(interface['enabled'])),
                             str(bool(interface['mgmt_only'])),
-                            interface['mode'],
+                            interface['mode'] or "",
                             interface['description']
                         ]
                     )
@@ -114,12 +115,12 @@ for dev in nb_base_data['devices']:
 if (unknown_nb_dev_interfaces_count > 0):
     title = "Verify the following interfaces exist on the devices"
     headerValues = ["Device", "Interface"]
-    create_nb_log(title, headerValues, unknown_nb_dev_interfaces, 5, 12)
+    nb_tools.create_nb_log(title, headerValues, unknown_nb_dev_interfaces, 5, 12)
 
 if (configured_nb_interfaces_count > 0):
     title = "The following interfaces have been configured"
     headerValues = ["Device", "Interface","Status","Management Only","802.1Q Mode","Description"]
-    create_nb_log(title, headerValues, configured_nb_interfaces, 10, 24)
+    nb_tools.create_nb_log(title, headerValues, configured_nb_interfaces, 10, 24)
 
 else:
     print()
