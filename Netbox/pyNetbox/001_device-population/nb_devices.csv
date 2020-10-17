@@ -1,4 +1,4 @@
 name,site,device_type,platform,device_role,rack,face,position,serial,asset_tag,status,mgmt_intf,primary_ipv4
-r1,hq1,7200-series,ios-devices,network_access,Dc1-2-5,0,1,XXXX-YYYY-ZZZZ,000-0001,active,FastEthernet0/0,192.168.100.201/24
-r3,hq1,7200-series,ios-devices,network_access,Dc1-2-5,0,3,XXXX-YYYY-ZZZZ,000-0002,active,FastEthernet0/0,192.168.100.203/24
-r5,hq1,7200-series,ios-devices,network_access,Dc1-2-5,0,5,XXXX-YYYY-ZZZZ,000-0003,active,FastEthernet0/0,192.168.100.205/24
+r1,hq1,7200-series,ios,network_access,Dc1-2-5,0,1,XXXX-YYYY-ZZZZ,000-0001,active,FastEthernet0/0,192.168.100.201/24
+r3,hq1,7200-series,ios,network_access,Dc1-2-5,0,3,XXXX-YYYY-ZZZZ,000-0002,active,FastEthernet0/0,192.168.100.203/24
+r5,hq1,7200-series,ios,network_access,Dc1-2-5,0,5,XXXX-YYYY-ZZZZ,000-0003,active,FastEthernet0/0,192.168.100.205/24
