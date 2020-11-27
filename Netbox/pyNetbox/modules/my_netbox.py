@@ -138,7 +138,7 @@ def retrieve_nb_obj(nb, app, model, searchTerm):
         elif (model == "vlans"):
             nb_obj = nb.ipam.vlans.get(vid=searchTerm_modified)
         elif (model == "vrfs"):
-            nb_obj = nb.ipam.vrfs.get(name=searchTeam_modified)
+            nb_obj = nb.ipam.vrfs.get(name=searchTerm_modified)
 
     return nb_obj
 
