@@ -17,13 +17,13 @@ def create_config_merge():
 
     requests.packages.urllib3.disable_warnings()
 
-    with open("restconf_data.yml", "r") as handle:
+    with open("interface_data.yml", "r") as handle:
         config_state = yaml.safe_load(handle)
 
     yang_payload = []
 
     # Builds a list of interfaces to be added
-    for interface in config_state["interfaces"]:
+    for interface in config_state["interfaces_restconf"]:
         yang_payload.append(interface)
 
     # Data already matches structure of YANG model, so can be appended directly
@@ -49,13 +49,13 @@ def create_config_merge():
 def create_config_initial():
     requests.packages.urllib3.disable_warnings()
 
-    with open("restconf_data.yml", "r") as handle:
+    with open("interface_data.yml", "r") as handle:
         config_state = yaml.safe_load(handle)
 
     yang_payload = []
 
     # Builds a list of interfaces to be added
-    for interface in config_state["interfaces"]:
+    for interface in config_state["interfaces_restconf"]:
         yang_payload.append(interface)
 
     # Data already matches structure of YANG model, so can be appended directly

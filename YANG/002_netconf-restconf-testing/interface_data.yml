@@ -1,0 +1,34 @@
+---
+
+# Follows the openconfig YANG data model for interfaces
+interfaces_restconf:
+  - name: "Loopback500"
+    config:
+      name: "Loopback500"
+      description: "TEST LOOPBACK"
+      enabled: false
+      type: "iana-if-type:softwareLoopback"
+  - name: "Loopback501"
+    config:
+      name: "Loopback501"
+      description: "TEST LOOPBACK"
+      enabled: false
+      type: "iana-if-type:softwareLoopback"
+
+interfaces_netconf:
+  - name: "Loopback500"
+    config:
+      name: "Loopback500"
+      description: "TEST LOOPBACK"
+      enabled: false
+      type:
+        "@xmlns:ianaift": "urn:ietf:params:xml:ns:yang:iana-if-type"
+        "#text": "ianaift:softwareLoopback"
+  - name: "Loopback501"
+    config:
+      name: "Loopback501"
+      description: "TEST LOOPBACK"
+      enabled: false
+      type:
+        "@xmlns:ianaift": "urn:ietf:params:xml:ns:yang:iana-if-type"
+        "#text": "ianaift:softwareLoopback"
