@@ -1,0 +1,78 @@
+r1:
+  label: "r1"
+  node_definition: "iosv"
+  x: 50
+  y: 100
+  tags:
+    - ansible_group=access
+  config: |-
+    hostname r1
+  interfaces:
+    - id: i1
+      slot: 0
+      label: GigabitEthernet1/0
+      type: physical
+    - id: i2
+      slot: 1
+      label: GigabitEthernet0/1
+      type: physical
+    - id: i3
+      slot: 2
+      label: GigabitEthernet0/2
+      type: physical
+    - id: i4
+      slot: 3
+      label: GigabitEthernet0/3
+      type: physical
+r3:
+  label: "r3"
+  node_definition: "iosv"
+  x: -50
+  y: 200
+  tags:
+    - ansible_group=access
+  config: |-
+    hostname r3
+  interfaces:
+    - id: i1
+      slot: 0
+      label: GigabitEthernet0/0
+      type: physical
+    - id: i2
+      slot: 1
+      label: GigabitEthernet0/1
+      type: physical
+    - id: i3
+      slot: 2
+      label: GigabitEthernet0/2
+      type: physical
+    - id: i4
+      slot: 3
+      label: GigabitEthernet0/3
+      type: physical
+r5:
+  label: "r5"
+  node_definition: "iosv"
+  x: 150
+  y: 200
+  tags:
+    - ansible_group=access
+  config: |-
+    hostname r5
+  interfaces:
+    - id: i1
+      slot: 0
+      label: GigabitEthernet0/0
+      type: physical
+    - id: i2
+      slot: 1
+      label: GigabitEthernet0/1
+      type: physical
+    - id: i3
+      slot: 2
+      label: GigabitEthernet0/2
+      type: physical
+    - id: i4
+      slot: 3
+      label: GigabitEthernet0/3
+      type: physical
