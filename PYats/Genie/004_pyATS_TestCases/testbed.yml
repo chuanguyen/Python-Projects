@@ -1,0 +1,46 @@
+testbed:
+  name: Lab at Sat 09:52 AM
+  credentials:
+    default:
+      username: '%ENV{PYATS_USERNAME}'
+      password: '%ENV{PYATS_PASSWORD}'
+    enable:
+      password: '%ENV{PYATS_PASSWORD}'
+devices:
+  terminal_server:
+    os: linux
+    type: linux
+    credentials:
+      default:
+        username: 'admin'
+        password: '%ENV{VIRL_PASSWORD}'
+    connections:
+      cli:
+        protocol: ssh
+        ip: 192.168.8.130
+  cml-r1:
+    os: ios
+    type: router
+    platform: iosv
+    connections:
+      defaults:
+        class: unicon.Unicon
+      a:
+        protocol: telnet
+        proxy: terminal_server
+        command: open /0a49a7/n0/0
+  cml-sw1:
+    os: ios
+    type: switch
+    series: iosv
+    tacacs:
+      username: cisco
+    passwords:
+      tacacs: cisco
+    connections:
+      defaults:
+        class: unicon.Unicon
+      a:
+        protocol: telnet
+        proxy: terminal_server
+        command: open /0a49a7/n1/0
