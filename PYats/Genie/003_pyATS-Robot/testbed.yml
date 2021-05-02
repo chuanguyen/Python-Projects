@@ -1,0 +1,108 @@
+testbed:
+  name: Lab at Sat 09:52 AM
+  credentials:
+    default:
+      username: '%ENV{PYATS_USERNAME}'
+      password: '%ENV{PYATS_PASSWORD}'
+    enable:
+      password: '%ENV{PYATS_PASSWORD}'
+devices:
+  terminal_server:
+    os: linux
+    type: linux
+    credentials:
+      default:
+        username: 'admin'
+        password: '%ENV{VIRL_PASSWORD}'
+    connections:
+      cli:
+        protocol: ssh
+        ip: 192.168.8.130
+  cml-r1:
+    os: ios
+    type: router
+    platform: iosv
+    connections:
+      defaults:
+        class: unicon.Unicon
+      a:
+        protocol: telnet
+        proxy: terminal_server
+        command: open /0a49a7/n0/0
+  cml-sw1:
+    os: ios
+    type: switch
+    platform: iosv
+    connections:
+      defaults:
+        class: unicon.Unicon
+      a:
+        protocol: telnet
+        proxy: terminal_server
+        command: open /0a49a7/n1/0
+  cml-nx1:
+    os: nxos
+    type: switch
+    platform: n9k
+    connections:
+      defaults:
+        class: unicon.Unicon
+      a:
+        protocol: telnet
+        proxy: terminal_server
+        command: open /0a49a7/n4/0
+  ubuntu-0:
+    os: linux
+    type: server
+    connections:
+      defaults:
+        class: unicon.Unicon
+      a:
+        protocol: telnet
+        proxy: terminal_server
+        command: open /0a49a7/n5/0
+topology:
+  cml-r1:
+    interfaces:
+      Loopback0:
+        type: loopback
+      GigabitEthernet0/0:
+        link: l1
+        type: ethernet
+      GigabitEthernet0/1:
+        type: ethernet
+      GigabitEthernet0/2:
+        type: ethernet
+      GigabitEthernet0/3:
+        type: ethernet
+  cml-sw1:
+    interfaces:
+      Loopback0:
+        type: loopback
+      GigabitEthernet0/0:
+        link: l2
+        type: ethernet
+      GigabitEthernet0/1:
+        type: ethernet
+      GigabitEthernet0/2:
+        type: ethernet
+      GigabitEthernet0/3:
+        type: ethernet
+  cml-nx1:
+    interfaces:
+      Loopback0:
+        type: loopback
+      mgmt0:
+        link: l3
+        type: ethernet
+      Ethernet1/1:
+        type: ethernet
+      Ethernet1/2:
+        type: ethernet
+      Ethernet1/3:
+        type: ethernet
+  ubuntu-0:
+    interfaces:
+      enp0s2:
+        link: l4
+        type: ethernet
