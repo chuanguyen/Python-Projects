@@ -1,0 +1,3 @@
+# List of testcases to run
+testcases:
+  - test_interfaces.py
