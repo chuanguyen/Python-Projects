@@ -10,7 +10,7 @@ r1:
   interfaces:
     - id: i1
       slot: 0
-      label: GigabitEthernet1/0
+      label: GigabitEthernet0/1
       type: physical
     - id: i2
       slot: 1

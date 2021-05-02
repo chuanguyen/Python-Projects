@@ -1,21 +1,21 @@
 lab:
   description: Test Lab
   notes: ''
-  timestamp: 1617459170.286074
+  timestamp: 1617544349.4952676
   title: Lab at Sat 09:52 AM
   version: 0.0.4
 nodes:
   - id: n0
-    label: iosv-0
+    label: cml-r1
     node_definition: iosv
     x: -500
     y: -50
     configuration: |-
       Building configuration...
 
-      Current configuration : 3090 bytes
+      Current configuration : 3093 bytes
       !
-      ! Last configuration change at 15:34:49 UTC Sat Apr 3 2021 by admin
+      ! Last configuration change at 14:55:39 UTC Sun Apr 4 2021 by admin
       !
       version 15.9
       service timestamps debug datetime msec
@@ -114,7 +114,7 @@ nodes:
       !
       control-plane
       !
-      banner exec ^CCC
+      banner exec ^CCCC
       **************************************************************************
       * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
       * education. IOSv is provided as-is and is not supported by Cisco's      *
@@ -123,7 +123,7 @@ nodes:
       * purposes is expressly prohibited except as otherwise authorized by     *
       * Cisco in writing.                                                      *
       **************************************************************************^C
-      banner incoming ^CCC
+      banner incoming ^CCCC
       **************************************************************************
       * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
       * education. IOSv is provided as-is and is not supported by Cisco's      *
@@ -132,7 +132,7 @@ nodes:
       * purposes is expressly prohibited except as otherwise authorized by     *
       * Cisco in writing.                                                      *
       **************************************************************************^C
-      banner login ^CCC
+      banner login ^CCCC
       **************************************************************************
       * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
       * education. IOSv is provided as-is and is not supported by Cisco's      *
@@ -177,16 +177,16 @@ nodes:
         label: GigabitEthernet0/3
         type: physical
   - id: n1
-    label: iosvl2-0
+    label: cml-sw1
     node_definition: iosvl2
     x: -250
     y: -50
     configuration: |-
       Building configuration...
 
-      Current configuration : 2867 bytes
+      Current configuration : 2870 bytes
       !
-      ! Last configuration change at 15:34:51 UTC Sat Apr 3 2021
+      ! Last configuration change at 14:55:47 UTC Sun Apr 4 2021
       !
       version 15.2
       service timestamps debug datetime msec
@@ -266,7 +266,7 @@ nodes:
       !
       control-plane
       !
-      banner exec ^CCC
+      banner exec ^CCCC
       **************************************************************************
       * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
       * education. IOSv is provided as-is and is not supported by Cisco's      *
@@ -275,7 +275,7 @@ nodes:
       * purposes is expressly prohibited except as otherwise authorized by     *
       * Cisco in writing.                                                      *
       **************************************************************************^C
-      banner incoming ^CCC
+      banner incoming ^CCCC
       **************************************************************************
       * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
       * education. IOSv is provided as-is and is not supported by Cisco's      *
@@ -284,7 +284,7 @@ nodes:
       * purposes is expressly prohibited except as otherwise authorized by     *
       * Cisco in writing.                                                      *
       **************************************************************************^C
-      banner login ^CCC
+      banner login ^CCCC
       **************************************************************************
       * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
       * education. IOSv is provided as-is and is not supported by Cisco's      *
@@ -378,15 +378,15 @@ nodes:
         label: port
         type: physical
   - id: n4
-    label: nxos9000-0
+    label: cml-nx1
     node_definition: nxosv9000
     x: -650
     y: -50
     configuration: |2-
 
       !Command: show running-config
-      !Running configuration last done at: Sat Apr  3 15:35:27 2021
-      !Time: Sat Apr  3 15:35:29 2021
+      !Running configuration last done at: Sun Apr  4 14:56:18 2021
+      !Time: Sun Apr  4 14:56:20 2021
 
       version 9.2(4) Bios:version
       hostname cml-nx1
