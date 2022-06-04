@@ -1,2 +1,4 @@
 robotframework
 robotframework-sshlibrary
+robotframework-seleniumlibrary
+webdrivermanager
