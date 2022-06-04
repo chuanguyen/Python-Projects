@@ -1,3 +1,4 @@
+pyaml
 robotframework
 robotframework-sshlibrary
 robotframework-seleniumlibrary
