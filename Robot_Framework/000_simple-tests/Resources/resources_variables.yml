@@ -1,0 +1,5 @@
+Sites_to_Test:
+  - url: "https://www.google.ca"
+    title: "Google"
+  - url: "https://www.youtube.com"
+    title: "YouTube"

@@ -1,6 +1,7 @@
 *** Settings ***
 Library             SSHLibrary
 Library             SeleniumLibrary
+Variables           ./resources_variables.yml
 
 *** Variables ***
 ${HOST}             localhost
@@ -23,11 +24,13 @@ Internet Connectivity Ping Test
     ${output}=          Execute Command     ping 8.8.8.8 -c 1
     Should Contain      ${output}           64 bytes from 8.8.8.8
 
-Access Google.ca
+Access Webpages
     [Documentation]     Validates whether the page loads
-    Go To               https://www.google.ca
-    Run Keyword And Continue On Failure     Title Should Be     Google
-    Run Keyword And Continue On Failure     Page Should Contain Button      Google Search
+    Log Variables
+    FOR     ${site}     IN  @{Sites_to_Test}
+        Go To               ${site["url"]}
+        Run Keyword And Continue On Failure     Title Should Be     ${site["title"]}
+    END
 
 
 Clean Up Test Environment

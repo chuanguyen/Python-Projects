@@ -7,4 +7,4 @@ Suite Teardown      Clean Up Test Environment
 *** Test Cases ***
 Layer 3 Tests
     Internet Connectivity Ping Test
-    Access Google.ca
+    Access Webpages
