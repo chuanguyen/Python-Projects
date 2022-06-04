@@ -4,7 +4,7 @@ Library             SeleniumLibrary
 Variables           ./resources_variables.yml
 
 *** Variables ***
-${HOST}             localhost
+${HOST}             %{ROBOT_SSH_HOST=localhost}
 ${USERNAME}         %{ROBOT_SSH_USERNAME}
 ${PASSWORD}         %{ROBOT_SSH_PASSWORD}
 ${BROWSER}          Chrome
@@ -19,7 +19,7 @@ Open Connection And Log In
     Open Connection         ${HOST}
     Login                   ${USERNAME}     ${PASSWORD}
 
-Internet Connectivity Ping Test
+Ping Internet
     [Documentation]     Ping Test To 8.8.8.8
     ${output}=          Execute Command     ping 8.8.8.8 -c 1
     Should Contain      ${output}           64 bytes from 8.8.8.8
