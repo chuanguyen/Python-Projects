@@ -2,4 +2,5 @@ pyaml
 robotframework
 robotframework-sshlibrary
 robotframework-seleniumlibrary
+rpaframework==15.0.0
 webdrivermanager
