@@ -169,15 +169,17 @@ elif (nb_all_created_devices_count > 0):
 
         for created_dev in nb_created_devices:
             # Retrieve specific interface associated w/ created device
-            nb_primary_interface = nb.dcim.interfaces.filter(device=created_dev.name,name=nb_all_devices_mgmt_intf[created_dev.name])
+            nb_primary_interface_filter = nb.dcim.interfaces.filter(device=created_dev.name,name=nb_all_devices_mgmt_intf[created_dev.name])
 
-            # Create dict to store attributes for device's primary IP
-            primary_ip_addr_dict = dict(
-                address=nb_all_devices_primaryIPs[created_dev.name],
-                status=1,
-                description=f"Management IP for {created_dev.name}",
-                interface=nb_primary_interface[0].id,
-            )
+            for nb_primary_interface in nb_primary_interface_filter:
+                # Create dict to store attributes for device's primary IP
+                primary_ip_addr_dict = dict(
+                    address=nb_all_devices_primaryIPs[created_dev.name],
+                    status="active",
+                    description=f"Management IP for {created_dev.name}",
+                    assigned_object_type="dcim.interface",
+                    assigned_object_id=nb_primary_interface.id,
+                )
 
             # Create primary IP and assign to device's first interface
             new_primary_ip = nb.ipam.ip_addresses.create(primary_ip_addr_dict)
@@ -187,9 +189,9 @@ elif (nb_all_created_devices_count > 0):
             dev.primary_ip4 = new_primary_ip.id
             dev.save()
 
-            title = "The following NetBox objects were created"
-            headerValues = ["Device", "Type", "Site", "Rack", "Management Interface", "IP"]
-            nb_tools.create_nb_log(title, headerValues, nb_all_created_devices, 10, 36)
+        title = "The following NetBox objects were created"
+        headerValues = ["Device", "Type", "Site", "Rack", "Management Interface", "IP"]
+        nb_tools.create_nb_log(title, headerValues, nb_all_created_devices, 10, 36)
 
     except pynetbox.core.query.RequestError as e:
         print(f"ERROR: NetBox query request failed {e}", file=sys.stderr)
