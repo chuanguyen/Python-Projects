@@ -1,5 +1,4 @@
 ---
-
 - dcim:
     regions:
       - required_non_id:
@@ -40,20 +39,6 @@
           color: "03a9f4"
         optional_id:
 
-    rack_groups:
-      - required_non_id:
-          name: "core-routing"
-          slug: "core-routing"
-        required_id:
-          site:
-            name: "hq1"
-            app: "dcim"
-            model: "sites"
-        optional_non_id:
-          description:
-        optional_id:
-          parent:
-
     racks:
       - required_non_id:
           name: "dc1-2-5"
@@ -78,10 +63,6 @@
           comments:
           tags:
         optional_id:
-          group:
-            name: "core-routing"
-            app: "dcim"
-            model: "rack_groups"
           role:
             name: "networking"
             app: "dcim"
@@ -200,28 +181,24 @@
             name: "hq1"
             app: "dcim"
             model: "sites"
-          group:
-            name: "access-vlans"
-            app: "dcim"
-            model: "vlan-groups"
           role:
             name: "access"
-            app: "dcim"
+            app: "ipam"
             model: "roles"
 
     # vrfs:
-      # - name:
-      #   required_non_id:
-      #     name:
-      #   required_id:
-      #   optional_non_id:
-      #     description:
-      #     display_name:
-      #     rd:
-      #     enforce_unique:
-      #     tags:
-      #   optional_id:
-      #     tenant:
+    # - name:
+    #   required_non_id:
+    #     name:
+    #   required_id:
+    #   optional_non_id:
+    #     description:
+    #     display_name:
+    #     rd:
+    #     enforce_unique:
+    #     tags:
+    #   optional_id:
+    #     tenant:
 
     prefixes:
       - required_non_id:

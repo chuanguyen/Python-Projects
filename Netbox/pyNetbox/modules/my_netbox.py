@@ -53,8 +53,6 @@ def create_nb_obj(nb, nb_app, model, nb_obj_dict):
             nb.dcim.sites.create(nb_obj_dict)
         elif (model == "rack_roles"):
             nb.dcim.rack_roles.create(nb_obj_dict)
-        elif (model == "rack_groups"):
-            nb.dcim.rack_groups.create(nb_obj_dict)
         elif (model == "racks"):
             nb.dcim.racks.create(nb_obj_dict)
         elif (model == "device_roles"):
@@ -110,8 +108,6 @@ def retrieve_nb_obj(nb, app, model, searchTerm):
             nb_obj = nb.dcim.sites.get(slug=searchTerm_modified)
         elif (model == "rack_roles"):
             nb_obj = nb.dcim.rack_roles.get(slug=searchTerm_modified)
-        elif (model == "rack_groups"):
-            nb_obj = nb.dcim.rack_groups.get(slug=searchTerm_modified)
         elif (model == "racks"):
             nb_obj = nb.dcim.racks.get(name=searchTerm_modified)
         elif (model == "devices"):
@@ -154,7 +150,6 @@ def retrieve_nb_identifier(model):
     nb_obj_name_keys = dict(
         regions="slug",
         sites="slug",
-        rack_groups="slug",
         rack_roles="slug",
         racks="name",
         devices="name",
