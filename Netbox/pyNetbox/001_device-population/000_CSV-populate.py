@@ -98,7 +98,7 @@ try:
                         position=row['position'],
                         serial=row['serial'],
                         asset_tag=row['asset_tag'],
-                        status=row['status'],
+                        status=row['device_status'],
                     )
                   )
 
@@ -137,7 +137,7 @@ except pynetbox.core.query.RequestError as e:
 
 if (nb_existing_devices_count > 0):
     title = "The following NetBox devices already exist"
-    headerValues = ["Name", "Site", "Rack", "Serial #", "Asset Tag", "Status"]
+    headerValues = ["Name", "Site", "Rack", "Serial #", "Asset Tag", "Device Status"]
     nb_tools.create_nb_log(title, headerValues, nb_existing_devices, 15, 36)
 
 ### Generates table of non-existent NetBox objects defined in CSV
