@@ -11,6 +11,8 @@ from genie.conf import Genie
 # Custom NB modules
 import my_netbox as nb_tools
 
+import json
+
 try:
     assert all(os.environ[env] for env in ['NETBOX_TOKEN'])
 
@@ -43,8 +45,46 @@ interface_details = {}
 for device in testbed.devices:
     genie_dev = testbed.devices[device]
     genie_dev.connect(log_stdout=False)
-    genie_learned_interfaces_description = genie_dev.parse("show interfaces description")
-    interface_details[device] = genie_learned_interfaces_description
+
+    interface_details.update(
+        {
+            genie_dev.name: {
+                "interfaces": dict()
+            }
+        }
+    )
+
+    genie_learned_interfaces = genie_dev.parse("show interfaces")
+    genie_learned_interfaces_switchport = genie_dev.parse("show interfaces switchport")
+
+    for interface, config in genie_learned_interfaces.items():
+
+        interface_details[genie_dev.name]["interfaces"].update(
+            {
+                interface: dict()
+            }
+        )
+
+        for config_key,config_value in config.items():
+
+            interface_details[genie_dev.name]["interfaces"][interface].update(
+                {
+                    config_key: config_value
+                }
+            )
+
+    for interface, config in genie_learned_interfaces_switchport.items():
+
+        for config_key,config_value in config.items():
+
+            interface_details[genie_dev.name]["interfaces"][interface].update(
+                {
+                    config_key: config_value
+                }
+            )
+
+
+print(json.dumps(interface_details, indent=4))
 
 try:
     # Pull all interfaces defined in NetBox for each device
@@ -69,7 +109,6 @@ try:
                     [
                         device,
                         interface_name,
-                        interface_attributes["description"],
                     ]
                 )
             else:
@@ -83,7 +122,13 @@ try:
                 )
 
         for nb_device_interface in nb_device_interfaces:
-            nb_device_interface.description = interface_details[device]["interfaces"][nb_device_interface.name]["description"]
+            nb_device_interface.enabled = bool(interface_details[device]["interfaces"][nb_device_interface.name].get("enabled"))
+            nb_device_interface.description = interface_details[device]["interfaces"][nb_device_interface.name].get("description", "DEFAULT: No description set on device")
+            nb_device_interface.mtu = interface_details[device]["interfaces"][nb_device_interface.name].get("mtu")
+            nb_device_interface.duplex = interface_details[device]["interfaces"][nb_device_interface.name].get("duplex_mode")
+            nb_device_interface.speed = interface_details[device]["interfaces"][nb_device_interface.name].get("bandwidth")
+
+        print(nb_device_interfaces)
 
         nb.dcim.interfaces.update(nb_device_interfaces)
 
@@ -92,7 +137,7 @@ except pynetbox.core.query.RequestError as e:
 
 if (editted_nb_count > 0):
     title = "The following NetBox objects were editted"
-    headerValues = ["Device Name", "Interface", "Description"]
+    headerValues = ["Device Name", "Interface"]
     nb_tools.create_nb_log(title, headerValues, editted_nb_objects, 15, 12)
 
 if (created_nb_count > 0):
