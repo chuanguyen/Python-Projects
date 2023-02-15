@@ -252,3 +252,29 @@ def create_nb_log(title, headerValues, nb_objs_data,headerWidthPadding=5,titleSe
         )
 
     print()
+
+def set_nb_device_interface_ip(nb, device_name, interface_name, interface_ip, interface_ip_desciption=""):
+    """Accepts a device name, interface name, and IP. Will then assign IP to the given interface
+
+      Args:
+        nb: PyNetbox connection to a Netbox instance
+        device_name
+        interface_name
+        interface_ip
+    """
+
+    nb_device = retrieve_nb_obj(nb, "dcim", "devices", device_name)
+
+    nb_interface_ip = nb.ipam.ip_addresses.get(address=interface_ip)
+
+    # If interface doesn't exist, create one
+    if (not nb_interface_ip):
+        nb_interface_ip = nb.ipam.ip_addresses.create(address=interface_ip)
+
+    # Retrieve interface for device
+    nb_interface = nb.dcim.interfaces.get(device=nb_device.name,name=interface_name)
+
+    nb_interface_ip.assigned_object_id = nb_interface.id
+    nb_interface_ip.assigned_object_type = 'dcim.interface'
+    nb_interface_ip.description = interface_ip_desciption
+    nb_interface_ip.save()
