@@ -267,7 +267,7 @@ def set_nb_device_interface_ip(nb, device_name, interface_name, interface_ip, in
 
     nb_interface_ip = nb.ipam.ip_addresses.get(address=interface_ip)
 
-    # If interface doesn't exist, create one
+    # If interface IP doesn't exist, create one
     if (not nb_interface_ip):
         nb_interface_ip = nb.ipam.ip_addresses.create(address=interface_ip)
 
